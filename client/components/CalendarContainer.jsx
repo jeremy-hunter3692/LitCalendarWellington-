@@ -47,10 +47,12 @@ export default function MyCalendar({ student, recurringNumber }) {
     console.log('onselecetedslot')
 
     //Add newEvent to redux state
-    // addEvent(start, end)
+    console.log('handle select', start, end)
+    addEvent(start, end)
   }
 
-  function addEvent({ start, end }) {
+  function addEvent(start, end) {
+    console.log('add Event', start, end)
     let length = recurringNumber - 1
     let title = student.name
     //TODO get teacher id on load?
@@ -81,6 +83,7 @@ export default function MyCalendar({ student, recurringNumber }) {
 
   return (
     <div>
+      <button onClick={submit}>submit events</button>
       <h1>Calender</h1>
       <Calendar
         localizer={localizer}
@@ -93,7 +96,6 @@ export default function MyCalendar({ student, recurringNumber }) {
         onSelectSlot={handleSelect}
         longPressThreshold={10}
       />
-      <button onClick={submit}>submit events</button>
     </div>
   )
 }

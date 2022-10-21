@@ -75,7 +75,7 @@ export default function Students() {
                 required
               >
                 <option value="" disabled>
-                  Choose student
+                  Student
                 </option>
                 {students.map((students) => (
                   <option
@@ -95,7 +95,7 @@ export default function Students() {
                 onChange={getWeeks}
               >
                 <option value="" disabled>
-                  Recurring?
+                  How many times
                 </option>
                 {numbers.map((x) => {
                   return (
