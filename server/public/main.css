@@ -1,0 +1,121 @@
+/* @import '../../src/sass/styles.scss';
+@import '../../src/addons/dragAndDrop/styles.scss'; */
+
+
+html, body, .viewport {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #e6ecee;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+header {
+  width: 100%;
+}
+
+#app {
+  width: 100%;
+  flex-wrap: wrap;
+  display:block;
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 50px;
+}
+
+h2 {
+  text-align: center;
+  margin: 30px auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: rgb(208, 0, 0);
+}
+
+
+h3 {
+  text-align: center;
+  margin: 7px auto;
+  font-size: 25px;
+}
+
+
+.nav {
+  background-color: #fafafa;
+  margin: 0;
+}
+
+.icon {
+  margin: 0 20px ;
+  font-size: 25px;
+  justify-content: left;
+  color:#5f4838;
+}
+
+.icon:hover {
+  color: #576fe3;
+  
+}
+
+.clickMe {
+  padding: 10px;
+  display: inline-block;
+  background: #fafafa;
+  border-radius: 1px;
+  justify-content: left;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+}
+
+.clickMe:hover {
+  color: #808fd7;
+}
+
+.textBox {
+  width: 90vw;
+  height: 40vh; 
+  margin: 2rem;
+  border-radius: 5px;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.notesInput{
+  width: 100%;
+  justify-content: center;
+}
+
+.formContainer {
+  background-color: aqua;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  /* gap: 4rem; */
+}
+
+
+
+label {
+  
+  font-size: 20px;
+}
+
+.studentNotes { 
+
+  background-color: green;
+}
+.teacherNotes { 
+
+  background-color:red;
+}
+
+.displayDetails {
+
+  color: cornflowerblue;
+}
