@@ -1,5 +1,7 @@
-/* @import '../../src/sass/styles.scss';
-@import '../../src/addons/dragAndDrop/styles.scss'; */
+/* @import 'react-big-calendar/lib/sass/styles' */
+@import '!style-loader!css-loader!./sass/styles.scss';
+/* import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css */
+
 
 
 html, body, .viewport {
@@ -7,7 +9,7 @@ html, body, .viewport {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #e6ecee;
+  background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
 
