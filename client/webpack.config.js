@@ -10,18 +10,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.s[ac]ss$/i,
-        loader: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-            },
-          },
-          'sass-loader',
-        ],
-
+        test: /\.(j|t)sx?$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
     ],

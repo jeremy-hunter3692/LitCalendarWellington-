@@ -3,7 +3,8 @@
 .rbc-event {
   border: none;
   box-sizing: border-box;
-  box-shadow: none;
+  //on hover? 
+  box-shadow: 6px 4px 2px rgb(205, 201, 201);
   margin: 0;
   padding: $event-padding;
   background-color: $event-bg;

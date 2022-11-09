@@ -7,7 +7,7 @@ export default function navBar() {
     <>
       <div className="nav">
         <header>
-          <h1>Personal Project: two boxes</h1>
+          <h1>Lit Calendar Wellington</h1>
           <Link to="/">Home</Link>
           <Link to="/calendar">Calendar</Link>
         </header>
