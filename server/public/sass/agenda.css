@@ -7,7 +7,7 @@
 }
 .rbc-agenda-view table.rbc-agenda-table {
   width: 100%;
-  border: 1px solid rgb(209, 209, 209);
+  border: 10px solid rgb(209, 209, 209);
   border-spacing: 0;
   border-collapse: collapse;
 }

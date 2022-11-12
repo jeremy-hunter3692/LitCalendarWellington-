@@ -8,6 +8,10 @@ import '!style-loader!css-loader!../../server/public/sass/styles.css'
 // import '/public/sass/styles.css'
 
 const localizer = momentLocalizer(moment)
+const now = new Date()
+const end = new Date()
+let hour = end.getHours() + 4
+end.setHours(hour)
 
 export default function MyCalendar() {
   const [displayPop, setDisplayPop] = useState(false)
@@ -18,8 +22,8 @@ export default function MyCalendar() {
   const [events, setEvents] = useState([
     {
       title: 'Kates Kalandar',
-      start: new Date(),
-      end: new Date(),
+      start: now,
+      end: end,
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',

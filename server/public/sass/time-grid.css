@@ -39,7 +39,7 @@
   right: 0;
 }
 .rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
-  border: 1px solid black;
+  border: 1px solid #c27c06;
   display: flex;
   max-height: 100%;
   min-height: 20px;
@@ -117,8 +117,8 @@
 .rbc-slot-selection {
   z-index: 10;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  background-color: rgba(0, 6, 193, 0.5);
+  color: rgb(7, 51, 211);
   font-size: 75%;
   width: 100%;
   padding: 3px;
@@ -230,6 +230,6 @@
   left: 0;
   right: 0;
   height: 1px;
-  background-color: #ad3131;
+  background-color: #c34704;
   pointer-events: none;
 }/*# sourceMappingURL=time-grid.css.map */
