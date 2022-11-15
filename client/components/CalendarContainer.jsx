@@ -47,7 +47,60 @@ export default function MyCalendar() {
         twitter: 'www.t',
       },
     },
+    {
+      title: 'Title',
+      start: new Date(2022, 10, 7, 12),
+      end: new Date(2022, 10, 7, 13),
+      type: 'author talk',
+      location: 'unity books',
+      imageURL: 'www.whatever',
+      sociallinks: {
+        facebook: 'www.f',
+        instagram: 'www.i',
+        twitter: 'www.t',
+      },
+    },
+    {
+      title: 'Title2',
+      start: new Date(2022, 10, 11, 12),
+      end: new Date(2022, 10, 11, 13),
+      type: 'author talk',
+      location: 'unity books',
+      imageURL: 'www.whatever',
+      sociallinks: {
+        facebook: 'www.f',
+        instagram: 'www.i',
+        twitter: 'www.t',
+      },
+    },
+    {
+      title: 'Title3',
+      start: new Date(2022, 10, 12, 12),
+      end: new Date(2022, 10, 12, 13),
+      type: 'author talk',
+      location: 'unity books',
+      imageURL: 'www.whatever',
+      sociallinks: {
+        facebook: 'www.f',
+        instagram: 'www.i',
+        twitter: 'www.t',
+      },
+    },
+    {
+      title: 'Title4',
+      start: new Date(2022, 10, 29, 12),
+      end: new Date(2022, 10, 29, 13),
+      type: 'author talk',
+      location: 'unity books',
+      imageURL: 'www.whatever',
+      sociallinks: {
+        facebook: 'www.f',
+        instagram: 'www.i',
+        twitter: 'www.t',
+      },
+    },
   ])
+  console.log(events)
 
   useEffect(() => {
     const handleMouseMove = (event) => {

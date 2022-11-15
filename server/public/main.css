@@ -138,9 +138,22 @@ position: inherit;
 z-index: 5;
 background-color: #ee7011;
 margin: 0px;
-padding: 1rem;
+padding: 2rem;
 color: white;
 border-radius: 5px;
 box-shadow: 5px 5px #d2d2d2 ;
 
 } 
+
+.popup button {
+  display: block;
+  background-color: #ffffff;
+  width: 10%;
+  margin-left: auto;
+   border-radius: 100%;
+}
+
+.popup li {
+list-style: none;
+padding: 1rem;
+}
