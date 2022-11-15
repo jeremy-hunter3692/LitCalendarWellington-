@@ -93,7 +93,7 @@ export default function MyCalendar() {
   function handleSelect(e) {
     //Add newEvent to redux state
     console.log('handle select', e)
-    setDisplayPop(!displayPop)
+    setDisplayPop(true)
     setPopDetails(e)
   }
 
@@ -102,12 +102,18 @@ export default function MyCalendar() {
     // dispatch(addEvents(newEvents))
   }
 
+  function click() {
+    setDisplayPop(false)
+    console.log('click', displayPop)
+  }
   return (
     <div>
       <button onClick={submit}>submit events</button>
       <h1>Calender</h1>
 
-      {displayPop && <PopupEvent details={popDetails} styleData={mousePos} />}
+      {displayPop && (
+        <PopupEvent details={popDetails} styleData={mousePos} click={click} />
+      )}
 
       <Calendar
         localizer={localizer}

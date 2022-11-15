@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Popup({ details, styleData }) {
+export default function Popup({ details, styleData, click }) {
   const absolute = 'absolute'
   const socials = details.sociallinks
   const [style, setStyle] = useState({
@@ -14,6 +14,7 @@ export default function Popup({ details, styleData }) {
     <>
       <div style={style}>
         <div className="popup">
+          <button onClick={click}>x</button>
           <header>Event pop up card</header>
           <li>{details.title} </li>
           <li> {details.location}</li>

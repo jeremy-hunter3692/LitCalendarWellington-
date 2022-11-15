@@ -132,12 +132,13 @@ label {
   border: 1px solid;
 } 
 .popup {
-width: 12rem;
+width: 20rem;
+height: 20rem;
 position: inherit;
 z-index: 5;
 background-color: #ee7011;
 margin: 0px;
-padding: 4px;
+padding: 1rem;
 color: white;
 border-radius: 5px;
 box-shadow: 5px 5px #d2d2d2 ;
