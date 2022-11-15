@@ -121,3 +121,25 @@ label {
 
   color: cornflowerblue;
 }
+
+
+.popupcont {
+  z-index: 1;
+  /* justify-content: center;
+  position: absolute; */
+  background-color: #f84f4f00; 
+
+  border: 1px solid;
+} 
+.popup {
+width: 12rem;
+position: inherit;
+z-index: 5;
+background-color: #ee7011;
+margin: 0px;
+padding: 4px;
+color: white;
+border-radius: 5px;
+box-shadow: 5px 5px #d2d2d2 ;
+
+} 
