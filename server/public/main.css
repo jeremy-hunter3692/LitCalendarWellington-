@@ -125,8 +125,7 @@ label {
 
 .popupcont {
   z-index: 1;
-  /* justify-content: center;
-  position: absolute; */
+
   background-color: #f84f4f00; 
 
   border: 1px solid;
@@ -138,22 +137,60 @@ position: inherit;
 z-index: 5;
 background-color: #ee7011;
 margin: 0px;
-padding: 2rem;
+padding: 1rem;
 color: white;
 border-radius: 5px;
 box-shadow: 5px 5px #d2d2d2 ;
 
 } 
 
+.licontainer {
+  background-color: #5f4838;
+}
+
+.licontainer img {
+  display: block;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /* align-items: center;
+  justify-content: center; */
+}
+
 .popup button {
   display: block;
   background-color: #ffffff;
+  color:#5f4838;
+  padding: 0px;
   width: 10%;
   margin-left: auto;
-   border-radius: 100%;
+  margin-bottom:  .1rem;
+  border-radius: 100%;
 }
+
+.popup ul {
+  padding: 0px;
+}
+
 
 .popup li {
 list-style: none;
-padding: 1rem;
+/* border: .5px solid black; */
+padding: 0 0.5rem ;
+
+}
+
+
+.sociallist {
+  list-style: none;
+  display: flex; 
+  justify-content: space-between;
+
+}
+
+.sociallistcont {
+
+  border: red solid;
+  width: auto;
+  margin-top: auto;
 }

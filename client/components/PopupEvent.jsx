@@ -8,20 +8,31 @@ export default function Popup({ details, styleData, click }) {
     left: styleData.x > 650 ? styleData.x - 400 : styleData.x,
     top: styleData.y > 470 ? styleData.y - 300 : styleData.y,
   })
-  console.log('STYLE', style)
+  console.log('STYLE', style, details)
 
   return (
     <>
       <div style={style}>
         <div className="popup">
-          <button onClick={click}>x</button>
+          <button onClick={click}>X</button>
+          <div className="licontainer">
+            <ul>
+              <li>{details.title} </li>
+              <li>
+                Location: {details.location} | {details.type}
+              </li>
+              <li>Link: </li>
+              <img src="cover.png" alt="book cover" width="30%"></img>
+            </ul>
+          </div>
 
-          <li>{details.title} </li>
-          <li> {details.location}</li>
-          <li> {details.type}</li>
-          <li>{socials.instagram}</li>
-          <li>{socials.facebook}</li>
-          <li>{socials.twitter}</li>
+          <div className="sociallistcont">
+            <ul className="sociallist">
+              <li>{socials.instagram}</li>
+              <li>{socials.facebook}</li>
+              <li>{socials.twitter}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </>
