@@ -114,34 +114,7 @@ export default function MyCalendar() {
     }
   }, [displayPop])
   console.log(mousePos)
-  // const [newEvents, setNewEvents] = useState([])
 
-  // useEffect(() => {
-  //   // console.log(eventData)
-  //   eventData[0] ? setEvents(eventData) : setEvents([])
-  // }, [eventData])
-
-  //////from docs
-  // function useCallback (){(event, start, end, isSelected) => ({
-  //   ...(isSelected && {
-  //     style: {
-  //       backgroundColor: '#000',
-  //     },
-  //   }),
-  //   ...(moment(start).hour() < 12 && {
-  //     className: 'powderBlue',
-  //   }),
-  //   ...(event.title.includes('Meeting') && {
-  //     className: 'darkGreen',
-  //   }),
-  // }),
-  // []}
-
-  // function EventPropGetter() {
-  //   const eventPropGetter = useCallback(event, start, end, isSelected)
-
-  // }
-  //////from docs
 
   function handleSelect(e) {
     //Add newEvent to redux state

@@ -131,6 +131,7 @@ label {
   border: 1px solid;
 } 
 .popup {
+
 width: 20rem;
 height: 20rem;
 position: inherit;
@@ -139,18 +140,24 @@ background-color: #ee7011;
 margin: 0px;
 padding: 1rem;
 color: white;
+
 border-radius: 5px;
 box-shadow: 5px 5px #d2d2d2 ;
 
 } 
 
 .licontainer {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
   background-color: #5f4838;
 }
 
+
 .licontainer img {
   display: block;
-
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   margin-left: auto !important;
   margin-right: auto !important;
   /* align-items: center;
@@ -181,16 +188,16 @@ padding: 0 0.5rem ;
 }
 
 
+.sociallistcont {
+
+  width: auto;
+  margin-top: 1rem;
+}
+
+
 .sociallist {
   list-style: none;
   display: flex; 
   justify-content: space-between;
 
-}
-
-.sociallistcont {
-
-  border: red solid;
-  width: auto;
-  margin-top: auto;
 }
