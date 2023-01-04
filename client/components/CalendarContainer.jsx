@@ -28,6 +28,9 @@ export default function MyCalendar() {
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',
+      about:
+        'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
+
       sociallinks: {
         facebook: 'www.f',
         instagram: 'www.i',
@@ -41,6 +44,9 @@ export default function MyCalendar() {
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',
+      about:
+        'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
+
       sociallinks: {
         facebook: 'www.f',
         instagram: 'www.i',
@@ -67,6 +73,8 @@ export default function MyCalendar() {
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',
+      about:
+        'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
       sociallinks: {
         facebook: 'www.f',
         instagram: 'www.i',
@@ -80,6 +88,8 @@ export default function MyCalendar() {
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',
+      about:
+        'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
       sociallinks: {
         facebook: 'www.f',
         instagram: 'www.i',
@@ -93,6 +103,8 @@ export default function MyCalendar() {
       type: 'author talk',
       location: 'unity books',
       imageURL: 'www.whatever',
+      about:
+        'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
       sociallinks: {
         facebook: 'www.f',
         instagram: 'www.i',
@@ -114,7 +126,6 @@ export default function MyCalendar() {
     }
   }, [displayPop])
   console.log(mousePos)
-
 
   function handleSelect(e) {
     //Add newEvent to redux state

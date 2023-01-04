@@ -25,12 +25,7 @@ export default function Popup({ details, styleData, click }) {
               <li>Link: </li>
               <img src="cover.png" alt="book cover" width="30%"></img>
               <li>
-                <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Minima deleniti possimus doloremque fuga reprehenderit dolorum
-                  obcaecati, ea est voluptas quam enim esse illum non optio
-                  doloribus illo voluptatem, earum quod!
-                </p>
+                <p>{details.about}</p>
               </li>
             </ul>
 
