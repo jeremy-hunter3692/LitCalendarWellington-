@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // reference data shape {
 //   title: 'Kates Kalandar',
@@ -18,10 +18,14 @@ import React from 'react'
 // }
 
 export default function AddEvent() {
-  let value = ''
+  const [form, setForm] = useState({})
 
+  const newEvent = {}
   function handleSubmit() {}
-  function handleChange() {}
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value })
+    console.log(form)
+  }
 
   return (
     <>
@@ -31,7 +35,7 @@ export default function AddEvent() {
         <input
           id="title"
           onChange={handleChange}
-          value={value}
+          value={newEvent.title}
           name="title"
           required
           placeholder="Title"
@@ -41,7 +45,7 @@ export default function AddEvent() {
         <input
           id="location"
           onChange={handleChange}
-          value={value}
+          value={newEvent.location}
           name="location"
           required
           placeholder="Location"
@@ -50,7 +54,7 @@ export default function AddEvent() {
         <input
           id="about"
           onChange={handleChange}
-          value={value}
+          value={newEvent.about}
           name="about"
           required
           placeholder="About"
@@ -60,7 +64,7 @@ export default function AddEvent() {
         <input
           id="facebook"
           onChange={handleChange}
-          value={value}
+          value={newEvent.sociallinks?.facebook}
           name="facebook"
           required
           placeholder="facebook"
@@ -69,7 +73,7 @@ export default function AddEvent() {
         <input
           id="instagram"
           onChange={handleChange}
-          value={value}
+          value={newEvent.sociallinks?.instagram}
           name="instagram"
           required
           placeholder="Instagram"
@@ -79,7 +83,7 @@ export default function AddEvent() {
         <input
           id="twitter"
           onChange={handleChange}
-          value={value}
+          value={newEvent.sociallinks?.twitter}
           name="twitter"
           required
           placeholder="twitter"
