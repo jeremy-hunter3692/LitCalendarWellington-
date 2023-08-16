@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function Popup({ details, styleData, click }) {
   const absolute = 'absolute'
- 
+
   const [style, setStyle] = useState({
     margin: 0,
     padding: 0,
@@ -18,11 +18,14 @@ export default function Popup({ details, styleData, click }) {
           <button onClick={click}>X</button>
           <div className="licontainer">
             <ul>
-              <li>{details.title} </li>
+              <li>
+                {' '}
+                <strong>{details.title} </strong>
+              </li>
               <li>
                 Location: {details.location} | {details.type}
               </li>
-              <li>Link: </li>
+              <li>Link: {details.link} </li>
               <img src="cover.png" alt="book cover" width="30%"></img>
               <li>
                 <p>{details.about}</p>
@@ -31,9 +34,9 @@ export default function Popup({ details, styleData, click }) {
 
             <div className="sociallistcont">
               <ul className="sociallist">
-                <li>{details.instagram}</li>
-                <li>{details.facebook}</li>
-                <li>{details.twitter}</li>
+                <li>{details.sociallinks.instagram}</li>
+                <li>{details.sociallinks.facebook}</li>
+                <li>{details.sociallinks.twitter}</li>
               </ul>
             </div>
           </div>

@@ -108,24 +108,22 @@ const practiseData = [
 export default function MyCalendar({ eventsProps }) {
   const [displayPop, setDisplayPop] = useState(false)
   const [popDetails, setPopDetails] = useState({})
-  // const [mousePos, setMousePos] = useState({})
+  const [mousePos, setMousePos] = useState({})
 
-  const dispatch = useDispatch()
-  const eventData = useSelector((state) => state.events)
   // console.log('calendar init', eventsProps)
   // const [events, setEvents] = useState(eventsProps)
 
-  // useEffect(() => {
-  //   const handleMouseMove = (event) => {
-  //     setMousePos({ x: event.clientX, y: event.clientY })
-  //   }
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePos({ x: event.clientX, y: event.clientY })
+    }
 
-  //   window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove)
 
-  //   return () => {
-  //     window.removeEventListener('mousemove', handleMouseMove)
-  //   }
-  // }, [displayPop])
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [displayPop])
   // console.log(mousePos)
 
   function handleSelect(e) {

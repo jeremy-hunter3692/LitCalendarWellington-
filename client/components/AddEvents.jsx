@@ -18,6 +18,7 @@ import React, { useState } from 'react'
 // }
 
 export default function AddEvent({ eventsSetter }) {
+  //TO DO:::::::make a micro date picker and time dropdowns etc
   const [form, setForm] = useState({})
   // const newEvent = {}
 
@@ -26,22 +27,27 @@ export default function AddEvent({ eventsSetter }) {
 
     let input = [{ ...form, start: new Date() }]
     input[0].sociallinks = {}
-    input[0].sociallinks.facebook = form.facebook
-    input[0].sociallinks.twitter = form.twitter
-    input[0].sociallinks.instagram = form.instagram
+    let iterable = Object.keys(input[0])
+    iterable.forEach((value) => {
+      if (
+        value === 'facebook' ||
+        value === 'twitter' ||
+        value === 'instagram'
+      ) {
+        input[0].sociallinks[value] = form[value]
+        delete input[0][value]
+      }
+    })
+
     input[0].end = new Date()
     let hour = input[0].end.getHours() + 4
     input[0].end.setHours(hour)
-    delete input[0].instagram
-    delete input[0].facebook
-    delete input[0].twitter
-
+    console.log('presave input', input)
     eventsSetter(input)
-    console.log('submit', input)
   }
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
-    console.log(form)
   }
 
   return (
@@ -75,6 +81,14 @@ export default function AddEvent({ eventsSetter }) {
           required
           placeholder="About"
         />
+        <label htmlFor="link">Link:</label>
+        <input
+          id="link"
+          onChange={handleChange}
+          // value={newEvent.twitter}
+          name="link"
+          placeholder="link"
+        />
         <h4>Social links:</h4>
         <label htmlFor="facebook">Facebook:</label>
         <input
@@ -101,7 +115,8 @@ export default function AddEvent({ eventsSetter }) {
           name="twitter"
           placeholder="twitter"
         />
-        <button onClick={handleSubmit}>Save Event</button>
+
+        <button onClick={handleSubmit}>Save Event </button>
       </form>
     </>
   )

@@ -5,15 +5,25 @@ import CalendarContainer from './CalendarContainer'
 
 const App = () => {
   const [globalEvents, setGlobalEvents] = useState([])
+  const [showAddEvents, setShowAddEvents] = useState(false)
+
   function globalEventSetter(input) {
     setGlobalEvents(input)
     // console.log('applevelstate:', input, globalEvents)
   }
+
+  function addEvent() {
+    setShowAddEvents(!showAddEvents)
+  }
   return (
     <>
       <Nav />
-      <AddEvent eventsSetter={globalEventSetter} />
-      <CalendarContainer eventsProps={globalEvents} />
+      <button onClick={addEvent}>Submit new event</button>
+      {showAddEvents ? (
+        <AddEvent eventsSetter={globalEventSetter} />
+      ) : (
+        <CalendarContainer eventsProps={globalEvents} />
+      )}
     </>
   )
 }
