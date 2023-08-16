@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function Popup({ details, styleData, click }) {
   const absolute = 'absolute'
-  const socials = details.sociallinks
+ 
   const [style, setStyle] = useState({
     margin: 0,
     padding: 0,
@@ -31,9 +31,9 @@ export default function Popup({ details, styleData, click }) {
 
             <div className="sociallistcont">
               <ul className="sociallist">
-                <li>{socials.instagram}</li>
-                <li>{socials.facebook}</li>
-                <li>{socials.twitter}</li>
+                <li>{details.instagram}</li>
+                <li>{details.facebook}</li>
+                <li>{details.twitter}</li>
               </ul>
             </div>
           </div>

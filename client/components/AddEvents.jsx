@@ -17,11 +17,28 @@ import React, { useState } from 'react'
 //   },
 // }
 
-export default function AddEvent() {
+export default function AddEvent({ eventsSetter }) {
   const [form, setForm] = useState({})
+  // const newEvent = {}
 
-  const newEvent = {}
-  function handleSubmit() {}
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    let input = [{ ...form, start: new Date() }]
+    input[0].sociallinks = {}
+    input[0].sociallinks.facebook = form.facebook
+    input[0].sociallinks.twitter = form.twitter
+    input[0].sociallinks.instagram = form.instagram
+    input[0].end = new Date()
+    let hour = input[0].end.getHours() + 4
+    input[0].end.setHours(hour)
+    delete input[0].instagram
+    delete input[0].facebook
+    delete input[0].twitter
+
+    eventsSetter(input)
+    console.log('submit', input)
+  }
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
     console.log(form)
@@ -29,13 +46,12 @@ export default function AddEvent() {
 
   return (
     <>
-      <h1>HI</h1>
-      <form onSubmit={handleSubmit} className="AddEvent">
+      <form className="AddEvent">
         <label htmlFor="title">Title:</label>
         <input
           id="title"
           onChange={handleChange}
-          value={newEvent.title}
+          // value={newEvent.title}
           name="title"
           required
           placeholder="Title"
@@ -45,7 +61,7 @@ export default function AddEvent() {
         <input
           id="location"
           onChange={handleChange}
-          value={newEvent.location}
+          // value={newEvent.location}
           name="location"
           required
           placeholder="Location"
@@ -54,7 +70,7 @@ export default function AddEvent() {
         <input
           id="about"
           onChange={handleChange}
-          value={newEvent.about}
+          // value={newEvent.about}
           name="about"
           required
           placeholder="About"
@@ -64,18 +80,16 @@ export default function AddEvent() {
         <input
           id="facebook"
           onChange={handleChange}
-          value={newEvent.sociallinks?.facebook}
+          // value={newEvent.facebook}
           name="facebook"
-          required
           placeholder="facebook"
         />
         <label htmlFor="instagram">Instagram:</label>
         <input
           id="instagram"
           onChange={handleChange}
-          value={newEvent.sociallinks?.instagram}
+          // value={newEvent.instagram}
           name="instagram"
-          required
           placeholder="Instagram"
         />
 
@@ -83,11 +97,11 @@ export default function AddEvent() {
         <input
           id="twitter"
           onChange={handleChange}
-          value={newEvent.sociallinks?.twitter}
+          // value={newEvent.twitter}
           name="twitter"
-          required
           placeholder="twitter"
         />
+        <button onClick={handleSubmit}>Save Event</button>
       </form>
     </>
   )
