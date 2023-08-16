@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+
+
 export default function Popup({ details, styleData, click }) {
   const absolute = 'absolute'
 
@@ -35,6 +37,7 @@ export default function Popup({ details, styleData, click }) {
               <li>
                 <p>{about}...</p>
               </li>
+         
             </ul>
 
             <div className="sociallistcont">

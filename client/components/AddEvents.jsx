@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+const eventType = ['Book Launch', 'Author Talk', 'option three']
 // reference data shape {
 //   title: 'Kates Kalandar',
 //   start: now,
@@ -47,6 +48,7 @@ export default function AddEvent({ eventsSetter }) {
   }
 
   function handleChange(e) {
+    console.log(form)
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
@@ -89,6 +91,25 @@ export default function AddEvent({ eventsSetter }) {
           name="link"
           placeholder="link"
         />
+
+        <label htmlFor="type">
+          Type:
+          <select
+            id="type"
+            name="type"
+            value={form.type}
+            defaultValue="choose type"
+            onChange={handleChange}
+            required
+          >
+            {eventType.map((x) => (
+              <option key={x} value={x} title="type">
+                {x}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <h4>Social links:</h4>
         <label htmlFor="facebook">Facebook:</label>
         <input
