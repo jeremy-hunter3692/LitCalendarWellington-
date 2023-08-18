@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import Popup from './PopupEvent'
 const eventType = ['Book Launch', 'Author Talk', 'option three']
 // reference data shape {
 //   title: 'Kates Kalandar',
@@ -18,9 +18,24 @@ const eventType = ['Book Launch', 'Author Talk', 'option three']
 //   },
 // }
 
+const initDetails = {
+  title: '',
+  start: new Date(),
+  end: new Date(),
+  type: '',
+  location: '',
+  imageURL: '',
+  about: 'placeholder',
+  sociallinks: {
+    facebook: '',
+    instagram: '',
+    twitter: '',
+  },
+}
+
 export default function AddEvent({ eventsSetter }) {
   //TO DO:::::::make a micro date picker and time dropdowns etc
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState(initDetails)
   // const newEvent = {}
 
   function handleSubmit(e) {
@@ -44,11 +59,12 @@ export default function AddEvent({ eventsSetter }) {
     let hour = input[0].end.getHours() + 4
     input[0].end.setHours(hour)
     console.log('presave input', input)
-    eventsSetter(input)
+    // eventsSetter(input)
   }
 
+  function handlePreview() {}
+
   function handleChange(e) {
-    console.log(form)
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
@@ -136,9 +152,10 @@ export default function AddEvent({ eventsSetter }) {
           name="twitter"
           placeholder="twitter"
         />
-
+        <button onClick={handlePreview}>Preview</button>
         <button onClick={handleSubmit}>Save Event </button>
       </form>
+      <Popup details={form} />
     </>
   )
 }

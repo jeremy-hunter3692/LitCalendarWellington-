@@ -1,22 +1,32 @@
 import React, { useState } from 'react'
 
-
-
 export default function Popup({ details, styleData, click }) {
+  console.log('top', details, styleData, click)
   const absolute = 'absolute'
 
   const [style, setStyle] = useState({
     margin: 0,
     padding: 0,
-    position: absolute,
-    left: styleData.x > 650 ? styleData.x - 400 : styleData.x,
-    top: styleData.y > 470 ? styleData.y - 300 : styleData.y,
+    position: 'relative',
+    left: 50,
+    top: 50,
   })
 
-  console.log('length', details.about.length)
+  styleData
+    ? setStyle({
+        margin: 0,
+        padding: 0,
+        position: absolute,
+        left: styleData.x > 650 ? styleData.x - 400 : styleData.x,
+        top: styleData.y > 470 ? styleData.y - 300 : styleData.y,
+      })
+    : ''
+
+  // console.log('length', details.about.length)
   const about =
-    details.about.length > 400 ? details.about.slice(0, 400) : details.about
-  console.log('about length', about.length)
+    details.about.length > 400
+      ? details.about.slice(0, 400)
+      : details.about
 
   return (
     <>
@@ -37,7 +47,6 @@ export default function Popup({ details, styleData, click }) {
               <li>
                 <p>{about}...</p>
               </li>
-         
             </ul>
 
             <div className="sociallistcont">
