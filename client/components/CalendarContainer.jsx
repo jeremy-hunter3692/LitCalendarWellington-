@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar'
 import moment from 'moment'
 import PopupEvent from './PopupEvent'
-import { useSelector, useDispatch } from 'react-redux'
-import { addEvents } from '../Actions/eventsActions'
+
 import '!style-loader!css-loader!../../server/public/sass/styles.css'
 // import '/public/sass/styles.css'
 
@@ -106,7 +105,7 @@ const practiseData = [
 ]
 
 export default function MyCalendar({ eventsProps }) {
-  const [displayPop, setDisplayPop] = useState(false)
+  const [displayPop, setDisplayPop] = useState()
   const [popDetails, setPopDetails] = useState({})
   const [mousePos, setMousePos] = useState({})
 
@@ -115,7 +114,13 @@ export default function MyCalendar({ eventsProps }) {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      setMousePos({ x: event.clientX, y: event.clientY })
+      setMousePos({
+        margin: 0,
+        padding: 0,
+        position: 'absolute',
+        left: event.clientX > 650 ? event.clientX - 400 : event.clientX,
+        top: event.clientY > 470 ? event.clientY - 300 : event.clientY,
+      })
     }
 
     window.addEventListener('mousemove', handleMouseMove)

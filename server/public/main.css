@@ -162,6 +162,10 @@ flex-direction: column;
 
 }
 
+.sociallist img {
+  width: 30%;
+}
+
 .popup button {
   display: block;
   background-color: #ffffff;

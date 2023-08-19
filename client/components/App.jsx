@@ -12,15 +12,19 @@ const App = () => {
     // console.log('applevelstate:', input, globalEvents)
   }
 
-  function addEvent() {
+  function showAddEventSetter() {
     setShowAddEvents(!showAddEvents)
   }
+
   return (
     <>
       <Nav />
-      <button onClick={addEvent}>Submit new event</button>
+      <button onClick={showAddEventSetter}>Submit new event</button>
       {showAddEvents ? (
-        <AddEvent eventsSetter={globalEventSetter} />
+        <AddEvent
+          eventsSetter={globalEventSetter}
+          showAddEventSetter={showAddEventSetter}
+        />
       ) : (
         <CalendarContainer eventsProps={globalEvents} />
       )}

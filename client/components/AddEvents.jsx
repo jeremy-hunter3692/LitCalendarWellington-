@@ -33,7 +33,7 @@ const initDetails = {
   },
 }
 
-export default function AddEvent({ eventsSetter }) {
+export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //TO DO:::::::make a micro date picker and time dropdowns etc
   const [form, setForm] = useState(initDetails)
   // const newEvent = {}
@@ -59,10 +59,9 @@ export default function AddEvent({ eventsSetter }) {
     let hour = input[0].end.getHours() + 4
     input[0].end.setHours(hour)
     console.log('presave input', input)
-    // eventsSetter(input)
+    eventsSetter(input)
+    showAddEventSetter()
   }
-
-  function handlePreview() {}
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -152,7 +151,7 @@ export default function AddEvent({ eventsSetter }) {
           name="twitter"
           placeholder="twitter"
         />
-        <button onClick={handlePreview}>Preview</button>
+
         <button onClick={handleSubmit}>Save Event </button>
       </form>
       <Popup details={form} />
