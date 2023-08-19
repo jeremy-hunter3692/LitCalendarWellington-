@@ -46,6 +46,10 @@ h3 {
   font-size: 25px;
 }
 
+.AddEvent {
+  margin: 2 em;
+
+}
 
 .nav {
   background-color: #fafafa;
@@ -187,6 +191,7 @@ list-style: none;
 /* border: .5px solid black; */
 padding: 0 0.5rem ;
 
+
 }
 
 
@@ -199,8 +204,21 @@ padding: 0 0.5rem ;
 
 
 .sociallist {
+
   list-style: none;
   display: flex; 
   justify-content: space-between;
 
+}
+
+.textarea {
+  margin: 2em;
+  display: flex;
+
+
+}
+
+textarea {
+  width: 50vw;
+  height: 20vh;
 }

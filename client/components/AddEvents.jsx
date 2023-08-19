@@ -89,15 +89,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           required
           placeholder="Location"
         />
-        <label htmlFor="about">About:</label>
-        <input
-          id="about"
-          onChange={handleChange}
-          // value={newEvent.about}
-          name="about"
-          required
-          placeholder="About"
-        />
         <label htmlFor="link">Link:</label>
         <input
           id="link"
@@ -108,25 +99,42 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
 
         <label htmlFor="type">
-          Type:
+          Event Type:
           <select
             id="type"
             name="type"
             value={form.type}
-            defaultValue="choose type"
+            defaultValue=""
             onChange={handleChange}
             required
           >
+            <option value="" disabled>
+              Choose type
+            </option>
             {eventType.map((x) => (
-              <option key={x} value={x} title="type">
+              <option key={x} value={x} title={x}>
                 {x}
               </option>
             ))}
           </select>
         </label>
 
+        <div className="textarea">
+          <div>
+            <label htmlFor="about">About:</label>
+          </div>
+          <textarea
+            id="about"
+            onChange={handleChange}
+            // value={newEvent.about}
+            name="about"
+            required
+            placeholder="this text will be cut off at 400 characters in the pop up"
+          />
+        </div>
         <h4>Social links:</h4>
         <label htmlFor="facebook">Facebook:</label>
+
         <input
           id="facebook"
           onChange={handleChange}
