@@ -9,6 +9,10 @@ const initStyle = {
 //TO DO: FIX THE DISPLAY OF THE SECONDS IN TIME PART
 export default function Popup({ details, styleData, click }) {
   const [style, setStyle] = useState(styleData || initStyle)
+  const date = details.start?.toDateString()
+  //Check this doesn't mess anything up 
+  const time = details.start?.toLocaleTimeString('en-US')
+  const timeFixed = time?.slice(0, -6) + time?.slice(-2)
 
   const about =
     details.about.length > 300 ? details.about.slice(0, 300) : details.about
@@ -22,9 +26,8 @@ export default function Popup({ details, styleData, click }) {
             <ul>
               <li>
                 {' '}
-                <strong>{details.title} </strong> | At{' '}
-                {details.start?.toDateString()} {'||'}
-                {details.start?.toLocaleTimeString('en-US')}
+                <strong>{details.title} </strong> | {date} | at
+                {timeFixed}
               </li>
               <li>
                 Location: {details.location} | {details.type}
