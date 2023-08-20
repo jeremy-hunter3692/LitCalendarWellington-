@@ -19,7 +19,9 @@ const App = () => {
   return (
     <>
       <Nav />
-      <button onClick={showAddEventSetter}>Submit new event</button>
+      <button onClick={showAddEventSetter}>
+        {showAddEvents ? 'Back' : 'Submit new event'}
+      </button>
       {showAddEvents ? (
         <AddEvent
           eventsSetter={globalEventSetter}

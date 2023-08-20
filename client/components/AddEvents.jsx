@@ -19,30 +19,106 @@ const eventType = ['Book Launch', 'Author Talk', 'option three']
 // }
 
 const initDetails = {
+  month: 'January',
+  date: 1,
+  hour: 0,
+  year: new Date().getFullYear(),
+  minutes: 0,
   title: '',
-  start: new Date(),
-  end: new Date(),
   type: '',
+  link: '',
   location: '',
   imageURL: '',
-  about: 'placeholder',
-  sociallinks: {
-    facebook: '',
-    instagram: '',
-    twitter: '',
-  },
+  about: '',
+  facebook: '',
+  instagram: '',
+  twitter: '',
 }
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+
+const hours = Array(24)
+  .fill(0)
+  .map((_, idx) => idx)
+
+const minutes = Array(12)
+  .fill(0)
+  .map((_, idx) => idx * 5)
+
+function daysInMonth(month) {
+  return new Date(2023, month, 0).getDate()
+}
+
+const daysEachMonth = months.map((x, idx) => {
+  return daysInMonth(idx + 1)
+})
+
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
-  //TO DO:::::::make a micro date picker and time dropdowns etc
+  
   const [form, setForm] = useState(initDetails)
-  // const newEvent = {}
+  console.log(form)
+
+  function getMonthIdx(month) {
+    return months.findIndex((x) => x === month)
+  }
+
+  function makeDateObject({ year, date, hour, minutes, month }) {
+    const deStringedMonth = getMonthIdx(month)
+    return new Date(year, deStringedMonth, date, hour, minutes)
+  }
+
+  function getDaysOfSelectedMonth(month) {
+    let numbers = []
+    if (month) {
+      const idx = getMonthIdx(month)
+
+      numbers = Array(daysEachMonth[idx])
+        .fill(0)
+        .map((_, idx) => idx + 1)
+    }
+
+    return (
+      <label htmlFor="date">
+        Date:
+        <select
+          id="date"
+          name="date"
+          value={form.date}
+          onChange={handleChange}
+          required
+        >
+          <option value="Date:" disabled>
+            Date:
+          </option>
+          {numbers.map((x) => (
+            <option key={x} value={x} title={x}>
+              {x}
+            </option>
+          ))}
+        </select>
+      </label>
+    )
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
-
-    let input = [{ ...form, start: new Date() }]
+    //Reminder events must be an array for the calendar
+    let input = [{ ...form }]
     input[0].sociallinks = {}
+
     let iterable = Object.keys(input[0])
     iterable.forEach((value) => {
       if (
@@ -54,27 +130,97 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         delete input[0][value]
       }
     })
-
-    input[0].end = new Date()
-    let hour = input[0].end.getHours() + 4
-    input[0].end.setHours(hour)
-    console.log('presave input', input)
+    //Gross - TIDY
+    input[0].start = makeDateObject(input[0])
+    console.log('after make date', input[0].start)
+    delete input[0].month
+    delete input[0].date
+    delete input[0].hour
+    delete input[0].year
+    delete input[0].minutes
+    // yucky - TIDY
+    const endhour = input[0].start.getHours() + 4
+    input[0].end = new Date(input[0].start)
+    input[0].end.setHours(endhour)
     eventsSetter(input)
     showAddEventSetter()
   }
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+
+    setForm({ ...form, [name]: value })
   }
 
+  //TO DO: Change this to a proper controlled react form
+  //Bug with Januaray/first option being default option in select/drop downs
   return (
-    <>
+    <div>
       <form className="AddEvent">
+        <label htmlFor="month">
+          Month:
+          <select
+            id="month"
+            name="month"
+            value={form.month}
+            onChange={handleChange}
+            required
+          >
+            <option value="Month:" disabled>
+              Month:
+            </option>
+            {months.map((x) => (
+              <option key={x} value={x} title={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+        </label>
+        {getDaysOfSelectedMonth(form.month)}
+        <label htmlFor="hour">
+          Hour:
+          <select
+            id="hour"
+            name="hour"
+            value={form.hour}
+            onChange={handleChange}
+            required
+          >
+            <option value="Hour:" disabled>
+              Hour:
+            </option>
+            {hours.map((x) => (
+              <option key={x} value={x} title={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="minutes">
+          Minutes:
+          <select
+            id="minutes"
+            name="minutes"
+            value={form.minutes}
+            onChange={handleChange}
+            required
+          >
+            <option value="Minutes:" disabled>
+              Minutes:
+            </option>
+            {minutes.map((x) => (
+              <option key={x} value={x} title={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+        </label>
+
         <label htmlFor="title">Title:</label>
         <input
           id="title"
           onChange={handleChange}
-          // value={newEvent.title}
+          value={form.title}
           name="title"
           required
           placeholder="Title"
@@ -84,7 +230,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <input
           id="location"
           onChange={handleChange}
-          // value={newEvent.location}
+          value={form.location}
           name="location"
           required
           placeholder="Location"
@@ -93,7 +239,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <input
           id="link"
           onChange={handleChange}
-          // value={newEvent.twitter}
+          value={form.link}
           name="link"
           placeholder="link"
         />
@@ -104,11 +250,10 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             id="type"
             name="type"
             value={form.type}
-            defaultValue=""
             onChange={handleChange}
             required
           >
-            <option value="" disabled>
+            <option value="Choose type" disabled>
               Choose type
             </option>
             {eventType.map((x) => (
@@ -126,10 +271,10 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           <textarea
             id="about"
             onChange={handleChange}
-            // value={newEvent.about}
+            value={form.about}
             name="about"
             required
-            placeholder="this text will be cut off at 400 characters in the pop up"
+            placeholder="this text will be cut off at 300 characters in the pop up"
           />
         </div>
         <h4>Social links:</h4>
@@ -138,7 +283,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <input
           id="facebook"
           onChange={handleChange}
-          // value={newEvent.facebook}
+          value={form.facebook}
           name="facebook"
           placeholder="facebook"
         />
@@ -146,7 +291,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <input
           id="instagram"
           onChange={handleChange}
-          // value={newEvent.instagram}
+          value={form.instagram}
           name="instagram"
           placeholder="Instagram"
         />
@@ -155,7 +300,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <input
           id="twitter"
           onChange={handleChange}
-          // value={newEvent.twitter}
+          value={form.twitter}
           name="twitter"
           placeholder="twitter"
         />
@@ -163,6 +308,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <button onClick={handleSubmit}>Save Event </button>
       </form>
       <Popup details={form} />
-    </>
+    </div>
   )
 }

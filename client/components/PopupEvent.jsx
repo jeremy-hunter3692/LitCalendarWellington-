@@ -6,12 +6,12 @@ const initStyle = {
   left: 50,
   top: 50,
 }
-//TO DO: fix the deafult value//book launch not working on options list
+//TO DO: FIX THE DISPLAY OF THE SECONDS IN TIME PART
 export default function Popup({ details, styleData, click }) {
   const [style, setStyle] = useState(styleData || initStyle)
 
   const about =
-    details.about.length > 400 ? details.about.slice(0, 400) : details.about
+    details.about.length > 300 ? details.about.slice(0, 300) : details.about
 
   return (
     <>
@@ -22,7 +22,9 @@ export default function Popup({ details, styleData, click }) {
             <ul>
               <li>
                 {' '}
-                <strong>{details.title} </strong>
+                <strong>{details.title} </strong> | At{' '}
+                {details.start?.toDateString()} {'||'}
+                {details.start?.toLocaleTimeString('en-US')}
               </li>
               <li>
                 Location: {details.location} | {details.type}
@@ -40,14 +42,14 @@ export default function Popup({ details, styleData, click }) {
                     src="Colored_Facebook3_svg-256.webp"
                     alt="facebook"
                   ></img>
-                  {details.sociallinks.facebook}
+                  {details.facebook}
                 </li>
                 <li>
                   <img
                     src="1_Instagram_colored_svg_1-256.webp"
                     alt="instagram"
                   ></img>
-                  {details.sociallinks.instagram}
+                  {details.instagram}
                 </li>
 
                 <li>
@@ -55,7 +57,7 @@ export default function Popup({ details, styleData, click }) {
                     src="1_Twitter3_colored_svg-256.webp"
                     alt="twitter"
                   ></img>
-                  {details.sociallinks.twitter}
+                  {details.twitter}
                 </li>
               </ul>
             </div>

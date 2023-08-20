@@ -133,15 +133,11 @@ export default function MyCalendar({ eventsProps }) {
 
   function handleSelect(e) {
     //Add newEvent to redux state
-    console.log('handle select', e)
+    // console.log('handle select', e)
     setDisplayPop(true)
     setPopDetails(e)
   }
 
-  //save on navigate away??
-  function submit() {
-    // dispatch(addEvents(newEvents))
-  }
 
   function click() {
     setDisplayPop(false)
@@ -149,7 +145,7 @@ export default function MyCalendar({ eventsProps }) {
   }
   return (
     <div>
-      {/* <button onClick={submit}>submit events</button> */}
+  
       <h1>Calender</h1>
 
       {displayPop && (
