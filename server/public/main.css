@@ -130,8 +130,8 @@ label {
 
 
 .popup {
-width: 20rem;
-height: 30rem;
+width: inherit;
+height: inherit;
 position: inherit;
 z-index: 5;
 background-color: #ee7011;

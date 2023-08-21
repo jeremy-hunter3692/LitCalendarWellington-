@@ -3,26 +3,44 @@ const initStyle = {
   margin: 0,
   padding: 0,
   position: 'relative',
+  width: '20rem',
+  height: '30rem',
   left: 50,
   top: 50,
 }
 //TO DO: FIX THE DISPLAY OF THE SECONDS IN TIME PART
-export default function Popup({ details, styleData, click }) {
+export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
+
+  function clickThrough() {
+    setStyle({
+      margin: 0,
+      padding: 0,
+      position: 'absolute',
+      width: '100vw',
+      height: '100hw',
+      left: 0,
+      top: 0,
+    })
+  }
 
   const date = details.start?.toDateString()
   //Check this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US')
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
-
+  const moreLink = '...' // <a href={moreLink} >...</a>
   const about =
-    details.about.length > 300 ? details.about.slice(0, 300) : details.about
+    details.about.length > 300
+      ? details.about.slice(0, 300) + moreLink
+      : details.about
 
   return (
     <>
       <div style={style}>
         <div className="popup">
-          <button onClick={click}>X</button>
+          <button onClick={close}>X</button>
+          <button onClick={clickThrough}>more</button>
+
           <div className="licontainer">
             <ul>
               <li>
@@ -32,10 +50,12 @@ export default function Popup({ details, styleData, click }) {
               <li>
                 Location: {details.location} | {details.type}
               </li>
-              <li>Link: {details.link} </li>
+              <li>
+                <a href={details.link}>Link: {details.link}</a>
+              </li>
               <img src="cover.png" alt="book cover" width="30%"></img>
               <li>
-                <p>{about}...</p>
+                <p>{about}</p>
               </li>
             </ul>
             <div className="sociallistcont">

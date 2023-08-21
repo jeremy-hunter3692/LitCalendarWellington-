@@ -155,6 +155,10 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //stop bug of text going out side of pop up in preivew
   //stop social media favicons changing size: set max size?
   //click through for pop up to full page event
+  //contact/organiser form
+  //save regular organiser/submitters ?
+  //save new ?
+  //some way to differentiate 
   return (
     <div>
       <form className="AddEvent">

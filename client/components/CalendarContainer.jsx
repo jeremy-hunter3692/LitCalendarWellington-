@@ -117,6 +117,8 @@ export default function MyCalendar({ eventsProps }) {
       setMousePos({
         margin: 0,
         padding: 0,
+        width: '20rem',
+        height: '30rem',
         position: 'absolute',
         left: event.clientX > 650 ? event.clientX - 400 : event.clientX,
         top: event.clientY > 470 ? event.clientY - 300 : event.clientY,
@@ -138,18 +140,17 @@ export default function MyCalendar({ eventsProps }) {
     setPopDetails(e)
   }
 
-
-  function click() {
+  function close() {
     setDisplayPop(false)
     console.log('click', displayPop)
   }
+
   return (
     <div>
-  
       <h1>Calender</h1>
 
       {displayPop && (
-        <PopupEvent details={popDetails} styleData={mousePos} click={click} />
+        <PopupEvent details={popDetails} styleData={mousePos} close={close} />
       )}
 
       <Calendar
