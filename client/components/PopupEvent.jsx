@@ -9,8 +9,9 @@ const initStyle = {
 //TO DO: FIX THE DISPLAY OF THE SECONDS IN TIME PART
 export default function Popup({ details, styleData, click }) {
   const [style, setStyle] = useState(styleData || initStyle)
+
   const date = details.start?.toDateString()
-  //Check this doesn't mess anything up 
+  //Check this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US')
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
 
@@ -26,8 +27,7 @@ export default function Popup({ details, styleData, click }) {
             <ul>
               <li>
                 {' '}
-                <strong>{details.title} </strong> | {date} | at
-                {timeFixed}
+                <strong>{details.title} </strong> | {date} | at {timeFixed}
               </li>
               <li>
                 Location: {details.location} | {details.type}
@@ -40,28 +40,39 @@ export default function Popup({ details, styleData, click }) {
             </ul>
             <div className="sociallistcont">
               <ul className="sociallist">
-                <li>
-                  <img
-                    src="Colored_Facebook3_svg-256.webp"
-                    alt="facebook"
-                  ></img>
-                  {details.facebook}
-                </li>
-                <li>
-                  <img
-                    src="1_Instagram_colored_svg_1-256.webp"
-                    alt="instagram"
-                  ></img>
-                  {details.instagram}
-                </li>
-
-                <li>
-                  <img
-                    src="1_Twitter3_colored_svg-256.webp"
-                    alt="twitter"
-                  ></img>
-                  {details.twitter}
-                </li>
+                {details.facebook && (
+                  <li>
+                    <a href={details.facebook}>
+                      <img
+                        src="Colored_Facebook3_svg-256.webp"
+                        alt="facebook"
+                      ></img>
+                      {details.facebook}
+                    </a>
+                  </li>
+                )}
+                {details.instagram && (
+                  <li>
+                    <a href={details.instagram}>
+                      <img
+                        src="1_Instagram_colored_svg_1-256.webp"
+                        alt="instagram"
+                      ></img>
+                      {details.instagram}
+                    </a>
+                  </li>
+                )}
+                {details.twitter && (
+                  <li>
+                    <a href={details.twitter}>
+                      <img
+                        src="1_Twitter3_colored_svg-256.webp"
+                        alt="twitter"
+                      ></img>
+                      {details.twitter}
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

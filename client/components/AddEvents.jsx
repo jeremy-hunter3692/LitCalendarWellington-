@@ -25,7 +25,7 @@ const initDetails = {
   year: new Date().getFullYear(),
   minutes: 0,
   title: '',
-  type: '',
+  type: 'Book Launch',
   link: '',
   location: '',
   imageURL: '',
@@ -62,12 +62,9 @@ function daysInMonth(month) {
   return new Date(2023, month, 0).getDate()
 }
 
-const daysEachMonth = months.map((x, idx) => {
-  return daysInMonth(idx + 1)
-})
+const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
-  
   const [form, setForm] = useState(initDetails)
   console.log(form)
 
@@ -117,22 +114,21 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
-    input[0].sociallinks = {}
+    // input[0].sociallinks = {}
 
-    let iterable = Object.keys(input[0])
-    iterable.forEach((value) => {
-      if (
-        value === 'facebook' ||
-        value === 'twitter' ||
-        value === 'instagram'
-      ) {
-        input[0].sociallinks[value] = form[value]
-        delete input[0][value]
-      }
-    })
+    // let iterable = Object.keys(input[0])
+    // iterable.forEach((value) => {
+    //   if (
+    //     value === 'facebook' ||
+    //     value === 'twitter' ||
+    //     value === 'instagram'
+    //   ) {
+    //     input[0].sociallinks[value] = form[value]
+    //     delete input[0][value]
+    //   }
+    // })
     //Gross - TIDY
     input[0].start = makeDateObject(input[0])
-    console.log('after make date', input[0].start)
     delete input[0].month
     delete input[0].date
     delete input[0].hour
@@ -152,70 +148,76 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     setForm({ ...form, [name]: value })
   }
 
-  //TO DO: Change this to a proper controlled react form
-  //Bug with Januaray/first option being default option in select/drop downs
+  //TO DO:
+  //Uploading image to some where/storage generally
+  //multiple images in preview?
+  //Full css work for the pop up
+  //stop bug of text going out side of pop up in preivew
+  //stop social media favicons changing size: set max size?
+  //click through for pop up to full page event
   return (
     <div>
       <form className="AddEvent">
-        <label htmlFor="month">
-          Month:
-          <select
-            id="month"
-            name="month"
-            value={form.month}
-            onChange={handleChange}
-            required
-          >
-            <option value="Month:" disabled>
-              Month:
-            </option>
-            {months.map((x) => (
-              <option key={x} value={x} title={x}>
-                {x}
+        <div>
+          <label htmlFor="month">
+            Month:
+            <select
+              id="month"
+              name="month"
+              value={form.month}
+              onChange={handleChange}
+              required
+            >
+              <option value="Month:" disabled>
+                Month:
               </option>
-            ))}
-          </select>
-        </label>
-        {getDaysOfSelectedMonth(form.month)}
-        <label htmlFor="hour">
-          Hour:
-          <select
-            id="hour"
-            name="hour"
-            value={form.hour}
-            onChange={handleChange}
-            required
-          >
-            <option value="Hour:" disabled>
-              Hour:
-            </option>
-            {hours.map((x) => (
-              <option key={x} value={x} title={x}>
-                {x}
+              {months.map((x) => (
+                <option key={x} value={x} title={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </label>
+          {getDaysOfSelectedMonth(form.month)}
+          <label htmlFor="hour">
+            Hour:
+            <select
+              id="hour"
+              name="hour"
+              value={form.hour}
+              onChange={handleChange}
+              required
+            >
+              <option value="Hour:" disabled>
+                Hour:
               </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="minutes">
-          Minutes:
-          <select
-            id="minutes"
-            name="minutes"
-            value={form.minutes}
-            onChange={handleChange}
-            required
-          >
-            <option value="Minutes:" disabled>
-              Minutes:
-            </option>
-            {minutes.map((x) => (
-              <option key={x} value={x} title={x}>
-                {x}
+              {hours.map((x) => (
+                <option key={x} value={x} title={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label htmlFor="minutes">
+            Minutes:
+            <select
+              id="minutes"
+              name="minutes"
+              value={form.minutes}
+              onChange={handleChange}
+              required
+            >
+              <option value="Minutes:" disabled>
+                Minutes:
               </option>
-            ))}
-          </select>
-        </label>
-
+              {minutes.map((x) => (
+                <option key={x} value={x} title={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
         <label htmlFor="title">Title:</label>
         <input
           id="title"
