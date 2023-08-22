@@ -141,7 +141,7 @@ color: white;
 border-radius: 5px;
 box-shadow: 5px 5px #d2d2d2 ;
 display: flex;
-flex: grow;
+/* flex: grow; */
 flex-direction: column;
 } 
 

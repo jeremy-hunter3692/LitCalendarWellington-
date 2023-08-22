@@ -8,9 +8,11 @@ const initStyle = {
   left: 50,
   top: 50,
 }
-//TO DO: FIX THE DISPLAY OF THE SECONDS IN TIME PART
+
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
+  // /TO DO DOUBLE this works/resets with the close button and render
+  const [fullScreen, setFullScreen] = useState(false)
 
   function clickThrough() {
     setStyle({
@@ -18,14 +20,15 @@ export default function Popup({ details, styleData, close }) {
       padding: 0,
       position: 'absolute',
       width: '100vw',
-      height: '100hw',
+      height: '100vh',
       left: 0,
       top: 0,
     })
+    setFullScreen(true)
   }
 
   const date = details.start?.toDateString()
-  //Check this doesn't mess anything up
+  //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US')
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
   const moreLink = '...' // <a href={moreLink} >...</a>
@@ -39,7 +42,7 @@ export default function Popup({ details, styleData, close }) {
       <div style={style}>
         <div className="popup">
           <button onClick={close}>X</button>
-          <button onClick={clickThrough}>more</button>
+          {!fullScreen && <button onClick={clickThrough}>more</button>}
 
           <div className="licontainer">
             <ul>
