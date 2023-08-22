@@ -13,6 +13,7 @@ export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   // /TO DO DOUBLE this works/resets with the close button and render
   const [fullScreen, setFullScreen] = useState(false)
+  const [moreLink, setMoreLink] = useState(false)
 
   function clickThrough() {
     setStyle({
@@ -27,25 +28,36 @@ export default function Popup({ details, styleData, close }) {
     setFullScreen(true)
   }
 
+  function handleClose() {
+    //come back to this - a way to make the close button revert to intil mouse position give
+    !fullScreen ? close() : setFullScreen(false)
+    setStyle(styleData)
+  }
+
   const date = details.start?.toDateString()
   //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US')
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
-  let moreLink = false
-  const about = details.about
-  let shortAbout = ''
-  if (details.about.length > 300) {
-    shortAbout = details.about.slice(0, 300) + '...'
-    moreLink = true
-  }
+
+  const about =
+    !(details.about.length > 300) && !fullScreen
+      ? details.about
+      : details.about.slice(0, 300)
 
   return (
     <>
       <div style={style}>
         <div className="popup">
-          TODO Better conditionals for buttons
-          {style === initStyle ? ' ' : <button onClick={close}>X</button>}
-          {!fullScreen && <button onClick={clickThrough}>more</button>}
+          TODO Better conditionals for buttons Preview? do nothing as in last
+          condition
+          {!(style === initStyle) ? (
+            <>
+              <button onClick={handleClose}>X</button>
+              {!fullScreen && <button onClick={clickThrough}>more</button>}
+            </>
+          ) : (
+            ' '
+          )}
           <div className="licontainer">
             <ul>
               <li>
@@ -61,10 +73,13 @@ export default function Popup({ details, styleData, close }) {
               <img src="cover.png" alt="book cover" width="30%"></img>
               <li>
                 <p>
-                  {fullScreen ? about : shortAbout}
-                  {!fullScreen && moreLink && (
+                  {about}
+                  {details.about.length > 300 && !fullScreen ? (
                     <button onClick={clickThrough}>more</button>
+                  ) : (
+                    ''
                   )}
+      
                 </p>
               </li>
             </ul>

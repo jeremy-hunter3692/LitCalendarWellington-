@@ -19,6 +19,7 @@ const App = () => {
   return (
     <>
       <Nav />
+
       <button onClick={showAddEventSetter}>
         {showAddEvents ? 'Back' : 'Submit new event'}
       </button>

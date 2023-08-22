@@ -66,7 +66,7 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
-  console.log(form)
+  // console.log(form)
 
   function getMonthIdx(month) {
     return months.findIndex((x) => x === month)
@@ -158,7 +158,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //contact/organiser form
   //save regular organiser/submitters ?
   //save new ?
-  //some way to differentiate 
+  //some way to differentiate
   return (
     <div>
       <form className="AddEvent">
