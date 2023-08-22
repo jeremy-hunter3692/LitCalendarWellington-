@@ -166,6 +166,10 @@ flex-direction: column;
 
 }
 
+.licontainer li {
+  overflow-wrap: break-word;
+}
+
 .sociallist img {
   width: 30%;
 }

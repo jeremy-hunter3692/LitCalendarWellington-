@@ -31,19 +31,21 @@ export default function Popup({ details, styleData, close }) {
   //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US')
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
-  const moreLink = '...' // <a href={moreLink} >...</a>
-  const about =
-    details.about.length > 300
-      ? details.about.slice(0, 300) + moreLink
-      : details.about
+  let moreLink = false
+  const about = details.about
+  let shortAbout = ''
+  if (details.about.length > 300) {
+    shortAbout = details.about.slice(0, 300) + '...'
+    moreLink = true
+  }
 
   return (
     <>
       <div style={style}>
         <div className="popup">
-          <button onClick={close}>X</button>
+          TODO Better conditionals for buttons
+          {style === initStyle ? ' ' : <button onClick={close}>X</button>}
           {!fullScreen && <button onClick={clickThrough}>more</button>}
-
           <div className="licontainer">
             <ul>
               <li>
@@ -58,7 +60,12 @@ export default function Popup({ details, styleData, close }) {
               </li>
               <img src="cover.png" alt="book cover" width="30%"></img>
               <li>
-                <p>{about}</p>
+                <p>
+                  {fullScreen ? about : shortAbout}
+                  {!fullScreen && moreLink && (
+                    <button onClick={clickThrough}>more</button>
+                  )}
+                </p>
               </li>
             </ul>
             <div className="sociallistcont">
