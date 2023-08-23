@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 const initStyle = {
   margin: 0,
   padding: 0,
@@ -12,8 +12,9 @@ const initStyle = {
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   // /TO DO DOUBLE this works/resets with the close button and render
+  // SET A BOOL for preview mode? Is that more effcient and/or readable
+  // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
-  const [moreLink, setMoreLink] = useState(false)
 
   function clickThrough() {
     setStyle({
@@ -48,8 +49,6 @@ export default function Popup({ details, styleData, close }) {
     <>
       <div style={style}>
         <div className="popup">
-          TODO Better conditionals for buttons Preview? do nothing as in last
-          condition
           {!(style === initStyle) ? (
             <>
               <button onClick={handleClose}>X</button>
@@ -79,7 +78,6 @@ export default function Popup({ details, styleData, close }) {
                   ) : (
                     ''
                   )}
-      
                 </p>
               </li>
             </ul>

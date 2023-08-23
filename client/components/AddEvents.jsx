@@ -1,22 +1,6 @@
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
 const eventType = ['Book Launch', 'Author Talk', 'option three']
-// reference data shape {
-//   title: 'Kates Kalandar',
-//   start: now,
-//   end: end,
-//   type: 'author talk',
-//   location: 'unity books',
-//   imageURL: 'www.whatever',
-//   about:
-//     'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
-
-//   sociallinks: {
-//     facebook: 'www.f',
-//     instagram: 'www.i',
-//     twitter: 'www.t',
-//   },
-// }
 
 const initDetails = {
   month: 'January',
@@ -66,7 +50,7 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
-  // console.log(form)
+  console.log(form)
 
   function getMonthIdx(month) {
     return months.findIndex((x) => x === month)
@@ -77,16 +61,38 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     return new Date(year, deStringedMonth, date, hour, minutes)
   }
 
+  function handleChange(e) {
+    const { name, value } = e.target
+    //TODO REFACTOR? - this is to update the time imeditaly with preivew
+    let tempObj = makeDateObject({ ...form, [name]: value })
+    setForm({ ...form, [name]: value, start: tempObj })
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    //Reminder events must be an array for the calendar
+    let input = [{ ...form }]
+    delete input[0].month
+    delete input[0].date
+    delete input[0].hour
+    delete input[0].year
+    delete input[0].minutes
+    // yucky - TIDY
+    const endhour = input[0].start.getHours() + 4
+    input[0].end = new Date(input[0].start)
+    input[0].end.setHours(endhour)
+    eventsSetter(input)
+    showAddEventSetter()
+  }
+
   function getDaysOfSelectedMonth(month) {
     let numbers = []
     if (month) {
       const idx = getMonthIdx(month)
-
       numbers = Array(daysEachMonth[idx])
         .fill(0)
         .map((_, idx) => idx + 1)
     }
-
     return (
       <label htmlFor="date">
         Date:
@@ -110,55 +116,23 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     )
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    //Reminder events must be an array for the calendar
-    let input = [{ ...form }]
-    // input[0].sociallinks = {}
-
-    // let iterable = Object.keys(input[0])
-    // iterable.forEach((value) => {
-    //   if (
-    //     value === 'facebook' ||
-    //     value === 'twitter' ||
-    //     value === 'instagram'
-    //   ) {
-    //     input[0].sociallinks[value] = form[value]
-    //     delete input[0][value]
-    //   }
-    // })
-    //Gross - TIDY
-    input[0].start = makeDateObject(input[0])
-    delete input[0].month
-    delete input[0].date
-    delete input[0].hour
-    delete input[0].year
-    delete input[0].minutes
-    // yucky - TIDY
-    const endhour = input[0].start.getHours() + 4
-    input[0].end = new Date(input[0].start)
-    input[0].end.setHours(endhour)
-    eventsSetter(input)
-    showAddEventSetter()
-  }
-
-  function handleChange(e) {
-    const { name, value } = e.target
-
-    setForm({ ...form, [name]: value })
-  }
-
   //TO DO:
+  //stop social media favicons changing size: set max size?
+  //and end time form to add events
+  //add other option for event type
+  // notes contact/organiser form
+  // contact details for submiter to moderator
+  // add extra contacts
+  // online vs irl vs both - button
+  //cost?
+  // reoccuring event? i.e. book club
   //Uploading image to some where/storage generally
   //multiple images in preview?
   //Full css work for the pop up
-  //stop bug of text going out side of pop up in preivew
-  //stop social media favicons changing size: set max size?
-  //click through for pop up to full page event
-  //contact/organiser form
   //save regular organiser/submitters ?
   //save new ?
   //some way to differentiate
+
   return (
     <div>
       <form className="AddEvent">
@@ -317,3 +291,20 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     </div>
   )
 }
+
+// reference data shape {
+//   title: 'Kates Kalandar',
+//   start: now,
+//   end: end,
+//   type: 'author talk',
+//   location: 'unity books',
+//   imageURL: 'www.whatever',
+//   about:
+//     'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
+
+//   sociallinks: {
+//     facebook: 'www.f',
+//     instagram: 'www.i',
+//     twitter: 'www.t',
+//   },
+// }
