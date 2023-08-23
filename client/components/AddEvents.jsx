@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
-const eventType = ['Book Launch', 'Author Talk', 'option three']
+const eventType = ['Book Launch', 'Author Talk', 'other']
 
 const initDetails = {
   month: 'January',
@@ -17,6 +17,7 @@ const initDetails = {
   facebook: '',
   instagram: '',
   twitter: '',
+  typeother: '',
 }
 
 const months = [
@@ -50,6 +51,7 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
+  const [disabled, setDisabled] = useState(true)
   console.log(form)
 
   function getMonthIdx(month) {
@@ -63,9 +65,18 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   function handleChange(e) {
     const { name, value } = e.target
-    //TODO REFACTOR? - this is to update the time imeditaly with preivew
-    let tempObj = makeDateObject({ ...form, [name]: value })
-    setForm({ ...form, [name]: value, start: tempObj })
+    //For other option input on type select
+    if (value === 'other') {
+      setDisabled(false)
+    }
+    if (name === 'type' && value !== 'other') {
+      setDisabled(true)
+      setForm({ ...form, [name]: value, typeother: '' })
+    } else {
+      //TODO REFACTOR? - this is to update the time imeditaly with preivew
+      let tempObj = makeDateObject({ ...form, [name]: value })
+      setForm({ ...form, [name]: value, start: tempObj })
+    }
   }
 
   function handleSubmit(e) {
@@ -243,6 +254,16 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             ))}
           </select>
         </label>
+
+        <label htmlFor="typeother">Other:</label>
+        <input
+          id="typetother"
+          onChange={handleChange}
+          value={form.typeother}
+          name="typeother"
+          placeholder="other event type"
+          disabled={disabled}
+        />
 
         <div className="textarea">
           <div>

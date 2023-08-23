@@ -19,7 +19,7 @@ const initDetails = {
 
 export default function Test() {
   const [form, setForm] = useState({})
-  console.log(form)
+  // console.log(form)
   function formGen(name) {
     const nameStr = name.toString()
 

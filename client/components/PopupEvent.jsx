@@ -37,7 +37,7 @@ export default function Popup({ details, styleData, close }) {
 
   const date = details.start?.toDateString()
   //TO DO DOUBLECheck this doesn't mess anything up
-  const time = details.start?.toLocaleTimeString('en-US')
+  const time = details.start?.toLocaleTimeString('en-US') || ''
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
 
   const about =
@@ -64,7 +64,8 @@ export default function Popup({ details, styleData, close }) {
                 <strong>{details.title} </strong> | {date} | at {timeFixed}
               </li>
               <li>
-                Location: {details.location} | {details.type}
+                Location: {details.location} |{' '}
+                {details.type === 'other' ? details.typeother : details.type}
               </li>
               <li>
                 <a href={details.link}>Link: {details.link}</a>
