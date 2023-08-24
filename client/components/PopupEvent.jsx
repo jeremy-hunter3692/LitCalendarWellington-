@@ -12,7 +12,7 @@ const initStyle = {
 
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
-  // /TO DO DOUBLE this works/resets with the close button and render
+  // /TO DO DOUBLE check this works/resets with the close button and render
   // SET A BOOL for preview mode? Is that more effcient and/or readable
   // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
@@ -67,6 +67,14 @@ export default function Popup({ details, styleData, close }) {
               <li>
                 Location: {details.location} |{' '}
                 {details.type === 'other' ? details.typeother : details.type}
+              </li>
+              <li>
+                {details.inperson === 'Both'
+                  ? 'Online and In Person'
+                  : details.inperson}
+              </li>
+              <li>
+                Cost: ${details.cost}
               </li>
               <li>
                 <a href={details.link}>Link: {details.link}</a>

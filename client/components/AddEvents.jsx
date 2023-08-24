@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
-const eventType = ['Book Launch', 'Author Talk', 'other']
+
+const eventType = ['Book Launch', 'Author Talk', 'Other']
 
 const initDetails = {
   month: 'January',
@@ -20,6 +21,8 @@ const initDetails = {
   instagram: '',
   twitter: '',
   typeother: '',
+  inperson: 'In Person',
+  cost: '',
 }
 
 const months = [
@@ -36,7 +39,7 @@ const months = [
   'November',
   'December',
 ]
-
+//Add typeOther?
 const toBeDeleted = [
   'year',
   'date',
@@ -64,7 +67,8 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
-  console.log(form)
+  const [badTime, setBadTime] = useState(false)
+  // console.log(form)
 
   function getMonthIdx(month) {
     return months.findIndex((x) => x === month)
@@ -79,11 +83,11 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     const { name, value } = e.target
     let tempObj = {}
     switch (true) {
-      case value === 'other':
+      case value === 'Other':
         setDisabled(false)
         setForm({ ...form, [name]: value })
         break
-      case name === 'type' && value !== 'other':
+      case name === 'type' && value !== 'Other':
         setDisabled(true)
         setForm({ ...form, [name]: value, typeother: '' })
         break
@@ -94,7 +98,11 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           hour: value,
           minutes: form.endMinutes,
         })
+
         setForm({ ...form, [name]: value, end: tempObj })
+        form.start.getTime() > tempObj.getTime()
+          ? setBadTime(true)
+          : setBadTime(false)
         break
       case name === 'endMinutes':
         //would need to set endHour etc first?
@@ -107,12 +115,15 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         break
       case toBeDeleted.includes(name):
         tempObj = makeDateObject({ ...form, [name]: value })
+
         setForm({ ...form, [name]: value, start: tempObj })
+        form.start.getTime() > form.end.getTime()
+          ? setBadTime(true)
+          : setBadTime(false)
         break
       default:
         setForm({ ...form, [name]: value })
     }
-
     // if (value === 'other') {
     //   setDisabled(false)
     // }
@@ -129,7 +140,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     //   hour: form.end,
     //   minutes: form.endMinutes,
     // })
-
     // }
   }
 
@@ -137,27 +147,18 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
-    // if mpa over input[o] toBeDelete.includes(x)
-    //  delete x?
     let arrayed = Object.keys(input[0])
     arrayed.map((x) => {
       if (toBeDeleted.includes(x)) {
         delete input[0][x]
       }
     })
-    // delete input[0].month
-    // delete input[0].date
-    // delete input[0].hour
-    // delete input[0].year
-    // delete input[0].minutes
-    //////////
     //TO DO Check this
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
     //TO DO /\/\/\/\
     /////////////////
     eventsSetter(input)
     showAddEventSetter()
-    console.log(form)
   }
 
   function getDaysOfSelectedMonth(month) {
@@ -193,9 +194,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   //TO DO:
   //stop social media favicons changing size: set max size?
-  // check for end time being after start time. 
-  // online vs irl vs both - button
-  //cost?
+  // check for end time being after start time.
   // notes contact/organiser form
   // contact details for submiter to moderator
   // add extra contacts
@@ -305,6 +304,8 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               </option>
             ))}
           </select>
+          {badTime ? 'End time is before start time' : ''}
+          <hr />
         </div>
         Other Details///
         <label htmlFor="title">Title:</label>
@@ -361,6 +362,44 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           placeholder="other event type"
           disabled={disabled}
         />
+        <hr></hr>
+        <label htmlFor="cost">Cost:$</label>
+        <input
+          id="cost"
+          onChange={handleChange}
+          value={form.cost}
+          name="cost"
+          placeholder=""
+        />
+        {/*Radio buttons  */}
+        <input
+          type="radio"
+          name="inperson"
+          value="In Person"
+          id="inperson"
+          checked={form.inperson === 'In Person'}
+          onChange={handleChange}
+        />
+        <label htmlFor="inperson">In person</label>
+        <input
+          type="radio"
+          name="inperson"
+          value="On line/streamed"
+          id="online/streamed"
+          checked={form.inperson === 'On line/streamed'}
+          onChange={handleChange}
+        />
+        <label htmlFor="online/streamed">online/streamed</label>
+        <input
+          type="radio"
+          name="inperson"
+          value="Both"
+          id="Both"
+          checked={form.inperson === 'Both'}
+          onChange={handleChange}
+        />
+        <label htmlFor="Both">Both</label>
+        {/* End Radio  */}
         <div className="textarea">
           <div>
             <label htmlFor="about">About:</label>
@@ -374,6 +413,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             placeholder="this text will be cut off at 300 characters in the pop up"
           />
         </div>
+        <hr></hr>
         <h4>Social links:</h4>
         <label htmlFor="facebook">Facebook:</label>
         <input
@@ -405,20 +445,3 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     </div>
   )
 }
-
-// reference data shape {
-//   title: 'Kates Kalandar',
-//   start: now,
-//   end: end,
-//   type: 'author talk',
-//   location: 'unity books',
-//   imageURL: 'www.whatever',
-//   about:
-//     'blah blah blah blah blah ablha baluhablah ablhab lahb ablbablahblab albhalbalh a balh bab ahb lahb al hbal hbalb alhb a hbal balhb alhb ahlb ',
-
-//   sociallinks: {
-//     facebook: 'www.f',
-//     instagram: 'www.i',
-//     twitter: 'www.t',
-//   },
-// }
