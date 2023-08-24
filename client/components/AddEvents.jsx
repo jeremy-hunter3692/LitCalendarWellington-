@@ -61,10 +61,6 @@ function daysInMonth(month) {
 
 const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
-// const endMinutes = Array(3)
-//   .fill(0)
-//   .map((_, idx) => idx * 15)
-
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
@@ -81,7 +77,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   function handleChange(e) {
     const { name, value } = e.target
-    //For other option input on type select
     let tempObj = {}
     switch (true) {
       case value === 'other':
@@ -142,17 +137,27 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
-    delete input[0].month
-    delete input[0].date
-    delete input[0].hour
-    delete input[0].year
-    delete input[0].minutes
-
+    // if mpa over input[o] toBeDelete.includes(x)
+    //  delete x?
+    let arrayed = Object.keys(input[0])
+    arrayed.map((x) => {
+      if (toBeDeleted.includes(x)) {
+        delete input[0][x]
+      }
+    })
+    // delete input[0].month
+    // delete input[0].date
+    // delete input[0].hour
+    // delete input[0].year
+    // delete input[0].minutes
+    //////////
     //TO DO Check this
-    form.typeother !== '' ? (input.type = input.typeother) : ' '
+    form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
     //TO DO /\/\/\/\
+    /////////////////
     eventsSetter(input)
     showAddEventSetter()
+    console.log(form)
   }
 
   function getDaysOfSelectedMonth(month) {
@@ -188,12 +193,12 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   //TO DO:
   //stop social media favicons changing size: set max size?
-  //and end time form to add events
+  // check for end time being after start time. 
+  // online vs irl vs both - button
+  //cost?
   // notes contact/organiser form
   // contact details for submiter to moderator
   // add extra contacts
-  // online vs irl vs both - button
-  //cost?
   // reoccuring event? i.e. book club
   //Uploading image to some where/storage generally
   //multiple images in preview?

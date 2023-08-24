@@ -6,7 +6,7 @@ import CalendarContainer from './CalendarContainer'
 const App = () => {
   const [globalEvents, setGlobalEvents] = useState([])
   const [showAddEvents, setShowAddEvents] = useState(false)
-
+  console.log(globalEvents)
   function globalEventSetter(input) {
     setGlobalEvents(input)
     // console.log('applevelstate:', input, globalEvents)

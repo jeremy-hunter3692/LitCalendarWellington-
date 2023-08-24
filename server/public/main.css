@@ -222,6 +222,10 @@ padding: 0 0.5rem ;
 
 }
 
+.calendar{
+  padding: 3rem;
+}
+
 textarea {
   width: 50vw;
   height: 20vh;
