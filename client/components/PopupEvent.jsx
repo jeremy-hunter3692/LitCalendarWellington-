@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 const initStyle = {
   margin: 0,
   padding: 0,
@@ -17,22 +18,18 @@ export default function Popup({ details, styleData, close }) {
   const [fullScreen, setFullScreen] = useState(false)
 
   function clickThrough() {
-    setStyle({
-      margin: 0,
-      padding: 0,
-      position: 'absolute',
-      width: '100vw',
-      height: '100vh',
-      left: 0,
-      top: 0,
-    })
-    setFullScreen(true)
-  }
-
-  function handleClose() {
-    //come back to this - a way to make the close button revert to intil mouse position give
-    !fullScreen ? close() : setFullScreen(false)
-    setStyle(styleData)
+    if (style !== initStyle) {
+      setStyle({
+        margin: 0,
+        padding: 0,
+        position: 'absolute',
+        width: '97vw',
+        height: '97vh',
+        left: 2,
+        top: 3,
+      })
+      setFullScreen(true)
+    }
   }
 
   const date = details.start?.toDateString()
@@ -41,17 +38,19 @@ export default function Popup({ details, styleData, close }) {
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
 
   const about =
-    !(details.about.length > 300) && !fullScreen
+    details.about.length < 300 || fullScreen
       ? details.about
       : details.about.slice(0, 300)
+
+  //it's less than 300 nothing
 
   return (
     <>
       <div style={style}>
         <div className="popup">
-          {!(style === initStyle) ? (
+          {style !== initStyle ? (
             <>
-              <button onClick={handleClose}>X</button>
+              <button onClick={close}>X</button>
               {!fullScreen && <button onClick={clickThrough}>more</button>}
             </>
           ) : (

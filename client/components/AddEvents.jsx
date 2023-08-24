@@ -92,6 +92,8 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     const endhour = input[0].start.getHours() + 4
     input[0].end = new Date(input[0].start)
     input[0].end.setHours(endhour)
+    //TO DO Check this
+    form.typeother !== '' ? (input.type = input.typeother) : ' '
     eventsSetter(input)
     showAddEventSetter()
   }
