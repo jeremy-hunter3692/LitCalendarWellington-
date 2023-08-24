@@ -4,10 +4,12 @@ const eventType = ['Book Launch', 'Author Talk', 'other']
 
 const initDetails = {
   month: 'January',
-  date: 1,
-  hour: 0,
+  date: '1',
+  hour: '0',
   year: new Date().getFullYear(),
-  minutes: 0,
+  minutes: '0',
+  endHours: '0',
+  endMinutes: '0',
   title: '',
   type: 'Book Launch',
   link: '',
@@ -35,6 +37,16 @@ const months = [
   'December',
 ]
 
+const toBeDeleted = [
+  'year',
+  'date',
+  'month',
+  'hour',
+  'minutes',
+  'endMinutes',
+  'endHours',
+]
+
 const hours = Array(24)
   .fill(0)
   .map((_, idx) => idx)
@@ -49,6 +61,10 @@ function daysInMonth(month) {
 
 const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
+// const endMinutes = Array(3)
+//   .fill(0)
+//   .map((_, idx) => idx * 15)
+
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
@@ -58,7 +74,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     return months.findIndex((x) => x === month)
   }
 
-  function makeDateObject({ year, date, hour, minutes, month }) {
+  function makeDateObject({ year, month, date, hour, minutes }) {
     const deStringedMonth = getMonthIdx(month)
     return new Date(year, deStringedMonth, date, hour, minutes)
   }
@@ -66,17 +82,60 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   function handleChange(e) {
     const { name, value } = e.target
     //For other option input on type select
-    if (value === 'other') {
-      setDisabled(false)
+    let tempObj = {}
+    switch (true) {
+      case value === 'other':
+        setDisabled(false)
+        setForm({ ...form, [name]: value })
+        break
+      case name === 'type' && value !== 'other':
+        setDisabled(true)
+        setForm({ ...form, [name]: value, typeother: '' })
+        break
+      case name === 'endHours':
+        //would need to set endHour etc first?
+        tempObj = makeDateObject({
+          ...form,
+          hour: value,
+          minutes: form.endMinutes,
+        })
+        setForm({ ...form, [name]: value, end: tempObj })
+        break
+      case name === 'endMinutes':
+        //would need to set endHour etc first?
+        tempObj = makeDateObject({
+          ...form,
+          hour: form.endHours,
+          minutes: value,
+        })
+        setForm({ ...form, [name]: value, end: tempObj })
+        break
+      case toBeDeleted.includes(name):
+        tempObj = makeDateObject({ ...form, [name]: value })
+        setForm({ ...form, [name]: value, start: tempObj })
+        break
+      default:
+        setForm({ ...form, [name]: value })
     }
-    if (name === 'type' && value !== 'other') {
-      setDisabled(true)
-      setForm({ ...form, [name]: value, typeother: '' })
-    } else {
-      //TODO REFACTOR? - this is to update the time imeditaly with preivew
-      let tempObj = makeDateObject({ ...form, [name]: value })
-      setForm({ ...form, [name]: value, start: tempObj })
-    }
+
+    // if (value === 'other') {
+    //   setDisabled(false)
+    // }
+    // if (name === 'type' && value !== 'other') {
+    //   setDisabled(true)
+    //   setForm({ ...form, [name]: value, typeother: '' })
+    // } else {
+    //   //TODO REFACTOR? - this is to update the time imeditaly with preivew
+    //   let tempObj = makeDateObject({ ...form, [name]: value })
+    //   setForm({ ...form, [name]: value, start: tempObj })
+    //  ///end stufff
+    // let result = makeDateObject({
+    //   ...form,
+    //   hour: form.end,
+    //   minutes: form.endMinutes,
+    // })
+
+    // }
   }
 
   function handleSubmit(e) {
@@ -88,12 +147,10 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     delete input[0].hour
     delete input[0].year
     delete input[0].minutes
-    // yucky - TIDY
-    const endhour = input[0].start.getHours() + 4
-    input[0].end = new Date(input[0].start)
-    input[0].end.setHours(endhour)
+
     //TO DO Check this
     form.typeother !== '' ? (input.type = input.typeother) : ' '
+    //TO DO /\/\/\/\
     eventsSetter(input)
     showAddEventSetter()
   }
@@ -132,7 +189,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //TO DO:
   //stop social media favicons changing size: set max size?
   //and end time form to add events
-  //add other option for event type
   // notes contact/organiser form
   // contact details for submiter to moderator
   // add extra contacts
@@ -208,7 +264,44 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               ))}
             </select>
           </label>
+          <label htmlFor="endHours">
+            Till:
+            <select
+              id="endHours"
+              name="endHours"
+              value={form.endHours}
+              onChange={handleChange}
+              required
+            >
+              <option value="Length:" disabled>
+                Hours
+              </option>
+              {hours.map((x) => (
+                <option key={x} value={x} title={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <select
+            id="endMinutes"
+            name="endMinutes"
+            value={form.endMinutes}
+            onChange={handleChange}
+            required
+          >
+            <option value="minutes:" disabled>
+              Minutes:
+            </option>
+            {minutes.map((x) => (
+              <option key={x} value={x} title={x}>
+                {x}
+              </option>
+            ))}
+          </select>
         </div>
+        Other Details///
         <label htmlFor="title">Title:</label>
         <input
           id="title"
@@ -218,7 +311,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           required
           placeholder="Title"
         />
-
         <label htmlFor="location">Location:</label>
         <input
           id="location"
@@ -236,7 +328,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           name="link"
           placeholder="link"
         />
-
         <label htmlFor="type">
           Event Type:
           <select
@@ -256,7 +347,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             ))}
           </select>
         </label>
-
         <label htmlFor="typeother">Other:</label>
         <input
           id="typetother"
@@ -266,7 +356,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           placeholder="other event type"
           disabled={disabled}
         />
-
         <div className="textarea">
           <div>
             <label htmlFor="about">About:</label>
@@ -282,7 +371,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         </div>
         <h4>Social links:</h4>
         <label htmlFor="facebook">Facebook:</label>
-
         <input
           id="facebook"
           onChange={handleChange}
@@ -298,7 +386,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           name="instagram"
           placeholder="Instagram"
         />
-
         <label htmlFor="twitter">Twitter:</label>
         <input
           id="twitter"
@@ -307,7 +394,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           name="twitter"
           placeholder="twitter"
         />
-
         <button onClick={handleSubmit}>Save Event </button>
       </form>
       <Popup details={form} />

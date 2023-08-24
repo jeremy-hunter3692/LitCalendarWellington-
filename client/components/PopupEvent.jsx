@@ -36,7 +36,8 @@ export default function Popup({ details, styleData, close }) {
   //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US') || ''
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
-
+  const endTime = details.end?.toLocaleTimeString('en-US') || ''
+  const endTimeFixed = endTime?.slice(0, -6) + endTime?.slice(-2)
   const about =
     details.about.length < 300 || fullScreen
       ? details.about
@@ -60,7 +61,8 @@ export default function Popup({ details, styleData, close }) {
             <ul>
               <li>
                 {' '}
-                <strong>{details.title} </strong> | {date} | at {timeFixed}
+                <strong>{details.title} </strong> | {date} | at {timeFixed} till{' '}
+                {endTimeFixed}
               </li>
               <li>
                 Location: {details.location} |{' '}
