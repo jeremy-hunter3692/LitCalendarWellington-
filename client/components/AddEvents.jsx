@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
+import NotesForMod from './NotesForMod'
 
 const eventType = ['Book Launch', 'Author Talk', 'Other']
 
@@ -92,20 +93,14 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         setForm({ ...form, [name]: value, typeother: '' })
         break
       case name === 'endHours':
-        //would need to set endHour etc first?
         tempObj = makeDateObject({
           ...form,
           hour: value,
           minutes: form.endMinutes,
         })
-
         setForm({ ...form, [name]: value, end: tempObj })
-        form.start.getTime() > tempObj.getTime()
-          ? setBadTime(true)
-          : setBadTime(false)
         break
       case name === 'endMinutes':
-        //would need to set endHour etc first?
         tempObj = makeDateObject({
           ...form,
           hour: form.endHours,
@@ -115,14 +110,16 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         break
       case toBeDeleted.includes(name):
         tempObj = makeDateObject({ ...form, [name]: value })
-
         setForm({ ...form, [name]: value, start: tempObj })
-        form.start.getTime() > form.end.getTime()
-          ? setBadTime(true)
-          : setBadTime(false)
         break
       default:
         setForm({ ...form, [name]: value })
+    }
+
+    if (form.start.getHours() > tempObj.getHours()) {
+      setBadTime(true)
+    } else {
+      setBadTime(false)
     }
     // if (value === 'other') {
     //   setDisabled(false)
@@ -194,7 +191,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   //TO DO:
   //stop social media favicons changing size: set max size?
-  // check for end time being after start time.
   // notes contact/organiser form
   // contact details for submiter to moderator
   // add extra contacts
@@ -205,7 +201,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //save regular organiser/submitters ?
   //save new ?
   //some way to differentiate
-
+  // stretch: turn off earlier options for end time setting
   return (
     <div>
       <form className="AddEvent">
@@ -441,6 +437,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
         <button onClick={handleSubmit}>Save Event </button>
       </form>
+      <NotesForMod />
       <Popup details={form} />
     </div>
   )
