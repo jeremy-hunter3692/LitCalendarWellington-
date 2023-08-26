@@ -6,7 +6,7 @@ export default function Test({ formNames, formSet, form }) {
 
     return (
       <>
-        <label htmlFor={nameStr}>{nameStr}</label>
+        <label htmlFor={nameStr}> {nameStr} </label>
         <input
           id={nameStr}
           onChange={handleChange}
@@ -25,7 +25,9 @@ export default function Test({ formNames, formSet, form }) {
   //if it's an object getting pased use this:
   const names = Object.keys(formNames)
   function makeForms() {
-    return names.map((x) => formGen(x))
+    return names.map((x) => {
+      return <div key={x}> {formGen(x)} </div>
+    })
   }
 
   return <>{makeForms()}</>

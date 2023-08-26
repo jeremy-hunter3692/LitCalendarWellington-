@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
@@ -23,7 +24,7 @@ const initDetails = {
   twitter: '',
   typeother: '',
   inperson: 'In Person',
-  cost: '',
+  cost: '__',
 }
 
 const months = [
@@ -65,6 +66,11 @@ function daysInMonth(month) {
 
 const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
@@ -83,6 +89,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   function handleChange(e) {
     const { name, value } = e.target
     let tempObj = {}
+
     switch (true) {
       case value === 'Other':
         setDisabled(false)
@@ -98,6 +105,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           hour: value,
           minutes: form.endMinutes,
         })
+
         setForm({ ...form, [name]: value, end: tempObj })
         break
       case name === 'endMinutes':
@@ -115,12 +123,14 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
       default:
         setForm({ ...form, [name]: value })
     }
-
-    if (form.start.getHours() > tempObj.getHours()) {
-      setBadTime(true)
-    } else {
-      setBadTime(false)
+    //better place to do this so less errors
+    //and on update
+    if (form.start !== undefined) {
+      form.start.getHours() > form.end.getHours()
+        ? setBadTime(true)
+        : setBadTime(false)
     }
+
     // if (value === 'other') {
     //   setDisabled(false)
     // }
@@ -355,7 +365,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           onChange={handleChange}
           value={form.typeother}
           name="typeother"
-          placeholder="other event type"
+          placeholder="other event type here"
           disabled={disabled}
         />
         <hr></hr>

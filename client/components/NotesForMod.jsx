@@ -4,11 +4,11 @@ import Test from './TestFormReturn'
 const formNames = {
   Contact: '',
   AlternativeContact: '',
-  OrganisationOrBusinessName: '',
+  Organisation: '',
 }
 export default function NotesForMod() {
   const [form, setForm] = useState(formNames)
-  console.log(form)
+  // console.log(form)
 
   function handleChange(e) {
     const { name, value } = e.target

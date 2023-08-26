@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import SocialLinks from './SocialLinks'
 
 const initStyle = {
   margin: 0,
@@ -73,9 +74,7 @@ export default function Popup({ details, styleData, close }) {
                   ? 'Online and In Person'
                   : details.inperson}
               </li>
-              <li>
-                Cost: ${details.cost}
-              </li>
+              <li>Cost: ${details.cost}</li>
               <li>
                 <a href={details.link}>Link: {details.link}</a>
               </li>
@@ -93,7 +92,7 @@ export default function Popup({ details, styleData, close }) {
             </ul>
             <div className="sociallistcont">
               <ul className="sociallist">
-                {details.facebook && (
+                {/* {details.facebook && (
                   <li>
                     <a href={details.facebook}>
                       <img
@@ -103,29 +102,10 @@ export default function Popup({ details, styleData, close }) {
                       {details.facebook}
                     </a>
                   </li>
-                )}
-                {details.instagram && (
-                  <li>
-                    <a href={details.instagram}>
-                      <img
-                        src="1_Instagram_colored_svg_1-256.webp"
-                        alt="instagram"
-                      ></img>
-                      {details.instagram}
-                    </a>
-                  </li>
-                )}
-                {details.twitter && (
-                  <li>
-                    <a href={details.twitter}>
-                      <img
-                        src="1_Twitter3_colored_svg-256.webp"
-                        alt="twitter"
-                      ></img>
-                      {details.twitter}
-                    </a>
-                  </li>
-                )}
+                )} */}
+                <SocialLinks link={details.facebook} name="facebook" />
+                <SocialLinks link={details.instagram} name="instagram" />
+                <SocialLinks link={details.twitter} name="twitter" />
               </ul>
             </div>
           </div>
