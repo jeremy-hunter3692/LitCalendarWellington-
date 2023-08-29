@@ -78,7 +78,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [disabled, setDisabled] = useState(true)
   const [badTime, setBadTime] = useState(false)
   const [checked, setChecked] = useState(false)
-  console.log(form)
+  // console.log(form)
 
   const handleCheck = () => {
     setChecked(!checked)

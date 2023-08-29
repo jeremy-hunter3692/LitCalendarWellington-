@@ -10,7 +10,7 @@ const initStyle = {
   left: 50,
   top: 50,
 }
-const imageArr = ['cover.png', 'cover2.png', 'cover3.png']
+const imageArr = ['cover0.png', 'cover1.png', 'cover2.png']
 
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
@@ -19,28 +19,26 @@ export default function Popup({ details, styleData, close }) {
   // SET A BOOL for preview mode? Is that more effcient and/or readable
   // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
-
+  console.log(imageIdx)
   function handleImages() {
-
+    setImageIdx
     // function nextTrack() {
-    //   if (index === audioTracks.length - 1) {
-    //     setIndex(init)
-    //   } else {
-    //     setIndex(index + 1)
-    //   }
+    // if (index === audioTracks.length - 1) {
+    //   setIndex(init)
+    // } else {
+    //   setIndex(index + 1)
     // }
-  
+    // }
+
     // function previousTrack() {
     //   if (index === audioTracks.length + 1) {
     //     setIndex(init)
     //   } else {
     //     setIndex(index - 1)
     //   }
-    // }
-
 
     const length = imageArr.length
-    setImageIdx(imageIdx === length? 0 : imageIdx + 1)
+    setImageIdx(imageIdx === length - 1 ? 0 : imageIdx + 1)
   }
 
   function clickThrough() {
@@ -103,7 +101,12 @@ export default function Popup({ details, styleData, close }) {
               <li>
                 <a href={details.link}>Link: {details.link}</a>
               </li>
-              <img src={imageArr[imageIdx]} alt="book cover" width="30%"></img>
+              <img
+                src={imageArr[imageIdx]}
+                alt="book cover"
+                width="30%"
+                onMouseOver={handleImages}
+              ></img>
               <li>
                 <p>
                   {about}
