@@ -211,8 +211,9 @@ padding: 0 0.5rem ;
 
   list-style: none;
   display: flex; 
-  justify-content: space-between;
-
+  justify-content: space-between;   
+  max-height:100%; 
+  max-width:100%
 }
 
 .textarea {

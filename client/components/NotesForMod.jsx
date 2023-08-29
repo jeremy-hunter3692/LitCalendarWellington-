@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Test from './TestFormReturn'
 
 const formNames = {
@@ -6,13 +6,16 @@ const formNames = {
   AlternativeContact: '',
   Organisation: '',
 }
-export default function NotesForMod() {
+export default function NotesForMod({ globalFromSetter }) {
   const [form, setForm] = useState(formNames)
-  // console.log(form)
+  useEffect(() => {
+    globalFromSetter(form)
+  }, [form])
+
+  // console.log('notes4mod', form)
 
   function handleChange(e) {
     const { name, value } = e.target
-
     setForm({ ...form, [name]: value })
   }
 
@@ -22,7 +25,7 @@ export default function NotesForMod() {
       <Test formSet={handleChange} formNames={formNames} form={form} />{' '}
       <div className="textarea">
         <div>
-          <label htmlFor="extranotes">About:</label>
+          <label htmlFor="extranotes">Extra notes for moderator</label>
         </div>
         <textarea
           id="extranotes"

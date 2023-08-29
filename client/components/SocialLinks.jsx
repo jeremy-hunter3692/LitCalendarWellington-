@@ -7,7 +7,7 @@ export default function SocialLinks({ link, name }) {
         <li>
           <a href={link}>
             <img src={name + '.webp'} alt={name}></img>
-            {link}
+            {/* {link} */}
           </a>
         </li>
       )}

@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function Test({ formNames, formSet, form }) {
+ 
+ 
   function formGen(name) {
     const nameStr = name.toString()
 

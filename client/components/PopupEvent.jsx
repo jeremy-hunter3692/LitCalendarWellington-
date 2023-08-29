@@ -10,13 +10,38 @@ const initStyle = {
   left: 50,
   top: 50,
 }
+const imageArr = ['cover.png', 'cover2.png', 'cover3.png']
 
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
+  const [imageIdx, setImageIdx] = useState(0)
   // /TO DO DOUBLE check this works/resets with the close button and render
   // SET A BOOL for preview mode? Is that more effcient and/or readable
   // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
+
+  function handleImages() {
+
+    // function nextTrack() {
+    //   if (index === audioTracks.length - 1) {
+    //     setIndex(init)
+    //   } else {
+    //     setIndex(index + 1)
+    //   }
+    // }
+  
+    // function previousTrack() {
+    //   if (index === audioTracks.length + 1) {
+    //     setIndex(init)
+    //   } else {
+    //     setIndex(index - 1)
+    //   }
+    // }
+
+
+    const length = imageArr.length
+    setImageIdx(imageIdx === length? 0 : imageIdx + 1)
+  }
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -78,7 +103,7 @@ export default function Popup({ details, styleData, close }) {
               <li>
                 <a href={details.link}>Link: {details.link}</a>
               </li>
-              <img src="cover.png" alt="book cover" width="30%"></img>
+              <img src={imageArr[imageIdx]} alt="book cover" width="30%"></img>
               <li>
                 <p>
                   {about}
@@ -92,17 +117,6 @@ export default function Popup({ details, styleData, close }) {
             </ul>
             <div className="sociallistcont">
               <ul className="sociallist">
-                {/* {details.facebook && (
-                  <li>
-                    <a href={details.facebook}>
-                      <img
-                        src="Colored_Facebook3_svg-256.webp"
-                        alt="facebook"
-                      ></img>
-                      {details.facebook}
-                    </a>
-                  </li>
-                )} */}
                 <SocialLinks link={details.facebook} name="facebook" />
                 <SocialLinks link={details.instagram} name="instagram" />
                 <SocialLinks link={details.twitter} name="twitter" />

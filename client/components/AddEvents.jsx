@@ -24,7 +24,9 @@ const initDetails = {
   twitter: '',
   typeother: '',
   inperson: 'In Person',
-  cost: '__',
+  cost: '',
+  modNotes: {},
+  koha: null,
 }
 
 const months = [
@@ -75,8 +77,16 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
   const [badTime, setBadTime] = useState(false)
-  // console.log(form)
+  const [checked, setChecked] = useState(false)
+  console.log(form)
 
+  const handleCheck = () => {
+    setChecked(!checked)
+  }
+
+  function globalFromSetter(input) {
+    setForm({ ...form, modNotes: input })
+  }
   function getMonthIdx(month) {
     return months.findIndex((x) => x === month)
   }
@@ -93,11 +103,16 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     switch (true) {
       case value === 'Other':
         setDisabled(false)
-        setForm({ ...form, [name]: value })
+        setForm({ ...form, modNotes: { ...form.modNotes }, [name]: value })
         break
       case name === 'type' && value !== 'Other':
         setDisabled(true)
-        setForm({ ...form, [name]: value, typeother: '' })
+        setForm({
+          ...form,
+          modNotes: { ...form.modNotes },
+          [name]: value,
+          typeother: '',
+        })
         break
       case name === 'endHours':
         tempObj = makeDateObject({
@@ -106,7 +121,12 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           minutes: form.endMinutes,
         })
 
-        setForm({ ...form, [name]: value, end: tempObj })
+        setForm({
+          ...form,
+          modNotes: { ...form.modNotes },
+          [name]: value,
+          end: tempObj,
+        })
         break
       case name === 'endMinutes':
         tempObj = makeDateObject({
@@ -114,14 +134,24 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           hour: form.endHours,
           minutes: value,
         })
-        setForm({ ...form, [name]: value, end: tempObj })
+        setForm({
+          ...form,
+          modNotes: { ...form.modNotes },
+          [name]: value,
+          end: tempObj,
+        })
         break
       case toBeDeleted.includes(name):
         tempObj = makeDateObject({ ...form, [name]: value })
-        setForm({ ...form, [name]: value, start: tempObj })
+        setForm({
+          ...form,
+          modNotes: { ...form.modNotes },
+          [name]: value,
+          start: tempObj,
+        })
         break
       default:
-        setForm({ ...form, [name]: value })
+        setForm({ ...form, modNotes: { ...form.modNotes }, [name]: value })
     }
     //better place to do this so less errors
     //and on update
@@ -162,7 +192,9 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     })
     //TO DO Check this
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
+    input[0].koha = checked
     //TO DO /\/\/\/\
+    // input=[{...form, notesformod: {childFrom} }] could be up the top there on first input
     /////////////////
     eventsSetter(input)
     showAddEventSetter()
@@ -199,12 +231,14 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     )
   }
 
-  //TO DO:
-  //stop social media favicons changing size: set max size?
-  // notes contact/organiser form
-  // contact details for submiter to moderator
-  // add extra contacts
-  // reoccuring event? i.e. book club
+  //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
+
+  // pass down state to notes for mods to add to  'global' state.
+  //working with use state and passed down setter - revisit this
+
+  //reoccuring event? i.e. book club - get from other calendar repo
+  // put in stream link in location here if online?
+  //checking for white space + required froms etc
   //Uploading image to some where/storage generally
   //multiple images in preview?
   //Full css work for the pop up
@@ -212,6 +246,8 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //save new ?
   //some way to differentiate
   // stretch: turn off earlier options for end time setting
+  //stop social media favicons changing size: set max size? - works great with non link displaying so maybe fine
+  //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\
   return (
     <div>
       <form className="AddEvent">
@@ -369,15 +405,21 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           disabled={disabled}
         />
         <hr></hr>
-        <label htmlFor="cost">Cost:$</label>
+        <label htmlFor="cost">{checked ? 'Suggested Koha' : 'Cost: $'}</label>
         <input
           id="cost"
           onChange={handleChange}
           value={form.cost}
           name="cost"
-          placeholder=""
+          placeholder="0"
         />
-        {/*Radio buttons  */}
+        <div>
+          <label>
+            <input type="checkbox" onChange={handleCheck} checked={checked} />
+            Koha?
+          </label>
+        </div>
+        {/*Radio buttons  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
         <input
           type="radio"
           name="inperson"
@@ -447,7 +489,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
         <button onClick={handleSubmit}>Save Event </button>
       </form>
-      <NotesForMod />
+      <NotesForMod globalFromSetter={globalFromSetter} />
       <Popup details={form} />
     </div>
   )
