@@ -19,27 +19,16 @@ export default function Popup({ details, styleData, close }) {
   // SET A BOOL for preview mode? Is that more effcient and/or readable
   // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
-  console.log(imageIdx)
+  // console.log(details)
+
   function handleImages() {
-    setImageIdx
-    // function nextTrack() {
-    // if (index === audioTracks.length - 1) {
-    //   setIndex(init)
-    // } else {
-    //   setIndex(index + 1)
-    // }
-    // }
-
-    // function previousTrack() {
-    //   if (index === audioTracks.length + 1) {
-    //     setIndex(init)
-    //   } else {
-    //     setIndex(index - 1)
-    //   }
-
-    const length = imageArr.length
-    setImageIdx(imageIdx === length - 1 ? 0 : imageIdx + 1)
+    setTimeout(() => {
+      const length = imageArr.length
+      setImageIdx(imageIdx === length - 1 ? 0 : imageIdx + 1)
+    }, 3000)
   }
+
+  handleImages()
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -93,19 +82,28 @@ export default function Popup({ details, styleData, close }) {
                 {details.type === 'other' ? details.typeother : details.type}
               </li>
               <li>
+                {' '}
+                <a href={details.link}>Link: {details.link}</a>
+              </li>
+              <li>
                 {details.inperson === 'Both'
                   ? 'Online and In Person'
                   : details.inperson}
               </li>
-              <li>Cost: ${details.cost}</li>
               <li>
-                <a href={details.link}>Link: {details.link}</a>
+                {details.koha > 0 && details.cost > 0
+                  ? `suggest koha :$ ${details.cost}`
+                  : details.cost > 0
+                  ? `cost :$ ${details.cost}`
+                  : details.koha
+                  ? 'koha'
+                  : 'free'}{' '}
               </li>
               <img
                 src={imageArr[imageIdx]}
                 alt="book cover"
                 width="30%"
-                onMouseOver={handleImages}
+                // onMouseOver={handleImages}
               ></img>
               <li>
                 <p>

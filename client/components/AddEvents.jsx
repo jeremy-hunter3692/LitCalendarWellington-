@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
+import Test from './TestFormReturn'
 
 const eventType = ['Book Launch', 'Author Talk', 'Other']
 
@@ -26,7 +27,7 @@ const initDetails = {
   inperson: 'In Person',
   cost: '',
   modNotes: {},
-  koha: null,
+  koha: false,
 }
 
 const months = [
@@ -71,18 +72,11 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
   const [badTime, setBadTime] = useState(false)
-  const [checked, setChecked] = useState(false)
-  // console.log(form)
-
-  const handleCheck = () => {
-    setChecked(!checked)
-  }
+  console.log(form)
 
   function globalFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -151,7 +145,11 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         })
         break
       default:
-        setForm({ ...form, modNotes: { ...form.modNotes }, [name]: value })
+        setForm({
+          ...form,
+          modNotes: { ...form.modNotes },
+          [name]: value,
+        })
     }
     //better place to do this so less errors
     //and on update
@@ -160,24 +158,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         ? setBadTime(true)
         : setBadTime(false)
     }
-
-    // if (value === 'other') {
-    //   setDisabled(false)
-    // }
-    // if (name === 'type' && value !== 'other') {
-    //   setDisabled(true)
-    //   setForm({ ...form, [name]: value, typeother: '' })
-    // } else {
-    //   //TODO REFACTOR? - this is to update the time imeditaly with preivew
-    //   let tempObj = makeDateObject({ ...form, [name]: value })
-    //   setForm({ ...form, [name]: value, start: tempObj })
-    //  ///end stufff
-    // let result = makeDateObject({
-    //   ...form,
-    //   hour: form.end,
-    //   minutes: form.endMinutes,
-    // })
-    // }
   }
 
   function handleSubmit(e) {
@@ -232,16 +212,27 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-
+  //splitting more forms into their own componenets
+  //--------
   // pass down state to notes for mods to add to  'global' state.
   //working with use state and passed down setter - revisit this
+  //--------
+  // cost case in handle events
+  // if 0 say free
+  // if koha only
+  // if koha but suggested amount
+  //making sure cost is in numberals
+  //link to buying tickets?
+  //--------
 
   //reoccuring event? i.e. book club - get from other calendar repo
+  //--------
   // put in stream link in location here if online?
+  ///-------
   //checking for white space + required froms etc
   //Uploading image to some where/storage generally
-  //multiple images in preview?
   //Full css work for the pop up
+  //--------
   //save regular organiser/submitters ?
   //save new ?
   //some way to differentiate
@@ -349,7 +340,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           {badTime ? 'End time is before start time' : ''}
           <hr />
         </div>
-        Other Details///
         <label htmlFor="title">Title:</label>
         <input
           id="title"
@@ -405,7 +395,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           disabled={disabled}
         />
         <hr></hr>
-        <label htmlFor="cost">{checked ? 'Suggested Koha' : 'Cost: $'}</label>
+        <label htmlFor="cost">{form.koha ? 'Suggested Koha' : 'Cost: $'}</label>
         <input
           id="cost"
           onChange={handleChange}
@@ -415,7 +405,11 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
         <div>
           <label>
-            <input type="checkbox" onChange={handleCheck} checked={checked} />
+            <input
+              type="checkbox"
+              onChange={() => setForm({ ...form, koha: !form.koha })}
+              checked={form?.koha}
+            />
             Koha?
           </label>
         </div>
