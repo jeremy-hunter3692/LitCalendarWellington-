@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
 import Test from './TestFormReturn'
+import TimeDropDowns from './TimeDropDowns'
 
 const eventType = ['Book Launch', 'Author Talk', 'Other']
 
@@ -28,6 +29,7 @@ const initDetails = {
   cost: '',
   modNotes: {},
   koha: false,
+  buyTixLink: '',
 }
 
 const months = [
@@ -172,7 +174,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     })
     //TO DO Check this
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
-    input[0].koha = checked
     //TO DO /\/\/\/\
     // input=[{...form, notesformod: {childFrom} }] could be up the top there on first input
     /////////////////
@@ -212,24 +213,22 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
+  //REfactor the time and date secionts into it's own componenet? Could re use more code here then
+  //Sort out links not going to typed in link - going to localhost/{link} atm
+  //make check if it's a link or not function and implemnet in appropriate places
+  //-------
   //splitting more forms into their own componenets
   //--------
   // pass down state to notes for mods to add to  'global' state.
   //working with use state and passed down setter - revisit this
   //--------
-  // cost case in handle events
-  // if 0 say free
-  // if koha only
-  // if koha but suggested amount
-  //making sure cost is in numberals
-  //link to buying tickets?
+  //make check if it's a link or not function and implemnet in appropriate places
   //--------
-
   //reoccuring event? i.e. book club - get from other calendar repo
   //--------
   // put in stream link in location here if online?
   ///-------
-  //checking for white space + required froms etc
+  //checking for white space + required froms etc?
   //Uploading image to some where/storage generally
   //Full css work for the pop up
   //--------
@@ -245,27 +244,25 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <div>
           <label htmlFor="month">
             Month:
-            <select
-              id="month"
-              name="month"
-              value={form.month}
-              onChange={handleChange}
-              required
-            >
-              <option value="Month:" disabled>
-                Month:
-              </option>
-              {months.map((x) => (
-                <option key={x} value={x} title={x}>
-                  {x}
-                </option>
-              ))}
-            </select>
+            <TimeDropDowns
+              form={form}
+              formSet={handleChange}
+              data={months}
+              name={'month'}
+              label={'Month:'}
+            />
           </label>
           {getDaysOfSelectedMonth(form.month)}
           <label htmlFor="hour">
             Hour:
-            <select
+            <TimeDropDowns
+              form={form}
+              formSet={handleChange}
+              data={hours}
+              name={'hours'}
+              label={'Hour:'}
+            />
+            {/* <select
               id="hour"
               name="hour"
               value={form.hour}
@@ -280,11 +277,18 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
                   {x}
                 </option>
               ))}
-            </select>
+            </select> */}
           </label>
           <label htmlFor="minutes">
             Minutes:
-            <select
+            <TimeDropDowns
+              form={form}
+              formSet={handleChange}
+              data={minutes}
+              name={'minutes'}
+              label={'Minutes:'}
+            />
+            {/* <select
               id="minutes"
               name="minutes"
               value={form.minutes}
@@ -299,7 +303,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
                   {x}
                 </option>
               ))}
-            </select>
+            </select> */}
           </label>
           <label htmlFor="endHours">
             Till:
@@ -340,31 +344,13 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           {badTime ? 'End time is before start time' : ''}
           <hr />
         </div>
-        <label htmlFor="title">Title:</label>
-        <input
-          id="title"
-          onChange={handleChange}
-          value={form.title}
-          name="title"
-          required
-          placeholder="Title"
-        />
-        <label htmlFor="location">Location:</label>
-        <input
-          id="location"
-          onChange={handleChange}
-          value={form.location}
-          name="location"
-          required
-          placeholder="Location"
-        />
-        <label htmlFor="link">Link:</label>
-        <input
-          id="link"
-          onChange={handleChange}
-          value={form.link}
-          name="link"
-          placeholder="link"
+        ////////////////////////// //////////////////////////
+        ////////////////////////// //////////////////////////
+        //////////////////////////
+        <Test
+          formSet={handleChange}
+          form={form}
+          formNames={{ title: '', location: '', link: '' }}
         />
         <label htmlFor="type">
           Event Type:
@@ -395,52 +381,64 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           disabled={disabled}
         />
         <hr></hr>
-        <label htmlFor="cost">{form.koha ? 'Suggested Koha' : 'Cost: $'}</label>
-        <input
-          id="cost"
-          onChange={handleChange}
-          value={form.cost}
-          name="cost"
-          placeholder="0"
-        />
         <div>
+          <label htmlFor="cost">
+            {form.koha ? 'Suggested Koha' : 'Cost: $'}
+          </label>
+          <input
+            id="cost"
+            onChange={handleChange}
+            value={form.cost}
+            name="cost"
+            placeholder="0"
+          />
           <label>
             <input
               type="checkbox"
               onChange={() => setForm({ ...form, koha: !form.koha })}
               checked={form?.koha}
             />
-            Koha?
+            Koha?{' '}
           </label>
         </div>
+        <label htmlFor="buyTixLink">Link to buy tickets</label>
+        <input
+          id="buyTixLink"
+          onChange={handleChange}
+          value={form.buyTixLink}
+          name="buyTixLink"
+          placeholder=""
+        />
         {/*Radio buttons  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
-        <input
-          type="radio"
-          name="inperson"
-          value="In Person"
-          id="inperson"
-          checked={form.inperson === 'In Person'}
-          onChange={handleChange}
-        />
-        <label htmlFor="inperson">In person</label>
-        <input
-          type="radio"
-          name="inperson"
-          value="On line/streamed"
-          id="online/streamed"
-          checked={form.inperson === 'On line/streamed'}
-          onChange={handleChange}
-        />
-        <label htmlFor="online/streamed">online/streamed</label>
-        <input
-          type="radio"
-          name="inperson"
-          value="Both"
-          id="Both"
-          checked={form.inperson === 'Both'}
-          onChange={handleChange}
-        />
-        <label htmlFor="Both">Both</label>
+        <div>
+          <input
+            type="radio"
+            name="inperson"
+            value="In Person"
+            id="inperson"
+            checked={form.inperson === 'In Person'}
+            onChange={handleChange}
+          />
+          <label htmlFor="inperson">In person</label>
+          <input
+            type="radio"
+            name="inperson"
+            value="On line/streamed"
+            id="online/streamed"
+            checked={form.inperson === 'On line/streamed'}
+            onChange={handleChange}
+          />
+          <label htmlFor="online/streamed">online/streamed</label>
+          <input
+            type="radio"
+            name="inperson"
+            value="Both"
+            id="Both"
+            checked={form.inperson === 'Both'}
+            onChange={handleChange}
+          />
+          <label htmlFor="Both">Both</label>
+        </div>
         {/* End Radio  */}
         <div className="textarea">
           <div>
@@ -457,7 +455,51 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         </div>
         <hr></hr>
         <h4>Social links:</h4>
-        <label htmlFor="facebook">Facebook:</label>
+        {/* check this is working and then tidy up code + make these into an object inside it? Or not worth it for refactoring purposes? */}
+        <Test
+          formSet={handleChange}
+          form={form}
+          formNames={{ facebook: '', instagram: '', twitter: '' }}
+        />
+      </form>
+      <NotesForMod globalFromSetter={globalFromSetter} />
+      <button onClick={handleSubmit}>Save Event </button>
+      <Popup details={form} />
+    </div>
+  )
+}
+
+{
+  /* <label htmlFor="title">Title:</label>
+        <input
+          id="title"
+          onChange={handleChange}
+          value={form.title}
+          name="title"
+          required
+          placeholder="Title"
+        />
+        <label htmlFor="location">Location:</label>
+        <input
+          id="location"
+          onChange={handleChange}
+          value={form.location}
+          name="location"
+          required
+          placeholder="Location"
+        />
+        <label htmlFor="link">Link:</label>
+        <input
+          id="link"
+          onChange={handleChange}
+          value={form.link}
+          name="link"
+          placeholder="link"
+        /> */
+}
+
+{
+  /* <label htmlFor="facebook">Facebook:</label>
         <input
           id="facebook"
           onChange={handleChange}
@@ -480,11 +522,24 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           value={form.twitter}
           name="twitter"
           placeholder="twitter"
-        />
-        <button onClick={handleSubmit}>Save Event </button>
-      </form>
-      <NotesForMod globalFromSetter={globalFromSetter} />
-      <Popup details={form} />
-    </div>
-  )
+        /> */
+}
+
+{
+  /* <select
+              id="month"
+              name="month"
+              value={form.month}
+              onChange={handleChange}
+              required
+            >
+              <option value="Month:" disabled>
+                Month:
+              </option>
+              {months.map((x) => (
+                <option key={x} value={x} title={x}>
+                  {x}
+                </option>
+              ))}
+            </select> */
 }

@@ -27,7 +27,6 @@ export default function Popup({ details, styleData, close }) {
       setImageIdx(imageIdx === length - 1 ? 0 : imageIdx + 1)
     }, 3000)
   }
-
   handleImages()
 
   function clickThrough() {
@@ -98,6 +97,7 @@ export default function Popup({ details, styleData, close }) {
                   : details.koha
                   ? 'koha'
                   : 'free'}{' '}
+                <a href={details.buyTixLink}>Buy Tickets</a>
               </li>
               <img
                 src={imageArr[imageIdx]}
