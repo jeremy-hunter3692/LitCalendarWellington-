@@ -5,7 +5,7 @@ export default function SocialLinks({ link, name }) {
     <>
       {link && (
         <li>
-          <a href={link}>
+          <a href={'https://' + link} target="_blank" rel="noreferrer noopener">
             <img src={name + '.webp'} alt={name}></img>
             {/* {link} */}
           </a>

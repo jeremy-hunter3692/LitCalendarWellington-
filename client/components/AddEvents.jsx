@@ -4,6 +4,7 @@ import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
 import Test from './TestFormReturn'
 import DropDowns from './DropDowns'
+import RadioButtons from './RadioButtons'
 
 const eventType = ['Book Launch', 'Author Talk', 'Reading', 'Other']
 const yearNow = new Date().getFullYear()
@@ -68,9 +69,7 @@ const minutes = Array(12)
   .map((_, idx) => idx * 5)
 
 //TODO: arrowise this function?
-function daysInMonth(month) {
-  return new Date(2023, month, 0).getDate()
-}
+const daysInMonth = (month) => new Date(2023, month, 0).getDate()
 
 const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
@@ -85,6 +84,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
+
   function getMonthIdx(month) {
     return months.findIndex((x) => x === month)
   }
@@ -114,10 +114,10 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         : ''
       : ''
   }
+
   function handleChange(e) {
     const { name, value } = e.target
     let tempObj = {}
-
     switch (true) {
       case value === 'Other':
         setDisabled(false)
@@ -187,7 +187,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         delete input[0][x]
       }
     })
-    //back up for event type maybe unnessecary
+    //back up for event-type maybe unnessecary
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
     eventsSetter(input)
     showAddEventSetter()
@@ -220,188 +220,193 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //stop social media favicons changing size: set max size? - works great with non link displaying so maybe fine
   //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\
   return (
-    <div>
-      <form className="AddEvent">
-        <div>
-          <label htmlFor="month">
-            Month:
+    <div className="AddEventContainer">
+      <div>
+        <form className="AddEvent">
+          <div>
+            <label htmlFor="month">
+              Month:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={months}
+                name={'month'}
+                label={'Month:'}
+              />
+            </label>
             <DropDowns
               form={form}
               formSet={handleChange}
-              data={months}
-              name={'month'}
-              label={'Month:'}
+              data={getDaysOfSelectedMonth(form.month)}
+              name={'date'}
+              label={'Date:'}
             />
-          </label>
-          <DropDowns
-            form={form}
-            formSet={handleChange}
-            data={getDaysOfSelectedMonth(form.month)}
-            name={'date'}
-            label={'Date:'}
-          />
-          {/* {getDaysOfSelectedMonth(form.month)} */}
-          <label htmlFor="hour">
-            Start time:
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={hours}
-              name={'hour'}
-              label={'Hour:'}
-            />
-          </label>
-          <label htmlFor="minutes">
+            {/* {getDaysOfSelectedMonth(form.month)} */}
+            <label htmlFor="hour">
+              Start time:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={hours}
+                name={'hour'}
+                label={'Hour:'}
+              />
+            </label>
+            <label htmlFor="minutes">
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={minutes}
+                name={'minutes'}
+                label={'Minutes:'}
+              />
+            </label>
+            <label htmlFor="endHours">
+              Till:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={hours}
+                name={'endHours'}
+                // label={'Minutes:'}
+              />
+            </label>
             <DropDowns
               form={form}
               formSet={handleChange}
               data={minutes}
-              name={'minutes'}
-              label={'Minutes:'}
+              name={'endMinutes'}
+              // label={'Minutes:'}
             />
-          </label>
-          <label htmlFor="endHours">
-            Till:
+            {timeCheck()}
+            <hr />
+          </div>
+          <Test
+            formSet={handleChange}
+            form={form}
+            formNames={{ title: '', location: '', link: '' }}
+          />
+          <label htmlFor="type">
+            Event Type:
             <DropDowns
               form={form}
               formSet={handleChange}
-              data={hours}
-              name={'endHours'}
-              // label={'Minutes:'}
+              data={eventType}
+              name={'type'}
             />
           </label>
-          <DropDowns
-            form={form}
-            formSet={handleChange}
-            data={minutes}
-            name={'endMinutes'}
-            // label={'Minutes:'}
-          />
-          {timeCheck()}
-          <hr />
-        </div>
-        <Test
-          formSet={handleChange}
-          form={form}
-          formNames={{ title: '', location: '', link: '' }}
-        />
-        <label htmlFor="type">
-          Event Type:
-          <DropDowns
-            form={form}
-            formSet={handleChange}
-            data={eventType}
-            name={'type'}
-          />
-          {/* <select
-            id="type"
-            name="type"
-            value={form.type}
-            onChange={handleChange}
-            required
-          >
-            <option value="Choose type" disabled>
-              Choose type
-            </option>
-            {eventType.map((x) => (
-              <option key={x} value={x} title={x}>
-                {x}
-              </option>
-            ))}
-          </select> */}
-        </label>
-        <label htmlFor="typeother">Other:</label>
-        <input
-          id="typetother"
-          onChange={handleChange}
-          value={form.typeother}
-          name="typeother"
-          placeholder="other event type here"
-          disabled={disabled}
-        />
-        <hr></hr>
-        <div>
-          <label>Koha? </label>
+          <label htmlFor="typeother">Other:</label>
           <input
-            type="checkbox"
-            onChange={() => setForm({ ...form, koha: !form.koha })}
-            checked={form?.koha}
-          />
-          <label htmlFor="cost">
-            {form.koha ? 'Suggested Koha:' : 'Cost:'} $
-          </label>
-          <input
-            id="cost"
+            id="typetother"
             onChange={handleChange}
-            value={form.cost}
-            name="cost"
-            placeholder="0"
+            value={form.typeother}
+            name="typeother"
+            placeholder="other event type here"
+            disabled={disabled}
           />
-          Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
-        </div>
-        <label htmlFor="buyTixLink">Link to buy tickets</label>
-        <input
-          id="buyTixLink"
-          onChange={handleChange}
-          value={form.buyTixLink}
-          name="buyTixLink"
-          placeholder=""
-        />
-        {/*Radio buttons  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
-        <div>
-          <input
-            type="radio"
-            name="inperson"
-            value="In Person"
-            id="inperson"
-            checked={form.inperson === 'In Person'}
-            onChange={handleChange}
-          />
-          <label htmlFor="inperson">In person</label>
-          <input
-            type="radio"
-            name="inperson"
-            value="On line/streamed"
-            id="online/streamed"
-            checked={form.inperson === 'On line/streamed'}
-            onChange={handleChange}
-          />
-          <label htmlFor="online/streamed">online/streamed</label>
-          <input
-            type="radio"
-            name="inperson"
-            value="Both"
-            id="Both"
-            checked={form.inperson === 'Both'}
-            onChange={handleChange}
-          />
-          <label htmlFor="Both">Both</label>
-        </div>
-        {/* End Radio  */}
-        <div className="textarea">
+          <hr></hr>
           <div>
-            <label htmlFor="about">About:</label>
+            <label>Koha? </label>
+            <input
+              type="checkbox"
+              onChange={() => setForm({ ...form, koha: !form.koha })}
+              checked={form?.koha}
+            />
+            <label htmlFor="cost">
+              {form.koha ? 'Suggested Koha:' : 'Cost:'} $
+            </label>
+            <input
+              id="cost"
+              onChange={handleChange}
+              value={form.cost}
+              name="cost"
+              placeholder="0"
+            />
+            Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
           </div>
-          <textarea
-            id="about"
+          <label htmlFor="buyTixLink">Link to buy tickets</label>
+          <input
+            id="buyTixLink"
             onChange={handleChange}
-            value={form.about}
-            name="about"
-            required
-            placeholder="this text will be cut off at 300 characters in the pop up"
+            value={form.buyTixLink}
+            name="buyTixLink"
+            placeholder=""
           />
-        </div>
-        <hr></hr>
-        <h4>Social links:</h4>
-        {/* check this is working and then tidy up code + make these into an object inside it? Or not worth it for refactoring purposes? */}
-        <Test
-          formSet={handleChange}
-          form={form}
-          formNames={{ facebook: '', instagram: '', twitter: '' }}
-        />
-      </form>
-      <NotesForMod globalFromSetter={modNotesFromSetter} />
-      <button onClick={handleSubmit}>Save Event </button>
+          {/*Radio buttons  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+          <div>
+            <RadioButtons
+              id="inperson"
+              value="In Person"
+              form={form}
+              handleChange={handleChange}
+            />
+            <RadioButtons
+              id="online/stream"
+              value="On line/streamed"
+              form={form}
+              handleChange={handleChange}
+            />
+            <RadioButtons
+              id="both"
+              value="Both"
+              form={form}
+              handleChange={handleChange}
+            />
+            {/* <input
+              type="radio"
+              name="inperson"
+              value="In Person"
+              id="inperson"
+              checked={form.inperson === 'In Person'}
+              onChange={handleChange}
+            />
+            <label htmlFor="inperson">In person</label>
+            <input
+              type="radio"
+              name="inperson"
+              value="On line/streamed"
+              id="online/streamed"
+              checked={form.inperson === 'On line/streamed'}
+              onChange={handleChange}
+            />
+            <label htmlFor="online/streamed">online/streamed</label>
+            <input
+              type="radio"
+              name="inperson"
+              value="Both"
+              id="Both"
+              checked={form.inperson === 'Both'}
+              onChange={handleChange}
+            />
+            <label htmlFor="Both">Both</label> */}
+          </div>
+          {/* End Radio  */}
+          <div className="textarea">
+            <div>
+              <label htmlFor="about">About:</label>
+            </div>
+            <textarea
+              id="about"
+              onChange={handleChange}
+              value={form.about}
+              name="about"
+              required
+              placeholder="this text will be cut off at 300 characters in the pop up"
+            />
+          </div>
+          <hr></hr>
+          <h4>Social links:</h4>
+          {/* check this is working and then tidy up code + make these into an object inside it? Or not worth it for refactoring purposes? */}
+          <Test
+            formSet={handleChange}
+            form={form}
+            formNames={{ facebook: '', instagram: '', twitter: '' }}
+          />
+        </form>
+        <NotesForMod globalFromSetter={modNotesFromSetter} />
+        <button onClick={handleSubmit}>Save Event </button>
+      </div>
+
       <Popup details={form} />
     </div>
   )

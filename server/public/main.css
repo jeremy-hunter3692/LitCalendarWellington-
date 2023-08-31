@@ -126,6 +126,13 @@ label {
   color: cornflowerblue;
 }
 
+.AddEventContainer {
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: solid red;
+}
 
 
 
@@ -226,6 +233,7 @@ padding: 0 0.5rem ;
 .calendar{
   padding: 3rem;
 }
+
 
 textarea {
   width: 50vw;

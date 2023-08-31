@@ -15,9 +15,6 @@ const imageArr = ['cover0.png', 'cover1.png', 'cover2.png']
 export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
-  // /TO DO DOUBLE check this works/resets with the close button and render
-  // SET A BOOL for preview mode? Is that more effcient and/or readable
-  // preview 'mode' bool would basically be styleData === init style
   const [fullScreen, setFullScreen] = useState(false)
   // console.log(details)
 
@@ -82,7 +79,13 @@ export default function Popup({ details, styleData, close }) {
               </li>
               <li>
                 {' '}
-                <a href={details.link}>Link: {details.link}</a>
+                <a
+                  href={'https://' + details.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Link: {details.link}
+                </a>
               </li>
               <li>
                 {details.inperson === 'Both'
@@ -97,7 +100,13 @@ export default function Popup({ details, styleData, close }) {
                   : details.koha
                   ? 'Koha'
                   : 'free'}{' '}
-                <a href={details.buyTixLink}>Buy Tickets</a>
+                <a
+                  href={details.buyTixLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Buy Tickets
+                </a>
               </li>
               <img
                 src={imageArr[imageIdx]}
