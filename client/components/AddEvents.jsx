@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
 import Test from './TestFormReturn'
-import TimeDropDowns from './TimeDropDowns'
+import DropDowns from './DropDowns'
 
-const eventType = ['Book Launch', 'Author Talk', 'Other']
+const eventType = ['Book Launch', 'Author Talk', 'Reading', 'Other']
 const yearNow = new Date().getFullYear()
 
 const initDetails = {
@@ -48,7 +48,7 @@ const months = [
   'November',
   'December',
 ]
-//Add typeOther?
+
 const toBeDeleted = [
   'year',
   'date',
@@ -67,6 +67,7 @@ const minutes = Array(12)
   .fill(0)
   .map((_, idx) => idx * 5)
 
+//TODO: arrowise this function?
 function daysInMonth(month) {
   return new Date(2023, month, 0).getDate()
 }
@@ -88,11 +89,31 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     return months.findIndex((x) => x === month)
   }
 
+  function getDaysOfSelectedMonth(month) {
+    let numbers = []
+    if (month) {
+      const idx = getMonthIdx(month)
+      numbers = Array(daysEachMonth[idx])
+        .fill(0)
+        .map((_, idx) => idx + 1)
+    }
+    return numbers
+  }
+
   function makeDateObject({ year, month, date, hour, minutes }) {
     const deStringedMonth = getMonthIdx(month)
     return new Date(year, deStringedMonth, date, hour, minutes)
   }
 
+  function timeCheck() {
+    return form.start?.getHours() > form.end?.getHours()
+      ? 'End time is before start time'
+      : form.start?.getHours() === form.end?.getHours()
+      ? form.start?.getMinutes() > form.end?.getMinutes()
+        ? 'End time is before start time'
+        : ''
+      : ''
+  }
   function handleChange(e) {
     const { name, value } = e.target
     let tempObj = {}
@@ -139,7 +160,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         })
         break
       case toBeDeleted.includes(name):
-        console.log('2b', name)
         tempObj = makeDateObject({ ...form, [name]: value })
         setForm({
           ...form,
@@ -167,58 +187,21 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         delete input[0][x]
       }
     })
-    //TO DO Check this
+    //back up for event type maybe unnessecary
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
-    //TO DO /\/\/\/\
-    // input=[{...form, notesformod: {childFrom} }] could be up the top there on first input
-    /////////////////
     eventsSetter(input)
     showAddEventSetter()
   }
 
-  function getDaysOfSelectedMonth(month) {
-    let numbers = []
-    if (month) {
-      const idx = getMonthIdx(month)
-      numbers = Array(daysEachMonth[idx])
-        .fill(0)
-        .map((_, idx) => idx + 1)
-    }
-    return (
-      <label htmlFor="date">
-        Date:
-        <select
-          id="date"
-          name="date"
-          value={form.date}
-          onChange={handleChange}
-          required
-        >
-          <option value="Date:" disabled>
-            Date:
-          </option>
-          {numbers.map((x) => (
-            <option key={x} value={x} title={x}>
-              {x}
-            </option>
-          ))}
-        </select>
-      </label>
-    )
-  }
-
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  //REfactor the time and date secionts into it's own componenet? Could re use more code here then
-  //Map for inital drops downs here? Sort out/decide labels
-  //re factor get selected days of month
-  ///////
+  //Map for inital time dropdowns here? Sort out/decide labels
+  //------
   //Sort out links not going to typed in link - going to localhost/{link} atm
   //make check if it's a link or not function and implemnet in appropriate places
   //-------
   //splitting more forms into their own componenets
   //--------
-  // pass down state to notes for mods to add to  'global' state.
-  //working with use state and passed down setter - revisit this
+  // pass down state to notes for mods to add to  'global' state.-----working with use state and passed down setter - revisit this
   //--------
   //make check if it's a link or not function and implemnet in appropriate places
   //--------
@@ -242,7 +225,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <div>
           <label htmlFor="month">
             Month:
-            <TimeDropDowns
+            <DropDowns
               form={form}
               formSet={handleChange}
               data={months}
@@ -250,10 +233,17 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               label={'Month:'}
             />
           </label>
-          {getDaysOfSelectedMonth(form.month)}
+          <DropDowns
+            form={form}
+            formSet={handleChange}
+            data={getDaysOfSelectedMonth(form.month)}
+            name={'date'}
+            label={'Date:'}
+          />
+          {/* {getDaysOfSelectedMonth(form.month)} */}
           <label htmlFor="hour">
             Start time:
-            <TimeDropDowns
+            <DropDowns
               form={form}
               formSet={handleChange}
               data={hours}
@@ -262,7 +252,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             />
           </label>
           <label htmlFor="minutes">
-            <TimeDropDowns
+            <DropDowns
               form={form}
               formSet={handleChange}
               data={minutes}
@@ -272,7 +262,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           </label>
           <label htmlFor="endHours">
             Till:
-            <TimeDropDowns
+            <DropDowns
               form={form}
               formSet={handleChange}
               data={hours}
@@ -280,18 +270,14 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               // label={'Minutes:'}
             />
           </label>
-          <TimeDropDowns
+          <DropDowns
             form={form}
             formSet={handleChange}
             data={minutes}
             name={'endMinutes'}
             // label={'Minutes:'}
           />
-
-          {form.start?.getHours() > form.end?.getHours()
-            ? 'End time is before start time'
-            : ''}
-
+          {timeCheck()}
           <hr />
         </div>
         <Test
@@ -301,7 +287,13 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
         <label htmlFor="type">
           Event Type:
-          <select
+          <DropDowns
+            form={form}
+            formSet={handleChange}
+            data={eventType}
+            name={'type'}
+          />
+          {/* <select
             id="type"
             name="type"
             value={form.type}
@@ -316,7 +308,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
                 {x}
               </option>
             ))}
-          </select>
+          </select> */}
         </label>
         <label htmlFor="typeother">Other:</label>
         <input
@@ -329,8 +321,14 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         />
         <hr></hr>
         <div>
+          <label>Koha? </label>
+          <input
+            type="checkbox"
+            onChange={() => setForm({ ...form, koha: !form.koha })}
+            checked={form?.koha}
+          />
           <label htmlFor="cost">
-            {form.koha ? 'Suggested Koha' : 'Cost: $'}
+            {form.koha ? 'Suggested Koha:' : 'Cost:'} $
           </label>
           <input
             id="cost"
@@ -339,14 +337,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             name="cost"
             placeholder="0"
           />
-          <label>
-            <input
-              type="checkbox"
-              onChange={() => setForm({ ...form, koha: !form.koha })}
-              checked={form?.koha}
-            />
-            Koha?{' '}
-          </label>
+          Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
         </div>
         <label htmlFor="buyTixLink">Link to buy tickets</label>
         <input

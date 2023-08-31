@@ -78,7 +78,7 @@ export default function Popup({ details, styleData, close }) {
               </li>
               <li>
                 Location: {details.location} |{' '}
-                {details.type === 'other' ? details.typeother : details.type}
+                {details.type === 'Other' ? details.typeother : details.type}
               </li>
               <li>
                 {' '}
@@ -91,11 +91,11 @@ export default function Popup({ details, styleData, close }) {
               </li>
               <li>
                 {details.koha > 0 && details.cost > 0
-                  ? `suggest koha :$ ${details.cost}`
+                  ? `suggest Koha :$ ${details.cost}`
                   : details.cost > 0
                   ? `cost :$ ${details.cost}`
                   : details.koha
-                  ? 'koha'
+                  ? 'Koha'
                   : 'free'}{' '}
                 <a href={details.buyTixLink}>Buy Tickets</a>
               </li>

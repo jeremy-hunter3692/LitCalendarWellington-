@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TimeDropDowns({ formSet, form, data, label, name }) {
+export default function DropDowns({ formSet, form, data, label, name }) {
   function handleChange(e) {
     formSet(e)
   }
