@@ -6,12 +6,14 @@ import Test from './TestFormReturn'
 import TimeDropDowns from './TimeDropDowns'
 
 const eventType = ['Book Launch', 'Author Talk', 'Other']
+const yearNow = new Date().getFullYear()
 
 const initDetails = {
   month: 'January',
   date: '1',
   hour: '0',
-  year: new Date().getFullYear(),
+  year: yearNow,
+  start: new Date(yearNow, '01', '00', '00'),
   minutes: '0',
   endHours: '0',
   endMinutes: '0',
@@ -77,10 +79,9 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
-  const [badTime, setBadTime] = useState(false)
   console.log(form)
 
-  function globalFromSetter(input) {
+  function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
   function getMonthIdx(month) {
@@ -138,6 +139,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         })
         break
       case toBeDeleted.includes(name):
+        console.log('2b', name)
         tempObj = makeDateObject({ ...form, [name]: value })
         setForm({
           ...form,
@@ -152,13 +154,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           modNotes: { ...form.modNotes },
           [name]: value,
         })
-    }
-    //better place to do this so less errors
-    //and on update
-    if (form.start !== undefined) {
-      form.start.getHours() > form.end.getHours()
-        ? setBadTime(true)
-        : setBadTime(false)
     }
   }
 
@@ -214,6 +209,9 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
   //REfactor the time and date secionts into it's own componenet? Could re use more code here then
+  //Map for inital drops downs here? Sort out/decide labels
+  //re factor get selected days of month
+  ///////
   //Sort out links not going to typed in link - going to localhost/{link} atm
   //make check if it's a link or not function and implemnet in appropriate places
   //-------
@@ -254,33 +252,16 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           </label>
           {getDaysOfSelectedMonth(form.month)}
           <label htmlFor="hour">
-            Hour:
+            Start time:
             <TimeDropDowns
               form={form}
               formSet={handleChange}
               data={hours}
-              name={'hours'}
+              name={'hour'}
               label={'Hour:'}
             />
-            {/* <select
-              id="hour"
-              name="hour"
-              value={form.hour}
-              onChange={handleChange}
-              required
-            >
-              <option value="Hour:" disabled>
-                Hour:
-              </option>
-              {hours.map((x) => (
-                <option key={x} value={x} title={x}>
-                  {x}
-                </option>
-              ))}
-            </select> */}
           </label>
           <label htmlFor="minutes">
-            Minutes:
             <TimeDropDowns
               form={form}
               formSet={handleChange}
@@ -288,65 +269,31 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               name={'minutes'}
               label={'Minutes:'}
             />
-            {/* <select
-              id="minutes"
-              name="minutes"
-              value={form.minutes}
-              onChange={handleChange}
-              required
-            >
-              <option value="Minutes:" disabled>
-                Minutes:
-              </option>
-              {minutes.map((x) => (
-                <option key={x} value={x} title={x}>
-                  {x}
-                </option>
-              ))}
-            </select> */}
           </label>
           <label htmlFor="endHours">
             Till:
-            <select
-              id="endHours"
-              name="endHours"
-              value={form.endHours}
-              onChange={handleChange}
-              required
-            >
-              <option value="Length:" disabled>
-                Hours
-              </option>
-              {hours.map((x) => (
-                <option key={x} value={x} title={x}>
-                  {x}
-                </option>
-              ))}
-            </select>
+            <TimeDropDowns
+              form={form}
+              formSet={handleChange}
+              data={hours}
+              name={'endHours'}
+              // label={'Minutes:'}
+            />
           </label>
+          <TimeDropDowns
+            form={form}
+            formSet={handleChange}
+            data={minutes}
+            name={'endMinutes'}
+            // label={'Minutes:'}
+          />
 
-          <select
-            id="endMinutes"
-            name="endMinutes"
-            value={form.endMinutes}
-            onChange={handleChange}
-            required
-          >
-            <option value="minutes:" disabled>
-              Minutes:
-            </option>
-            {minutes.map((x) => (
-              <option key={x} value={x} title={x}>
-                {x}
-              </option>
-            ))}
-          </select>
-          {badTime ? 'End time is before start time' : ''}
+          {form.start?.getHours() > form.end?.getHours()
+            ? 'End time is before start time'
+            : ''}
+
           <hr />
         </div>
-        ////////////////////////// //////////////////////////
-        ////////////////////////// //////////////////////////
-        //////////////////////////
         <Test
           formSet={handleChange}
           form={form}
@@ -462,7 +409,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           formNames={{ facebook: '', instagram: '', twitter: '' }}
         />
       </form>
-      <NotesForMod globalFromSetter={globalFromSetter} />
+      <NotesForMod globalFromSetter={modNotesFromSetter} />
       <button onClick={handleSubmit}>Save Event </button>
       <Popup details={form} />
     </div>
