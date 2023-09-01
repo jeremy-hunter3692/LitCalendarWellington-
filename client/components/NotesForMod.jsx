@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Test from './TestFormReturn'
+import FormReturn from './FormReturn'
 
 const formNames = {
   Contact: '',
@@ -22,7 +22,11 @@ export default function NotesForMod({ globalFromSetter }) {
   return (
     <>
       <hr></hr>
-      <Test formSet={handleChange} formNames={formNames} form={form} />{' '}
+      <FormReturn
+        formSet={handleChange}
+        formNames={formNames}
+        form={form}
+      />{' '}
       <div className="textarea">
         <div>
           <label htmlFor="extranotes">Extra notes for moderator</label>

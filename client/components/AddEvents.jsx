@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React, { useState } from 'react'
 import Popup from './PopupEvent'
 import NotesForMod from './NotesForMod'
-import Test from './TestFormReturn'
 import DropDowns from './DropDowns'
 import RadioButtons from './RadioButtons'
+import FromReturn from './FormReturn'
 
 const eventType = ['Book Launch', 'Author Talk', 'Reading', 'Other']
 const yearNow = new Date().getFullYear()
@@ -152,6 +151,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           hour: form.endHours,
           minutes: value,
         })
+
         setForm({
           ...form,
           modNotes: { ...form.modNotes },
@@ -218,70 +218,41 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   //some way to differentiate
   // stretch: turn off earlier options for end time setting
   //stop social media favicons changing size: set max size? - works great with non link displaying so maybe fine
+
   //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\
+  const dropDownMenus = [
+    { label: 'Month:', data: months, name: 'month' },
+    { label: 'Date:', data: getDaysOfSelectedMonth(form.month), name: 'date' },
+    { label: 'Hour:', data: hours, name: 'hour' },
+    { label: 'Minutes:', data: minutes, name: 'minutes' },
+    { label: 'Till', data: hours, name: 'endHours' },
+    { label: '', data: minutes, name: 'endMinutes' },
+  ]
+
   return (
     <div className="AddEventContainer">
       <div>
         <form className="AddEvent">
           <div>
-            <label htmlFor="month">
-              Month:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={months}
-                name={'month'}
-                label={'Month:'}
-              />
-            </label>
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={getDaysOfSelectedMonth(form.month)}
-              name={'date'}
-              label={'Date:'}
-            />
-            {/* {getDaysOfSelectedMonth(form.month)} */}
-            <label htmlFor="hour">
-              Start time:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={hours}
-                name={'hour'}
-                label={'Hour:'}
-              />
-            </label>
-            <label htmlFor="minutes">
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={minutes}
-                name={'minutes'}
-                label={'Minutes:'}
-              />
-            </label>
-            <label htmlFor="endHours">
-              Till:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={hours}
-                name={'endHours'}
-                // label={'Minutes:'}
-              />
-            </label>
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={minutes}
-              name={'endMinutes'}
-              // label={'Minutes:'}
-            />
+            Start time:
+            {dropDownMenus.map((x) => {
+              return (
+                <label key={x.name} htmlFor={x.name}>
+                  {x.label}
+                  <DropDowns
+                    form={form}
+                    formSet={handleChange}
+                    data={x.data}
+                    name={x.name}
+                    label={x.label}
+                  />
+                </label>
+              )
+            })}
             {timeCheck()}
             <hr />
           </div>
-          <Test
+          <FromReturn
             formSet={handleChange}
             form={form}
             formNames={{ title: '', location: '', link: '' }}
@@ -306,8 +277,9 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           />
           <hr></hr>
           <div>
-            <label>Koha? </label>
+            <label htmlFor="koha">Koha? </label>
             <input
+              id="koha"
               type="checkbox"
               onChange={() => setForm({ ...form, koha: !form.koha })}
               checked={form?.koha}
@@ -332,7 +304,6 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             name="buyTixLink"
             placeholder=""
           />
-          {/*Radio buttons  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
           <div>
             <RadioButtons
               id="inperson"
@@ -352,35 +323,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
               form={form}
               handleChange={handleChange}
             />
-            {/* <input
-              type="radio"
-              name="inperson"
-              value="In Person"
-              id="inperson"
-              checked={form.inperson === 'In Person'}
-              onChange={handleChange}
-            />
-            <label htmlFor="inperson">In person</label>
-            <input
-              type="radio"
-              name="inperson"
-              value="On line/streamed"
-              id="online/streamed"
-              checked={form.inperson === 'On line/streamed'}
-              onChange={handleChange}
-            />
-            <label htmlFor="online/streamed">online/streamed</label>
-            <input
-              type="radio"
-              name="inperson"
-              value="Both"
-              id="Both"
-              checked={form.inperson === 'Both'}
-              onChange={handleChange}
-            />
-            <label htmlFor="Both">Both</label> */}
           </div>
-          {/* End Radio  */}
           <div className="textarea">
             <div>
               <label htmlFor="about">About:</label>
@@ -397,7 +340,7 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           <hr></hr>
           <h4>Social links:</h4>
           {/* check this is working and then tidy up code + make these into an object inside it? Or not worth it for refactoring purposes? */}
-          <Test
+          <FromReturn
             formSet={handleChange}
             form={form}
             formNames={{ facebook: '', instagram: '', twitter: '' }}
@@ -485,4 +428,62 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
                 </option>
               ))}
             </select> */
+}
+
+{
+  /* <label htmlFor="month">
+              Month:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={months}
+                name={'month'}
+                label={'Month:'}
+              />
+            </label>
+            <DropDowns
+              form={form}
+              formSet={handleChange}
+              data={getDaysOfSelectedMonth(form.month)}
+              name={'date'}
+              label={'Date:'}
+            />
+            {/* {getDaysOfSelectedMonth(form.month)} *
+            <label htmlFor="hour">
+              Start time:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={hours}
+                name={'hour'}
+                label={'Hour:'}
+              />
+            </label>
+            <label htmlFor="minutes">
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={minutes}
+                name={'minutes'}
+                label={'Minutes:'}
+              />
+            </label>
+            <label htmlFor="endHours">
+              Till:
+              <DropDowns
+                form={form}
+                formSet={handleChange}
+                data={hours}
+                name={'endHours'}
+                // label={'Minutes:'}
+              />
+            </label>
+            <DropDowns
+              form={form}
+              formSet={handleChange}
+              data={minutes}
+              name={'endMinutes'}
+              // label={'Minutes:'}
+            />{' '}
+            */
 }

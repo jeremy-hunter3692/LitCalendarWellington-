@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Test({ formNames, formSet, form }) {
+export default function FromReturn({ formNames, formSet, form }) {
   function handleChange(e) {
     formSet(e)
   }
