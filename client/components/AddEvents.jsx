@@ -78,7 +78,7 @@ const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
-  console.log(form)
+  // console.log(form)
 
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -233,39 +233,23 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     <div className="AddEventContainer">
       <div>
         <form className="AddEvent">
-          <div>
-            Start time:
-            {dropDownMenus.map((x) => {
-              return (
-                <label key={x.name} htmlFor={x.name}>
-                  {x.label}
-                  <DropDowns
-                    form={form}
-                    formSet={handleChange}
-                    data={x.data}
-                    name={x.name}
-                    label={x.label}
-                  />
-                </label>
-              )
-            })}
-            {timeCheck()}
-            <hr />
-          </div>
+          <DropDowns
+            form={form}
+            formSet={handleChange}
+            dropData={dropDownMenus}
+          />
+          {timeCheck()}
+          <hr />
           <FromReturn
             formSet={handleChange}
             form={form}
             formNames={{ title: '', location: '', link: '' }}
           />
-          <label htmlFor="type">
-            Event Type:
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={eventType}
-              name={'type'}
-            />
-          </label>
+          <DropDowns
+            form={form}
+            formSet={handleChange}
+            dropData={[{ name: 'type', data: eventType, label: 'Type: ' }]}
+          />
           <label htmlFor="typeother">Other:</label>
           <input
             id="typetother"
@@ -306,20 +290,11 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
           />
           <div>
             <RadioButtons
-              id="inperson"
-              value="In Person"
-              form={form}
-              handleChange={handleChange}
-            />
-            <RadioButtons
-              id="online/stream"
-              value="On line/streamed"
-              form={form}
-              handleChange={handleChange}
-            />
-            <RadioButtons
-              id="both"
-              value="Both"
+              radioDataObj={[
+                { id: 'inperson', value: 'In Person' },
+                { id: 'online/stream', value: 'On line/streamed' },
+                { id: 'both', value: 'Both' },
+              ]}
               form={form}
               handleChange={handleChange}
             />
