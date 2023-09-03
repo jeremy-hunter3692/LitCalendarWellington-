@@ -118,10 +118,14 @@ function recurringEvent(firstEvent, length = 5) {
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
-export default function AddEvent({ eventsSetter, showAddEventSetter }) {
-  const [form, setForm] = useState(initDetails)
+export default function AddEvent({
+  eventsSetter,
+  showAddEventSetter,
+  details,
+}) {
+  const [form, setForm] = useState(details || initDetails)
   const [disabled, setDisabled] = useState(true)
-  console.log(form)
+  // console.log(form)
 
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -217,15 +221,12 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
     eventsSetter(input)
     showAddEventSetter()
     //Todo finsh this below returns an array of events. Figure out how we will save this.
-    recurringEvent(input[0])
+    // recurringEvent(input[0])
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  //  line 214//no buy tickets link + option? if suggested koha
-  ///other input box only turn up on other select
-
   //------
-  //edit event
+  //edit event-working but needs code for undoing time object and mod section. 
   //replicate event could be edit + save as new
   //------
   //make check if it's a link or not function and implemnet in appropriate places
@@ -367,137 +368,4 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
       </div>
     </div>
   )
-}
-
-{
-  /* <label htmlFor="title">Title:</label>
-        <input
-          id="title"
-          onChange={handleChange}
-          value={form.title}
-          name="title"
-          required
-          placeholder="Title"
-        />
-        <label htmlFor="location">Location:</label>
-        <input
-          id="location"
-          onChange={handleChange}
-          value={form.location}
-          name="location"
-          required
-          placeholder="Location"
-        />
-        <label htmlFor="link">Link:</label>
-        <input
-          id="link"
-          onChange={handleChange}
-          value={form.link}
-          name="link"
-          placeholder="link"
-        /> */
-}
-
-{
-  /* <label htmlFor="facebook">Facebook:</label>
-        <input
-          id="facebook"
-          onChange={handleChange}
-          value={form.facebook}
-          name="facebook"
-          placeholder="facebook"
-        />
-        <label htmlFor="instagram">Instagram:</label>
-        <input
-          id="instagram"
-          onChange={handleChange}
-          value={form.instagram}
-          name="instagram"
-          placeholder="Instagram"
-        />
-        <label htmlFor="twitter">Twitter:</label>
-        <input
-          id="twitter"
-          onChange={handleChange}
-          value={form.twitter}
-          name="twitter"
-          placeholder="twitter"
-        /> */
-}
-
-{
-  /* <select
-              id="month"
-              name="month"
-              value={form.month}
-              onChange={handleChange}
-              required
-            >
-              <option value="Month:" disabled>
-                Month:
-              </option>
-              {months.map((x) => (
-                <option key={x} value={x} title={x}>
-                  {x}
-                </option>
-              ))}
-            </select> */
-}
-
-{
-  /* <label htmlFor="month">
-              Month:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={months}
-                name={'month'}
-                label={'Month:'}
-              />
-            </label>
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={getDaysOfSelectedMonth(form.month)}
-              name={'date'}
-              label={'Date:'}
-            />
-            {/* {getDaysOfSelectedMonth(form.month)} *
-            <label htmlFor="hour">
-              Start time:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={hours}
-                name={'hour'}
-                label={'Hour:'}
-              />
-            </label>
-            <label htmlFor="minutes">
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={minutes}
-                name={'minutes'}
-                label={'Minutes:'}
-              />
-            </label>
-            <label htmlFor="endHours">
-              Till:
-              <DropDowns
-                form={form}
-                formSet={handleChange}
-                data={hours}
-                name={'endHours'}
-                // label={'Minutes:'}
-              />
-            </label>
-            <DropDowns
-              form={form}
-              formSet={handleChange}
-              data={minutes}
-              name={'endMinutes'}
-              // label={'Minutes:'}
-            />{' '}
-            */
 }

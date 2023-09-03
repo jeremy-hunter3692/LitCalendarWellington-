@@ -16,7 +16,7 @@ export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
-  console.log(details)
+  // console.log(details)
 
   function handleImages() {
     setTimeout(() => {
@@ -48,7 +48,7 @@ export default function Popup({ details, styleData, close }) {
   const endTime = details.end?.toLocaleTimeString('en-US') || ''
   const endTimeFixed = endTime?.slice(0, -6) + endTime?.slice(-2)
   const about =
-    details.about.length < 300 || fullScreen
+    details.about?.length < 300 || fullScreen
       ? details.about
       : details.about.slice(0, 300)
 
@@ -88,20 +88,20 @@ export default function Popup({ details, styleData, close }) {
                 >
                   {details.link}
                 </a>
-              </li>
-              <li>
+                |{' '}
                 {details.inperson === 'Both'
                   ? 'Online and In Person'
                   : details.inperson}
               </li>
+
               <li>
                 {details.koha > 0 && details.cost > 0
-                  ? `suggest Koha :$ ${details.cost}`
+                  ? `Suggested Koha :$${details.cost}`
                   : details.cost > 0
-                  ? `cost :$ ${details.cost}`
+                  ? `Cost :$${details.cost}`
                   : details.koha
                   ? 'Koha'
-                  : 'free'}{' '}
+                  : 'Free'}{' '}
                 {/* This is probably not neede and will be check at input stage */}
                 {details.buyTixLink !== null && details.buyTixLink !== '' && (
                   <a
