@@ -22,7 +22,7 @@ export default function MyCalendar({ eventsProps }) {
         margin: 0,
         padding: 0,
         width: '20rem',
-        height: '30rem',
+        height: '35rem',
         position: 'absolute',
         left: event.clientX > 650 ? event.clientX - 400 : event.clientX,
         top: event.clientY > 470 ? event.clientY - 300 : event.clientY,
@@ -49,7 +49,7 @@ export default function MyCalendar({ eventsProps }) {
   }
 
   return (
-    <div className='calendar'>
+    <div className="calendar">
       <h1>Calender</h1>
 
       {displayPop && (

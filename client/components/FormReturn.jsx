@@ -26,9 +26,9 @@ export default function FromReturn({ formNames, formSet, form }) {
 
   function makeForms() {
     return names.map((x) => {
-      return <div key={x}> {formGen(x)} </div>
+      return <> {formGen(x)} </>
     })
-  }
+  }4
 
   return <>{makeForms()}</>
 }

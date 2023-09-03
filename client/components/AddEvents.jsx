@@ -14,6 +14,7 @@ const initDetails = {
   hour: '0',
   year: yearNow,
   start: new Date(yearNow, '01', '00', '00'),
+  end: new Date(yearNow, '01', '01', '00'),
   minutes: '0',
   endHours: '0',
   endMinutes: '0',
@@ -31,7 +32,7 @@ const initDetails = {
   cost: '',
   modNotes: {},
   koha: false,
-  buyTixLink: '',
+  buyTixLink: null,
 }
 
 const months = [
@@ -67,41 +68,63 @@ const minutes = Array(12)
   .fill(0)
   .map((_, idx) => idx * 5)
 
-//TODO: arrowise this function?
 const daysInMonth = (month) => new Date(2023, month, 0).getDate()
 
 const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
 
+function getMonthIdx(month) {
+  return months.findIndex((x) => x === month)
+}
+
+function getDaysOfSelectedMonth(month) {
+  let numbers = []
+  if (month) {
+    const idx = getMonthIdx(month)
+    numbers = Array(daysEachMonth[idx])
+      .fill(0)
+      .map((_, idx) => idx + 1)
+  }
+  return numbers
+}
+
+function makeDateObject({ year, month, date, hour, minutes }) {
+  const deStringedMonth = getMonthIdx(month)
+  return new Date(year, deStringedMonth, date, hour, minutes)
+}
+
+function recurringEvent(firstEvent, length = 5) {
+  // make variable for weekly or monthly
+  // if weekly 7 else monthtly get getMonth = 1 ??
+
+  const daysAdded = 7
+  console.log('req top', firstEvent)
+  const weeklyEvents = [firstEvent]
+  for (let i = 1; i < length; i++) {
+    let newDate = {
+      ...firstEvent,
+      //copying last loops datetime
+      start: new Date(weeklyEvents[i - 1].start.valueOf()),
+      end: new Date(weeklyEvents[i - 1].end.valueOf()),
+    }
+    //adding the 7 days to the last weeks datetime
+    newDate.start.setDate(newDate.start.getDate() + daysAdded)
+    newDate.end.setDate(newDate.end.getDate() + daysAdded)
+    //push to returning array
+    weeklyEvents.push(newDate)
+  }
+  console.log('recurring', weeklyEvents)
+  // return weeklyEvents
+}
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 export default function AddEvent({ eventsSetter, showAddEventSetter }) {
   const [form, setForm] = useState(initDetails)
   const [disabled, setDisabled] = useState(true)
-  // console.log(form)
+  console.log(form)
 
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
-  }
-
-  function getMonthIdx(month) {
-    return months.findIndex((x) => x === month)
-  }
-
-  function getDaysOfSelectedMonth(month) {
-    let numbers = []
-    if (month) {
-      const idx = getMonthIdx(month)
-      numbers = Array(daysEachMonth[idx])
-        .fill(0)
-        .map((_, idx) => idx + 1)
-    }
-    return numbers
-  }
-
-  function makeDateObject({ year, month, date, hour, minutes }) {
-    const deStringedMonth = getMonthIdx(month)
-    return new Date(year, deStringedMonth, date, hour, minutes)
   }
 
   function timeCheck() {
@@ -187,20 +210,26 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         delete input[0][x]
       }
     })
+    //double check could make a bug? Maybe add to handle change for preivew purposes
+    form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
     eventsSetter(input)
     showAddEventSetter()
+    //Todo finsh this below returns an array of events. Figure out how we will save this.
+    recurringEvent(input[0])
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  //Map for inital time dropdowns here? Sort out/decide labels
+  //  line 214//no buy tickets link + option? if suggested koha
+  ///other input box only turn up on other select
+
   //------
-  //Sort out links not going to typed in link - going to localhost/{link} atm
+  //edit event
+  //replicate event could be edit + save as new
+  //------
   //make check if it's a link or not function and implemnet in appropriate places
   //-------
-  //splitting more forms into their own componenets
-  //--------
   // pass down state to notes for mods to add to  'global' state.-----working with use state and passed down setter - revisit this
   //--------
   //make check if it's a link or not function and implemnet in appropriate places
@@ -231,8 +260,8 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
 
   return (
     <div className="AddEventContainer">
-      <div>
-        <form className="AddEvent">
+      <div className="addEvent">
+        <form>
           <DropDowns
             form={form}
             formSet={handleChange}
@@ -250,15 +279,20 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             formSet={handleChange}
             dropData={[{ name: 'type', data: eventType, label: 'Type: ' }]}
           />
-          <label htmlFor="typeother">Other:</label>
-          <input
-            id="typetother"
-            onChange={handleChange}
-            value={form.typeother}
-            name="typeother"
-            placeholder="other event type here"
-            disabled={disabled}
-          />
+          {form.type === 'Other' && (
+            <>
+              <label htmlFor="typeother">Other:</label>
+              <input
+                autoFocus
+                name="typeother"
+                id="typetother"
+                onChange={handleChange}
+                value={form.typeother}
+                placeholder="other event type here"
+                disabled={disabled}
+              />
+            </>
+          )}
           <hr></hr>
           <div>
             <label htmlFor="koha">Koha? </label>
@@ -280,14 +314,18 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
             />
             Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
           </div>
-          <label htmlFor="buyTixLink">Link to buy tickets</label>
-          <input
-            id="buyTixLink"
-            onChange={handleChange}
-            value={form.buyTixLink}
-            name="buyTixLink"
-            placeholder=""
-          />
+          {!form.koha && form.cost > 0 && (
+            <>
+              <label htmlFor="buyTixLink">Link to buy tickets</label>
+              <input
+                id="buyTixLink"
+                onChange={handleChange}
+                value={form.buyTixLink}
+                name="buyTixLink"
+                placeholder=""
+              />{' '}
+            </>
+          )}
           <div>
             <RadioButtons
               radioDataObj={[
@@ -324,8 +362,9 @@ export default function AddEvent({ eventsSetter, showAddEventSetter }) {
         <NotesForMod globalFromSetter={modNotesFromSetter} />
         <button onClick={handleSubmit}>Save Event </button>
       </div>
-
-      <Popup details={form} />
+      <div className="popuppreview">
+        <Popup details={form} />
+      </div>
     </div>
   )
 }

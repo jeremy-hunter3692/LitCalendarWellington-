@@ -16,7 +16,7 @@ export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
-  // console.log(details)
+  console.log(details)
 
   function handleImages() {
     setTimeout(() => {
@@ -33,7 +33,7 @@ export default function Popup({ details, styleData, close }) {
         padding: 0,
         position: 'absolute',
         width: '97vw',
-        height: '97vh',
+        height: '99vh',
         left: 2,
         top: 3,
       })
@@ -70,21 +70,23 @@ export default function Popup({ details, styleData, close }) {
             <ul>
               <li>
                 {' '}
-                <strong>{details.title} </strong> | {date} | at {timeFixed} till{' '}
-                {endTimeFixed}
-              </li>
-              <li>
-                Location: {details.location} |{' '}
+                <strong>{details.title} </strong> |{' '}
                 {details.type === 'Other' ? details.typeother : details.type}
               </li>
               <li>
-                {' '}
+                Location: {details.location} |{' '}
+                <i>
+                  {date} at {timeFixed} till {endTimeFixed}
+                </i>
+              </li>
+              <li>
+                Link:{' '}
                 <a
                   href={'https://' + details.link}
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  Link: {details.link}
+                  {details.link}
                 </a>
               </li>
               <li>
@@ -100,15 +102,19 @@ export default function Popup({ details, styleData, close }) {
                   : details.koha
                   ? 'Koha'
                   : 'free'}{' '}
-                <a
-                  href={details.buyTixLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Buy Tickets
-                </a>
+                {/* This is probably not neede and will be check at input stage */}
+                {details.buyTixLink !== null && details.buyTixLink !== '' && (
+                  <a
+                    href={'https://' + details.buyTixLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Buy Tickets
+                  </a>
+                )}
               </li>
               <img
+                id="popimg"
                 src={imageArr[imageIdx]}
                 alt="book cover"
                 width="30%"
@@ -118,7 +124,9 @@ export default function Popup({ details, styleData, close }) {
                 <p>
                   {about}
                   {details.about.length > 300 && !fullScreen ? (
-                    <button onClick={clickThrough}>more</button>
+                    <button id="insidemorebutton" onClick={clickThrough}>
+                      ...more
+                    </button>
                   ) : (
                     ''
                   )}

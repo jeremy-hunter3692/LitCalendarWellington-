@@ -2,7 +2,31 @@
 @import '!style-loader!css-loader!./sass/styles.scss';
 /* import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css */
 
+#insidemorebutton {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  font-size: 0.8rem;
+  border-radius: 0%;
+  /* opacity: 0; */
+}
 
+#popimg {
+  max-height: 40%;
+}
+
+#insidemorebutton:hover {
+  background-color: whitesmoke;
+  opacity: 0.5;
+  color: black; 
+
+  /* color: whitesmoke; */
+
+}
+
+i {
+  font-size: .7em;
+}
 
 html, body, .viewport {
   width: 100%;
@@ -46,9 +70,20 @@ h3 {
   font-size: 25px;
 }
 
-.AddEvent {
-  margin: 2 em;
+a {
+  text-decoration: none;
+  color: white;
+  font-size: 0.8rem;
+  font-style: italic;
+}
 
+.addEvent {
+display: inline-block;
+
+}
+
+.addEvent form {
+  margin: 1.5rem;;
 }
 
 .nav {
@@ -127,14 +162,12 @@ label {
 }
 
 .AddEventContainer {
-  
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  /* border: solid red; */
+float: left;
 }
 
-
+.popuppreview {
+  float: right;
+}
 
 .popup {
 width: inherit;
@@ -151,6 +184,7 @@ display: flex;
 /* flex: grow; */
 flex-direction: column;
 } 
+
 
 .licontainer {
   height: auto;
@@ -179,6 +213,7 @@ flex-direction: column;
 
 .sociallist img {
   width: 30%;
+  
 }
 
 .popup button {
@@ -202,8 +237,12 @@ list-style: none;
 /* border: .5px solid black; */
 padding: 0 0.5rem ;
 
-
 }
+
+.popup p {
+  font-size: 0.8rem;
+}
+
 
 
 .sociallistcont {
