@@ -6,8 +6,9 @@ const formNames = {
   AlternativeContact: '',
   Organisation: '',
 }
-export default function NotesForMod({ globalFromSetter }) {
-  const [form, setForm] = useState(formNames)
+export default function NotesForMod({ globalFromSetter, editDetails }) {
+  const [form, setForm] = useState(editDetails || formNames)
+
   useEffect(() => {
     globalFromSetter(form)
   }, [form])
@@ -34,7 +35,7 @@ export default function NotesForMod({ globalFromSetter }) {
         <textarea
           id="extranotes"
           onChange={handleChange}
-          value={form.about}
+          value={form.extranotes}
           name="extranotes"
           required
           placeholder="Any extra details you would like to go to the mod"

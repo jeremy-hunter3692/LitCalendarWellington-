@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 export default function FromReturn({ formNames, formSet, form }) {
   function handleChange(e) {
@@ -26,9 +26,9 @@ export default function FromReturn({ formNames, formSet, form }) {
 
   function makeForms() {
     return names.map((x) => {
-      return <> {formGen(x)} </>
+      return <Fragment key={x}> {formGen(x)} </Fragment>
     })
-  }4
+  }
 
   return <>{makeForms()}</>
 }

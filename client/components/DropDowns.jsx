@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 export default function DropDowns({ formSet, form, dropData }) {
   function handleChange(e) {
@@ -34,7 +34,7 @@ export default function DropDowns({ formSet, form, dropData }) {
 
   function makeDropDowns() {
     return dropData.map((x) => {
-      return <> {makeDropDownGen(x)} </>
+      return <Fragment key={x.label}> {makeDropDownGen(x)} </Fragment>
     })
   }
 

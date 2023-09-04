@@ -126,6 +126,7 @@ export default function AddEvent({
   const [form, setForm] = useState(details || initDetails)
   const [disabled, setDisabled] = useState(true)
   // console.log(form)
+  const editDetails = details ? details.modNotes : null
 
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -208,12 +209,12 @@ export default function AddEvent({
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
-    let arrayed = Object.keys(input[0])
-    arrayed.map((x) => {
-      if (toBeDeleted.includes(x)) {
-        delete input[0][x]
-      }
-    })
+    // let arrayed = Object.keys(input[0])
+    // arrayed.map((x) => {
+    //   if (toBeDeleted.includes(x)) {
+    //     delete input[0][x]
+    //   }
+    // })
     //double check could make a bug? Maybe add to handle change for preivew purposes
     form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary
@@ -226,7 +227,7 @@ export default function AddEvent({
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
   //------
-  //edit event-working but needs code for undoing time object and mod section. 
+  //edit event-working but needs code for undoing time object and mod section.
   //replicate event could be edit + save as new
   //------
   //make check if it's a link or not function and implemnet in appropriate places
@@ -360,7 +361,10 @@ export default function AddEvent({
             formNames={{ facebook: '', instagram: '', twitter: '' }}
           />
         </form>
-        <NotesForMod globalFromSetter={modNotesFromSetter} />
+        <NotesForMod
+          globalFromSetter={modNotesFromSetter}
+          editDetails={editDetails}
+        />
         <button onClick={handleSubmit}>Save Event </button>
       </div>
       <div className="popuppreview">

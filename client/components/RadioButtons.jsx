@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 export default function RadioButtons({ radioDataObj, handleChange, form }) {
   function radioGen({ id, value }) {
@@ -20,7 +20,7 @@ export default function RadioButtons({ radioDataObj, handleChange, form }) {
 
   function makeRadios() {
     return radioDataObj.map((x) => {
-      return <>{radioGen(x)}</>
+      return <Fragment key={x.id}>{radioGen(x)}</Fragment>
     })
   }
 
