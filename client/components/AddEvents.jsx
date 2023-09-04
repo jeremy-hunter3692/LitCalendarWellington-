@@ -32,7 +32,8 @@ const initDetails = {
   cost: '',
   modNotes: {},
   koha: false,
-  buyTixLink: null,
+  buyTixLink: '',
+  unwagedCost: '',
 }
 
 const months = [
@@ -125,7 +126,7 @@ export default function AddEvent({
 }) {
   const [form, setForm] = useState(details || initDetails)
   const [disabled, setDisabled] = useState(true)
-  // console.log(form)
+  console.log(form)
   const editDetails = details ? details.modNotes : null
 
   function modNotesFromSetter(input) {
@@ -315,7 +316,21 @@ export default function AddEvent({
               placeholder="0"
             />
             Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
+            {!form.koha && (
+              <label htmlFor="unwagedCost">
+                {' '}
+                Optional unwaged cost: $
+                <input
+                  id="unwagedCost"
+                  onChange={handleChange}
+                  value={form.unwagedCost}
+                  name="unwagedCost"
+                  placeholder="0"
+                />
+              </label>
+            )}
           </div>
+
           {!form.koha && form.cost > 0 && (
             <>
               <label htmlFor="buyTixLink">Link to buy tickets</label>

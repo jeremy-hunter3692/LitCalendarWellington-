@@ -25,7 +25,9 @@ const App = () => {
       <button onClick={showAddEventSetter}>
         {showAddEvents ? 'Back' : 'Submit new event'}
       </button>
-      <button onClick={() => showEdit(true)}>edit</button>
+
+      {!edit && <button onClick={() => showEdit(true)}>edit</button>}
+
       {edit ? <EditEvent details={globalEvents[0]} /> : ''}
       {showAddEvents ? (
         <AddEvent
@@ -33,7 +35,7 @@ const App = () => {
           showAddEventSetter={showAddEventSetter}
         />
       ) : (
-        <CalendarContainer eventsProps={globalEvents} />
+        !edit && <CalendarContainer eventsProps={globalEvents} />
       )}
     </>
   )

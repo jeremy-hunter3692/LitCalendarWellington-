@@ -101,7 +101,12 @@ export default function Popup({ details, styleData, close }) {
                   ? `Cost :$${details.cost}`
                   : details.koha
                   ? 'Koha'
-                  : 'Free'}{' '}
+                  : 'Free'}
+                {!details.koha &&
+                Number(details.unwagedCost) > 0 &&
+                !(Number(details.unwagedCost) >= Number(details.cost))
+                  ? `/${details.unwagedCost} waged/unwaged`
+                  : ''}
                 {/* This is probably not neede and will be check at input stage */}
                 {details.buyTixLink !== null && details.buyTixLink !== '' && (
                   <a
