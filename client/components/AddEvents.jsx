@@ -5,7 +5,13 @@ import DropDowns from './DropDowns'
 import RadioButtons from './RadioButtons'
 import FromReturn from './FormReturn'
 
-const eventType = ['Book Launch', 'Author Talk', 'Reading', 'Other']
+const eventType = [
+  'Book Launch',
+  'Author Talk',
+  'Reading',
+  'Book Club',
+  'Other',
+]
 const yearNow = new Date().getFullYear()
 
 const initDetails = {
@@ -34,6 +40,7 @@ const initDetails = {
   koha: false,
   buyTixLink: '',
   unwagedCost: '',
+  // weekly: 0,
 }
 
 const months = [
@@ -93,11 +100,11 @@ function makeDateObject({ year, month, date, hour, minutes }) {
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
 
-function recurringEvent(firstEvent, length = 5) {
+function recurringEvent(firstEvent, length) {
   // make variable for weekly or monthly
   // if weekly 7 else monthtly get getMonth = 1 ??
 
-  const daysAdded = 7
+  const daysAdded = length
   console.log('req top', firstEvent)
   const weeklyEvents = [firstEvent]
   for (let i = 1; i < length; i++) {
@@ -126,7 +133,7 @@ export default function AddEvent({
 }) {
   const [form, setForm] = useState(details || initDetails)
   const [disabled, setDisabled] = useState(true)
-  console.log(form)
+  // console.log(form)
   const editDetails = details ? details.modNotes : null
 
   function modNotesFromSetter(input) {
@@ -223,19 +230,10 @@ export default function AddEvent({
     eventsSetter(input)
     showAddEventSetter()
     //Todo finsh this below returns an array of events. Figure out how we will save this.
-    // recurringEvent(input[0])
+    // recurringEvent(input[0], form.weekly)
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  //------
-  //edit event-working but needs code for undoing time object and mod section.
-  //replicate event could be edit + save as new
-  //------
-  //make check if it's a link or not function and implemnet in appropriate places
-  //-------
-  // pass down state to notes for mods to add to  'global' state.-----working with use state and passed down setter - revisit this
-  //--------
-  //make check if it's a link or not function and implemnet in appropriate places
   //--------
   //reoccuring event? i.e. book club - get from other calendar repo
   //--------
@@ -245,6 +243,14 @@ export default function AddEvent({
   //Uploading image to some where/storage generally
   //Full css work for the pop up
   //--------
+  //------
+  //replicate event could be edit + save as new
+  //------
+  //make check if it's a link or not function and implemnet in appropriate places
+  //-------
+  // pass down state to notes for mods to add to  'global' state.-----working with use state and passed down setter - revisit this
+  //--------
+  //make check if it's a link or not function and implemnet in appropriate places
   //save regular organiser/submitters ?
   //save new ?
   //some way to differentiate
@@ -271,6 +277,14 @@ export default function AddEvent({
             dropData={dropDownMenus}
           />
           {timeCheck()}
+          {/* Reccuring event?
+          <label htmlFor="weekly">How many weeks?</label>
+          <input
+            name="weekly"
+            id="weekly"
+            onChange={handleChange}
+            value={form.weekly}
+          /> */}
           <hr />
           <FromReturn
             formSet={handleChange}
@@ -330,7 +344,6 @@ export default function AddEvent({
               </label>
             )}
           </div>
-
           {!form.koha && form.cost > 0 && (
             <>
               <label htmlFor="buyTixLink">Link to buy tickets</label>
