@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer, Views } from 'react-big-calendar'
 import moment from 'moment'
 import PopupEvent from './PopupEvent'
 
-// import '!style-loader!css-loader!../../server/public/sass/styles.css'
+import '!style-loader!css-loader!../../server/public/sass/styles.css'
 // import '/public/sass/styles.css'
 
 const localizer = momentLocalizer(moment)
