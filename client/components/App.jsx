@@ -8,7 +8,6 @@ const App = () => {
   const [globalEvents, setGlobalEvents] = useState([])
   const [showAddEvents, setShowAddEvents] = useState(false)
   const [edit, showEdit] = useState(false)
-  console.log(globalEvents)
 
   function globalEventSetter(input) {
     setGlobalEvents(input)

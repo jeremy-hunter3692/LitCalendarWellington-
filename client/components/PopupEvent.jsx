@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SocialLinks from './SocialLinks'
 
 const initStyle = {
@@ -16,15 +16,21 @@ export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
-  // console.log(details)
+
+  useEffect(() => {
+    const timeout = handleImages()
+    //clear old time out from the images moving
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [])
 
   function handleImages() {
-    setTimeout(() => {
+    return setTimeout(() => {
       const length = imageArr.length
-      setImageIdx(imageIdx === length - 1 ? 0 : imageIdx + 1)
+      imageIdx === length - 1 ? setImageIdx(0) : setImageIdx(() => imageIdx + 1)
     }, 3000)
   }
-  handleImages()
 
   function clickThrough() {
     if (style !== initStyle) {

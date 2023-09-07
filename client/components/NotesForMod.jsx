@@ -8,9 +8,16 @@ const formNames = {
 }
 export default function NotesForMod({ globalFromSetter, editDetails }) {
   const [form, setForm] = useState(editDetails || formNames)
-
+  console.log('notes for mod')
   useEffect(() => {
-    globalFromSetter(form)
+    console.log('notes for mod')
+    let using = true
+    using ? globalFromSetter(form) : ''
+
+    return () => {
+      using = false
+      setForm({})
+    }
   }, [form])
 
   // console.log('notes4mod', editDetails)

@@ -324,8 +324,10 @@ export default function AddEvent({
             </label>
             <input
               id="cost"
+              type="text"
               onChange={handleChange}
               value={form.cost}
+              aria-label="cost"
               name="cost"
               placeholder="0"
             />
