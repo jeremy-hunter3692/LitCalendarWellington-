@@ -2,27 +2,11 @@
 @import '!style-loader!css-loader!./sass/styles.scss';
 /* import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css */
 
-#insidemorebutton {
-  background-color: transparent;
-  border: none;
-  color: whitesmoke;
-  font-size: 0.8rem;
-  border-radius: 0%;
-  /* opacity: 0; */
-}
-
 #popimg {
   max-height: 40%;
 }
 
-#insidemorebutton:hover {
-  background-color: whitesmoke;
-  opacity: 0.5;
-  color: black; 
 
-  /* color: whitesmoke; */
-
-}
 
 i {
   font-size: .7em;
@@ -147,13 +131,30 @@ label {
   font-size: 20px;
 }
 
-.studentNotes { 
+.textarea {
+  margin: 2em;
+  display: flex;
 
-  background-color: green;
+
 }
-.teacherNotes { 
 
-  background-color:red;
+.calendar{
+  padding: 3rem;
+}
+
+
+textarea {
+  width: 50vw;
+  height: 20vh;
+}
+
+
+
+.costandirl{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
 }
 
 .displayDetails {
@@ -164,6 +165,7 @@ label {
 .AddEventContainer {
 float: left;
 }
+
 
 .popuppreview {
   float: right;
@@ -183,14 +185,18 @@ box-shadow: 5px 5px #d2d2d2 ;
 display: flex;
 /* flex: grow; */
 flex-direction: column;
+word-wrap: break-word
 } 
 
 
 .licontainer {
+
   height: auto;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  flex-wrap: wrap;
+   white-space: nowrap;
   height: 90%;
   background-color: #5f4838;
 }
@@ -207,14 +213,33 @@ flex-direction: column;
 
 }
 
-.licontainer li {
-  overflow-wrap: break-word;
-}
+.popuplink {
+ 
 
-.sociallist img {
-  width: 30%;
+  flex-grow:unset;
+  /* border: solid red; */
+  display: flex;
+  flex-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+/* .licontainer li {
+  overflow-wrap: break-word;
+} */
+
+.popup p {
+  font-size: 0.8rem;
+
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  margin-bottom: 0;
+  
   
 }
+
 
 .popup button {
   display: block;
@@ -227,21 +252,38 @@ flex-direction: column;
   border-radius: 100%;
 }
 
-.popup ul {
-  padding: 0px;
-}
-
-
-.popup li {
-list-style: none;
-/* border: .5px solid black; */
-padding: 0 0.5rem ;
-
-}
-
-.popup p {
+#insidemorebutton {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
   font-size: 0.8rem;
+  border-radius: 0%;
+   margin: 0
+  /* opacity: 0; */
 }
+
+
+#insidemorebutton:hover {
+  background-color: whitesmoke;
+  opacity: 0.5;
+  color: black; 
+
+  /* color: whitesmoke; */
+}
+
+.popup ul {
+  max-width: 90%;
+  padding: 0px;
+  margin-bottom: 0;
+}
+
+
+/* .popup li {
+list-style: none;
+border: .5px solid black;
+padding: 0 0.5rem ;}
+ */
+
 
 
 
@@ -250,7 +292,14 @@ padding: 0 0.5rem ;
   width: auto;
   margin-top: auto;
   margin-bottom: 0;
+  bottom: 0;
 }
+
+.sociallist img {
+  width: 30%;
+  
+}
+
 
 
 .sociallist {
@@ -259,22 +308,7 @@ padding: 0 0.5rem ;
   display: flex; 
   justify-content: space-between;   
   max-height:100%; 
-  max-width:100%
+  max-width:100%;
+  margin-bottom: 1rem;
 }
 
-.textarea {
-  margin: 2em;
-  display: flex;
-
-
-}
-
-.calendar{
-  padding: 3rem;
-}
-
-
-textarea {
-  width: 50vw;
-  height: 20vh;
-}

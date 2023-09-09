@@ -53,12 +53,21 @@ export default function Popup({ details, styleData, close }) {
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)
   const endTime = details.end?.toLocaleTimeString('en-US') || ''
   const endTimeFixed = endTime?.slice(0, -6) + endTime?.slice(-2)
-  const about =
-    details.about?.length < 300 || fullScreen
-      ? details.about
-      : details.about.slice(0, 300)
+  const unwagedDisplay = () => {
+    return (
+      <>
+        /{details.unwagedCost} <i>waged/unwaged</i>
+      </>
+    )
+  }
 
-  //it's less than 300 nothing
+  // replaced with css
+  // const about =
+  //   details.about?.length < 300 || fullScreen
+  //     ? details.about
+  //     : details.about.slice(0, 300)
+
+  // it's less than 300 nothing
 
   return (
     <>
@@ -74,45 +83,51 @@ export default function Popup({ details, styleData, close }) {
           )}
           <div className="licontainer">
             <ul>
-              <li>
+              <div>
                 {' '}
-                <strong>{details.title} </strong> |{' '}
-                {details.type === 'Other' ? details.typeother : details.type}
-              </li>
-              <li>
-                Location: {details.location} |{' '}
+                <strong>{details.title} </strong>
+              </div>
+              <div>
+                {' '}
+                {details.type === 'Other'
+                  ? details.typeother
+                  : details.type} at {details.location}{' '}
+              </div>
+              <div className="popuplink">
                 <i>
-                  {date} at {timeFixed} till {endTimeFixed}
+                  {date} at {timeFixed} till {endTimeFixed} |{' '}
+                  <a
+                    href={'https://' + details.link}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {details.link}
+                  </a>
                 </i>
-              </li>
-              <li>
-                Link:{' '}
-                <a
-                  href={'https://' + details.link}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {details.link}
-                </a>
-                |{' '}
-                {details.inperson === 'Both'
-                  ? 'Online and In Person'
-                  : details.inperson}
-              </li>
-
-              <li>
-                {details.koha > 0 && details.cost > 0
-                  ? `Suggested Koha :$${details.cost}`
-                  : details.cost > 0
-                  ? `Cost :$${details.cost}`
-                  : details.koha
-                  ? 'Koha'
-                  : 'Free'}
-                {!details.koha &&
-                Number(details.unwagedCost) > 0 &&
-                !(Number(details.unwagedCost) >= Number(details.cost))
-                  ? `/${details.unwagedCost} waged/unwaged`
-                  : ''}
+              </div>
+              <div className="costandirl">
+                <div>
+                  {details.koha > 0 && details.cost > 0
+                    ? `Suggested Koha :$${details.cost}`
+                    : details.cost > 0
+                    ? `Cost :$${details.cost}`
+                    : details.koha
+                    ? 'Koha '
+                    : 'Free '}
+                  {!details.koha &&
+                  Number(details.unwagedCost) > 0 &&
+                  !(Number(details.unwagedCost) >= Number(details.cost))
+                    ? unwagedDisplay()
+                    : ''}
+                  {' | '}
+                </div>
+                <div>
+                  {details.inperson === 'Both'
+                    ? 'Online and In Person'
+                    : ` ${details.inperson}`}
+                </div>
+              </div>
+              <div>
                 {/* This is probably not neede and will be check at input stage */}
                 {details.buyTixLink !== null && details.buyTixLink !== '' && (
                   <a
@@ -123,7 +138,7 @@ export default function Popup({ details, styleData, close }) {
                     Buy Tickets
                   </a>
                 )}
-              </li>
+              </div>
               <img
                 id="popimg"
                 src={imageArr[imageIdx]}
@@ -131,18 +146,16 @@ export default function Popup({ details, styleData, close }) {
                 width="30%"
                 // onMouseOver={handleImages}
               ></img>
-              <li>
-                <p>
-                  {about}
-                  {details.about.length > 300 && !fullScreen ? (
-                    <button id="insidemorebutton" onClick={clickThrough}>
-                      ...more
-                    </button>
-                  ) : (
-                    ''
-                  )}
-                </p>
-              </li>
+              <div>
+                <p> {details.about}</p>
+                {details.about.length > 300 && !fullScreen ? (
+                  <button id="insidemorebutton" onClick={clickThrough}>
+                    <i>more..</i>
+                  </button>
+                ) : (
+                  ''
+                )}
+              </div>
             </ul>
             <div className="sociallistcont">
               <ul className="sociallist">
