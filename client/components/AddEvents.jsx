@@ -395,7 +395,10 @@ export default function AddEvent({
           globalFromSetter={modNotesFromSetter}
           editDetails={editDetails}
         />
-        <button onClick={handleSubmit}>Save Event </button>
+        <button onClick={handleSubmit} aria-label="save event">
+          {' '}
+          Save Event{' '}
+        </button>
       </div>
       <div className="popuppreview">
         <Popup details={form} />
