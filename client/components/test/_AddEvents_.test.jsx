@@ -6,9 +6,7 @@ import userEvent from '@testing-library/user-event'
 
 describe('renders child components', () => {
   test('renders form correctly with children', () => {
-    const { getByLabelText, getByText, getByRole, getAllByRole } = render(
-      <AddEvent />
-    )
+    const { getByLabelText, getByText, getByRole } = render(<AddEvent />)
 
     const radio1 = getByRole('radio', { name: 'In Person' })
     const radio2 = getByRole('radio', { name: 'On line/streamed' })
@@ -52,23 +50,51 @@ describe('form test', () => {
   })
 
   test('submits form in correct data shape', async () => {
-    const yearNow = new Date().getFullYear()
+    const month = screen.getByRole('combobox', { name: /month/i })
+    await user.selectOptions(month, 'March')
+    const date = screen.getByRole('combobox', { name: 'Date:' })
+    await user.selectOptions(date, '10')
+    const hour = screen.getByRole('combobox', { name: 'Hour:' })
+    await user.selectOptions(hour, '18')
+    const mins = screen.getByRole('combobox', { name: 'Minutes:' })
+    await user.selectOptions(mins, '30')
+    //THIS IS TOO FRAGILE WILL CHANGE
+    const endMins = screen.getByRole('combobox', { name: 'EndMins' })
+    await user.selectOptions(endMins, '30')
+    const endHour = screen.getByRole('combobox', { name: 'Till' })
+    await user.selectOptions(endHour, '19')
     const title = screen.getByRole('textbox', { name: /title/i })
     await user.type(title, 'Kates Event')
     const location = screen.getByRole('textbox', { name: /location/i })
     await user.type(location, 'a bookstore')
-    const link = screen.getByRole('textbox', { name: /link/i })
+
+    const link = screen.getByRole('textbox', { name: 'link' })
     await user.type(link, 'www.stuff.co.nz')
-    const facebook = screen.getByRole('textbox', { name: /facebook/i })
-    await user.type(facebook, 'www.facebook.com')
+    const type = screen.getByRole('combobox', { name: 'Type:' })
+    await user.selectOptions(type, 'Reading')
+
+    const cost = screen.getByRole('textbox', {
+      name: 'cost',
+    })
+    await user.type(cost, '10')
+    const optionalCost = screen.getByRole('textbox', {
+      name: 'Optional unwaged cost: $',
+    })
+    await user.type(optionalCost, '5')
+    const buyTix = screen.getByRole('textbox', { name: /Link to buy tickets/i })
+    await user.type(buyTix, 'www.stuff.co.nz')
     const about = screen.getByRole('textbox', { name: /about/i })
     await user.type(about, 'some words that will be in the about section')
+
+    const facebook = screen.getByRole('textbox', { name: /facebook/i })
+    await user.type(facebook, 'www.facebook.com')
     const twitter = screen.getByRole('textbox', { name: /twitter/i })
     await user.type(twitter, 'www.twitter.com')
     const instagram = screen.getByRole('textbox', { name: /instagram/i })
     await user.type(instagram, 'www.instagram.com')
     const contact = screen.getByRole('textbox', { name: 'Contact' })
     await user.type(contact, 'Person1')
+
     const altContact = screen.getByRole('textbox', {
       name: 'AlternativeContact',
     })
@@ -77,22 +103,31 @@ describe('form test', () => {
       name: 'Organisation',
     })
     await user.type(organisation, 'Place1')
+    const extranotes = screen.getByRole('textbox', {
+      name: 'Extra notes for moderator',
+    })
+    await user.type(extranotes, 'notes in extra notes mod')
+
+    const year = new Date().getFullYear()
+    const start = new Date(2023, 2, 10, 18, 30)
+    const end = new Date(2023, 2, 10, 19, 30)
+    // const start = new Date(year)
 
     fireEvent.click(screen.getByRole('button', { name: /save event/i }))
     // expect(title.value).toBe('Kates Event')
     expect(onSubmit).toHaveBeenCalledWith([
       {
-        month: 'January',
-        date: '1',
-        hour: '0',
-        year: yearNow,
-        start: new Date(yearNow, '01', '00', '00'),
-        end: new Date(yearNow, '01', '01', '00'),
-        minutes: '0',
-        endHours: '0',
-        endMinutes: '0',
+        month: 'March',
+        date: '10',
+        hour: '18',
+        year: new Date().getFullYear(),
+        start: start,
+        end: end,
+        minutes: '30',
+        endHours: '19',
+        endMinutes: '30',
         title: 'Kates Event',
-        type: 'Book Launch',
+        type: 'Reading',
         link: 'www.stuff.co.nz',
         location: 'a bookstore',
         imageURL: '',
@@ -102,29 +137,111 @@ describe('form test', () => {
         twitter: 'www.twitter.com',
         typeother: '',
         inperson: 'In Person',
-        cost: '',
+        cost: '10',
+        modNotes: {
+          AlternativeContact: 'Person2',
+          Contact: 'Person1',
+          Organisation: 'Place1',
+          extranotes: 'notes in extra notes mod',
+        },
+        koha: false,
+        buyTixLink: 'www.stuff.co.nz',
+        unwagedCost: '5',
+      },
+    ])
+  })
+
+  test('correct snape with type Other and Koha checked', async () => {
+    const month = screen.getByRole('combobox', { name: /month/i })
+    await user.selectOptions(month, 'March')
+    const date = screen.getByRole('combobox', { name: 'Date:' })
+    await user.selectOptions(date, '10')
+    const hour = screen.getByRole('combobox', { name: 'Hour:' })
+    await user.selectOptions(hour, '18')
+    const mins = screen.getByRole('combobox', { name: 'Minutes:' })
+    await user.selectOptions(mins, '30')
+    //THIS IS TOO FRAGILE WILL CHANGE
+    const endMins = screen.getByRole('combobox', { name: 'EndMins' })
+    await user.selectOptions(endMins, '30')
+    const endHour = screen.getByRole('combobox', { name: 'Till' })
+    await user.selectOptions(endHour, '19')
+    const title = screen.getByRole('textbox', { name: /title/i })
+    await user.type(title, 'Kates Event')
+    const location = screen.getByRole('textbox', { name: /location/i })
+    await user.type(location, 'a bookstore')
+    const link = screen.getByRole('textbox', { name: 'link' })
+    await user.type(link, 'www.stuff.co.nz')
+    const type = screen.getByRole('combobox', { name: 'Type:' })
+    await user.selectOptions(type, 'Other')
+    const other = screen.getByPlaceholderText('other event type here')
+    await user.type(other, 'othertext')
+    const koha = screen.getByRole('checkbox', { name: /koha?/i })
+    await user.click(koha)
+    const cost = screen.getByRole('textbox', {
+      name: 'cost',
+    })
+    await user.type(cost, '10')
+    const radio = screen.getByRole('radio', { name: 'On line/streamed' })
+    await user.click(radio)
+    const about = screen.getByRole('textbox', { name: /about/i })
+    await user.type(about, 'some words that will be in the about section')
+
+    const facebook = screen.getByRole('textbox', { name: /facebook/i })
+    await user.type(facebook, 'www.facebook.com')
+    const twitter = screen.getByRole('textbox', { name: /twitter/i })
+    await user.type(twitter, 'www.twitter.com')
+    const instagram = screen.getByRole('textbox', { name: /instagram/i })
+    await user.type(instagram, 'www.instagram.com')
+    const contact = screen.getByRole('textbox', { name: 'Contact' })
+    await user.type(contact, 'Person1')
+
+    const altContact = screen.getByRole('textbox', {
+      name: 'AlternativeContact',
+    })
+    await user.type(altContact, 'Person2')
+    const organisation = screen.getByRole('textbox', {
+      name: 'Organisation',
+    })
+    await user.type(organisation, 'Place1')
+    const year = new Date().getFullYear()
+    const start = new Date(2023, 2, 10, 18, 30)
+    const end = new Date(2023, 2, 10, 19, 30)
+    // const start = new Date(year)
+
+    fireEvent.click(screen.getByRole('button', { name: /save event/i }))
+    // expect(title.value).toBe('Kates Event')
+    expect(onSubmit).toHaveBeenCalledWith([
+      {
+        month: 'March',
+        date: '10',
+        hour: '18',
+        year: new Date().getFullYear(),
+        start: start,
+        end: end,
+        minutes: '30',
+        endHours: '19',
+        endMinutes: '30',
+        title: 'Kates Event',
+        type: 'othertext',
+        link: 'www.stuff.co.nz',
+        location: 'a bookstore',
+        imageURL: '',
+        about: 'some words that will be in the about section',
+        facebook: 'www.facebook.com',
+        instagram: 'www.instagram.com',
+        twitter: 'www.twitter.com',
+        typeother: 'othertext',
+        inperson: 'On line/streamed',
+        cost: '10',
         modNotes: {
           AlternativeContact: 'Person2',
           Contact: 'Person1',
           Organisation: 'Place1',
         },
-        koha: false,
-        buyTixLink: '',
+        koha: true,
+        buyTixLink: null,
         unwagedCost: '',
       },
     ])
   })
 })
-
-// function getTitle() {
-//   return screen.getByRole('textbox', { name: /title/i })
-// }
-// function getLocation() {
-//   return screen.getByRole('textbox', { name: /location/i })
-// }
-// function getAbout() {
-//   return screen.getByRole('textbox', { name: /about/i })
-// }
-// function madeUp() {
-//   return screen.getByRole('textbox', { name: /madeup/i })
-// }

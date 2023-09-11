@@ -264,7 +264,7 @@ export default function AddEvent({
     { label: 'Hour:', data: hours, name: 'hour' },
     { label: 'Minutes:', data: minutes, name: 'minutes' },
     { label: 'Till', data: hours, name: 'endHours' },
-    { label: '', data: minutes, name: 'endMinutes' },
+    { label: 'EndMins', data: minutes, name: 'endMinutes' },
   ]
 
   return (
