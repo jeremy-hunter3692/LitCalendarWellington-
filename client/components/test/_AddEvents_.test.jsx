@@ -12,11 +12,11 @@ describe('renders child components', () => {
     const radio2 = getByRole('radio', { name: 'On line/streamed' })
     const radio3 = getByRole('radio', { name: 'Both' })
     const notesForMod = getByText('Extra notes for moderator')
-    const social1 = getByText('facebook')
-    const social2 = getByText('instagram')
-    const social3 = getByText('twitter')
-    const title = getByText('title')
-    const location = getByRole('textbox', { name: 'location' }) //getByLabelText('Month:')
+    const social1 = getByText('Facebook')
+    const social2 = getByText('Instagram')
+    const social3 = getByText('Twitter')
+    const title = getByText('Title')
+    const location = getByRole('textbox', { name: 'Location' }) //getByLabelText('Month:')
     const cost = getByRole('textbox', { name: 'cost' })
     const cost2 = getByLabelText('Cost: $')
     const date = getByLabelText('Date:')
@@ -68,7 +68,7 @@ describe('form test', () => {
     const location = screen.getByRole('textbox', { name: /location/i })
     await user.type(location, 'a bookstore')
 
-    const link = screen.getByRole('textbox', { name: 'link' })
+    const link = screen.getByRole('textbox', { name: /link/i })
     await user.type(link, 'www.stuff.co.nz')
     const type = screen.getByRole('combobox', { name: 'Type:' })
     await user.selectOptions(type, 'Reading')
@@ -139,9 +139,9 @@ describe('form test', () => {
         inperson: 'In Person',
         cost: '10',
         modNotes: {
-          AlternativeContact: 'Person2',
-          Contact: 'Person1',
-          Organisation: 'Place1',
+          alternativeContact: 'Person2',
+          contact: 'Person1',
+          organisation: 'Place1',
           extranotes: 'notes in extra notes mod',
         },
         koha: false,
@@ -169,7 +169,7 @@ describe('form test', () => {
     await user.type(title, 'Kates Event')
     const location = screen.getByRole('textbox', { name: /location/i })
     await user.type(location, 'a bookstore')
-    const link = screen.getByRole('textbox', { name: 'link' })
+    const link = screen.getByRole('textbox', { name: /link/i })
     await user.type(link, 'www.stuff.co.nz')
     const type = screen.getByRole('combobox', { name: 'Type:' })
     await user.selectOptions(type, 'Other')
@@ -234,9 +234,9 @@ describe('form test', () => {
         inperson: 'On line/streamed',
         cost: '10',
         modNotes: {
-          AlternativeContact: 'Person2',
-          Contact: 'Person1',
-          Organisation: 'Place1',
+          alternativeContact: 'Person2',
+          contact: 'Person1',
+          organisation: 'Place1',
         },
         koha: true,
         buyTixLink: null,

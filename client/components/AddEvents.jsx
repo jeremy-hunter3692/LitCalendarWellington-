@@ -234,6 +234,8 @@ export default function AddEvent({
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
+ // re write formname props as label and object key not worth trying ot make them the same thing
+ 
   //--------
   //reoccuring event? i.e. book club - get from other calendar repo
   //--------
@@ -289,7 +291,7 @@ export default function AddEvent({
           <FromReturn
             formSet={handleChange}
             form={form}
-            formNames={{ title: '', location: '', link: '' }}
+            formNames={{ Title: '', Location: '', Link: '' }}
           />
           <DropDowns
             form={form}
@@ -388,7 +390,7 @@ export default function AddEvent({
           <FromReturn
             formSet={handleChange}
             form={form}
-            formNames={{ facebook: '', instagram: '', twitter: '' }}
+            formNames={{ Facebook: '', Instagram: '', Twitter: '' }}
           />
         </form>
         <NotesForMod

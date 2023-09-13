@@ -4,12 +4,15 @@ export default function FromReturn({ formNames, formSet, form }) {
   function handleChange(e) {
     formSet(e)
   }
-
+  // console.log(formNames)
   function formGen(name) {
-    const nameStr = name.toString()
+    const label = name.toString()
+
+    const nameStr = label.toLowerCase()
+
     return (
       <>
-        <label htmlFor={nameStr}> {nameStr} </label>
+        <label htmlFor={nameStr}> {label} </label>
         <input
           id={nameStr}
           onChange={handleChange}

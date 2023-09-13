@@ -15,7 +15,7 @@ export default function NotesForMod({ globalFromSetter, editDetails }) {
     globalFromSetter(form)
   }, [form])
 
-  // console.log('notes4mod', editDetails)
+  // console.log('notess4mod', form)
 
   function handleChange(e) {
     const { name, value } = e.target

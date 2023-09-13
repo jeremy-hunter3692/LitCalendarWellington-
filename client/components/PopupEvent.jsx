@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import SocialLinks from './SocialLinks'
 
 const initStyle = {
@@ -16,21 +16,25 @@ export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
+  // console.log('top', imageIdx)
 
+  //why does this work with setInterval but not setTimeout
   useEffect(() => {
-    const timeout = handleImages()
+    const clearTimeOut = setInterval(() => {
+      const length = imageArr.length
+      console.log('ranTimeOut', imageIdx, imageArr.length)
+      setImageIdx(imageIdx === length - 1 ? 0 : (imageIdx) => imageIdx + 1)
+    }, 2000)
     //clear old time out from the images moving
     return () => {
-      clearTimeout(timeout)
+      console.log('ranCleanUp', imageIdx, imageArr.length)
+      clearInterval(clearTimeOut)
     }
-  }, [])
+  }, [imageIdx])
 
-  function handleImages() {
-    return setTimeout(() => {
-      const length = imageArr.length
-      imageIdx === length - 1 ? setImageIdx(0) : setImageIdx(() => imageIdx + 1)
-    }, 3000)
-  }
+  // function handleImages() {
+
+  // }
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -146,11 +150,11 @@ export default function Popup({ details, styleData, close }) {
                 width="30%"
                 // onMouseOver={handleImages}
               ></img>
-              <div>
+              <div className="aboutsection">
                 <p> {details.about}</p>
-                {details.about.length > 300 && !fullScreen ? (
+                {details.about.length > 255 && !fullScreen ? (
                   <button id="insidemorebutton" onClick={clickThrough}>
-                    <i>more..</i>
+                    <i>more</i>
                   </button>
                 ) : (
                   ''

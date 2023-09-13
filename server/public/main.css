@@ -1,6 +1,9 @@
 /* @import 'react-big-calendar/lib/sass/styles' */
 @import '!style-loader!css-loader!./sass/styles.scss';
 /* import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css */
+/* :root {
+ --popupcorners: 13px
+} */
 
 #popimg {
   max-height: 40%;
@@ -172,15 +175,17 @@ float: left;
 }
 
 .popup {
+
 width: inherit;
 height: inherit;
 position: inherit;
 z-index: 5;
-background-color: #ee7011;
+
+background-color: #00275e;
 margin: 0px;
 padding: 1rem;
-color: white;
-border-radius: 5px;
+color: #ffffff;
+border-radius: 25px;
 box-shadow: 5px 5px #d2d2d2 ;
 display: flex;
 /* flex: grow; */
@@ -190,15 +195,19 @@ word-wrap: break-word
 
 
 .licontainer {
-
+  border: solid white;
+  border-width: 0.2px;
+  border-radius: 12px;
+  padding: 1rem;
   height: auto;
   display: flex;
+  box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
   flex-direction: column;
   flex-grow: 1;
   flex-wrap: wrap;
    white-space: nowrap;
   height: 90%;
-  background-color: #5f4838;
+  background-color: #1a1511;
 }
 
 
@@ -228,21 +237,33 @@ word-wrap: break-word
   overflow-wrap: break-word;
 } */
 
+
+.aboutsection {
+  display: flex;
+  flex-Direction: row;
+  flex-Wrap: wrap;
+
+}
+
+
 .popup p {
   font-size: 0.8rem;
-
   display: -webkit-box;
+  white-space: normal;
   overflow: hidden;
+  text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 6;
   margin-bottom: 0;
-  
+  margin-right:auto;
   
 }
 
 
+
 .popup button {
   display: block;
+  white-space: nowrap;
   background-color: #ffffff;
   color:#5f4838;
   padding: 0px;
