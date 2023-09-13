@@ -22,19 +22,15 @@ export default function Popup({ details, styleData, close }) {
   useEffect(() => {
     const clearTimeOut = setInterval(() => {
       const length = imageArr.length
-      console.log('ranTimeOut', imageIdx, imageArr.length)
+      // console.log('ranTimeOut', imageIdx, imageArr.length)
       setImageIdx(imageIdx === length - 1 ? 0 : (imageIdx) => imageIdx + 1)
     }, 2000)
     //clear old time out from the images moving
     return () => {
-      console.log('ranCleanUp', imageIdx, imageArr.length)
+      // console.log('ranCleanUp', imageIdx, imageArr.length)
       clearInterval(clearTimeOut)
     }
   }, [imageIdx])
-
-  // function handleImages() {
-
-  // }
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -77,14 +73,21 @@ export default function Popup({ details, styleData, close }) {
     <>
       <div style={style}>
         <div className="popup">
-          {style !== initStyle ? (
-            <>
-              <button onClick={close}>X</button>
-              {!fullScreen && <button onClick={clickThrough}>more</button>}
-            </>
-          ) : (
-            ' '
-          )}
+          <div className="poptoprightbuttons">
+            <div></div>
+            {style !== initStyle ? (
+              <>
+                <button onClick={close}>X</button>
+                {!fullScreen && (
+                  <button onClick={clickThrough}>
+                    {'  '}More{'  '}
+                  </button>
+                )}
+              </>
+            ) : (
+              ' '
+            )}
+          </div>
           <div className="licontainer">
             <ul>
               <div>

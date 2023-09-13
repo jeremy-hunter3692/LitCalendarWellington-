@@ -8,14 +8,9 @@ const formNames = {
 }
 export default function NotesForMod({ globalFromSetter, editDetails }) {
   const [form, setForm] = useState(editDetails || formNames)
-  // console.log('notes for mod')
   useEffect(() => {
-    // console.log('notes for mod')
-
     globalFromSetter(form)
   }, [form])
-
-  // console.log('notess4mod', form)
 
   function handleChange(e) {
     const { name, value } = e.target

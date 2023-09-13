@@ -259,18 +259,24 @@ word-wrap: break-word
   
 }
 
+.poptoprightbuttons {
+display: flex;
+flex-direction: row-reverse;
 
+}
 
 .popup button {
   display: block;
+  width: 100%;
   white-space: nowrap;
-  background-color: #ffffff;
-  color:#5f4838;
-  padding: 0px;
-  width: 10%;
-  margin-left: auto;
+  background-color: whitesmoke;
+  color:#00275e;
+  padding: 0 0.4rem;
+  width: 3rem;
+  font-size: .6rem;
+  margin-top:  .2rem;
   margin-bottom:  .1rem;
-  border-radius: 100%;
+  border-radius: 20%;
 }
 
 #insidemorebutton {

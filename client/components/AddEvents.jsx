@@ -20,7 +20,8 @@ const initDetails = {
   hour: '0',
   year: yearNow,
   start: new Date(yearNow, '01', '00', '00'),
-  end: new Date(yearNow, '01', '01', '00'),
+  //this end date object is probably pointless on init
+  end: new Date(yearNow, '01', '00', '00'),
   minutes: '0',
   endHours: '0',
   endMinutes: '0',
@@ -96,6 +97,7 @@ function getDaysOfSelectedMonth(month) {
 }
 
 function makeDateObject({ year, month, date, hour, minutes }) {
+  console.log()
   const deStringedMonth = getMonthIdx(month)
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
@@ -217,16 +219,23 @@ export default function AddEvent({
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
+    const { start, end } = input[0]
+    //fixing bug that comes from being able to preview end times
+    end.setDate(start.getDate())
+    end.setMonth(start.getMonth())
+    // end.setYear(start.getYear())
+    console.log(start, end)
     // let arrayed = Object.keys(input[0])
     // arrayed.map((x) => {
     //   if (toBeDeleted.includes(x)) {
     //     delete input[0][x]
     //   }
     // })
-    //double check could make a bug? Maybe add to handle change for preivew purposes
+
     form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary
     form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
+
     eventsSetter(input)
     showAddEventSetter()
     //Todo finsh this below returns an array of events. Figure out how we will save this.
@@ -234,8 +243,10 @@ export default function AddEvent({
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
- // re write formname props as label and object key not worth trying ot make them the same thing
- 
+  // re write formname props as label and object key not worth trying ot make them the same thing
+  //Bug if you select end  time and date is on default
+  //becasue date object is only updated when you edit endHours not anything else.
+  //maybe make something that copies start date to end at the submit part
   //--------
   //reoccuring event? i.e. book club - get from other calendar repo
   //--------
