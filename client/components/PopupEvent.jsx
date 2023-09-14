@@ -12,7 +12,11 @@ const initStyle = {
 }
 const imageArr = ['cover0.png', 'cover1.png', 'cover2.png']
 
-export default function Popup({ details, styleData, close }) {
+export default function Popup({
+  details,
+  styleData = { ...initStyle },
+  close,
+}) {
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
@@ -73,22 +77,22 @@ export default function Popup({ details, styleData, close }) {
     <>
       <div style={style}>
         <div className="popup">
-          <div className="poptoprightbuttons">
-            <div></div>
-            {style !== initStyle ? (
-              <>
-                <button onClick={close}>X</button>
-                {!fullScreen && (
-                  <button onClick={clickThrough}>
-                    {'  '}More{'  '}
-                  </button>
-                )}
-              </>
-            ) : (
-              ' '
-            )}
-          </div>
           <div className="licontainer">
+            <div className="poptoprightbuttons">
+              <div></div>
+              {style !== initStyle ? (
+                <>
+                  <button onClick={close}>X</button>
+                  {!fullScreen && (
+                    <button onClick={clickThrough}>
+                      {'  '}More{'  '}
+                    </button>
+                  )}
+                </>
+              ) : (
+                ' '
+              )}
+            </div>
             <ul>
               <div>
                 {' '}

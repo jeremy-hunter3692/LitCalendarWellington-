@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import FormReturn from './FormReturn'
 
-const formNames = {
-  Contact: '',
-  AlternativeContact: '',
-  Organisation: '',
-}
+const formNames = [
+  { label: 'Contact', name: 'contact' },
+  { label: 'Alternative Contact', name: 'alternativeContact' },
+  { label: 'Organisation', name: 'organisation' },
+]
+const initNames = {}
+formNames.forEach((x) => {
+  let name = x.name
+  initNames[name] = ''
+})
+
 export default function NotesForMod({ globalFromSetter, editDetails }) {
-  const [form, setForm] = useState(editDetails || formNames)
+  const [form, setForm] = useState(editDetails || initNames)
+
   useEffect(() => {
     globalFromSetter(form)
   }, [form])

@@ -5,9 +5,6 @@
  --popupcorners: 13px
 } */
 
-#popimg {
-  max-height: 40%;
-}
 
 
 
@@ -73,36 +70,7 @@ display: inline-block;
   margin: 1.5rem;;
 }
 
-.nav {
-  background-color: #fafafa;
-  margin: 0;
-}
 
-.icon {
-  margin: 0 20px ;
-  font-size: 25px;
-  justify-content: left;
-  color:#5f4838;
-}
-
-.icon:hover {
-  color: #576fe3;
-  
-}
-
-.clickMe {
-  padding: 10px;
-  display: inline-block;
-  background: #fafafa;
-  border-radius: 1px;
-  justify-content: left;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 20px;
-}
-
-.clickMe:hover {
-  color: #808fd7;
-}
 
 .textBox {
   width: 90vw;
@@ -112,21 +80,6 @@ display: inline-block;
   justify-content: center;
   font-size: 2rem;
 }
-
-.notesInput{
-  width: 100%;
-  justify-content: center;
-}
-
-.formContainer {
-  background-color: aqua;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  /* gap: 4rem; */
-}
-
 
 
 label {
@@ -152,26 +105,26 @@ textarea {
 }
 
 
+.AddEventContainer {
+float: left;
+}
+
+#popimg {
+  object-fit: contain;
+  max-height: 40%;
+  /* max-width: 40%; */
+}
+
+.popuppreview {
+  float: right;
+}
+
 
 .costandirl{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   white-space: pre-wrap;
-}
-
-.displayDetails {
-
-  color: cornflowerblue;
-}
-
-.AddEventContainer {
-float: left;
-}
-
-
-.popuppreview {
-  float: right;
 }
 
 .popup {
@@ -195,10 +148,12 @@ word-wrap: break-word
 
 
 .licontainer {
+  padding: 0rem 1rem 1rem 1rem;
+
   border: solid white;
   border-width: 0.2px;
   border-radius: 12px;
-  padding: 1rem;
+
   height: auto;
   display: flex;
   box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
@@ -262,6 +217,7 @@ word-wrap: break-word
 .poptoprightbuttons {
 display: flex;
 flex-direction: row-reverse;
+padding: 0.2rem;
 
 }
 

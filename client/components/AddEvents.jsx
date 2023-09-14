@@ -97,7 +97,6 @@ function getDaysOfSelectedMonth(month) {
 }
 
 function makeDateObject({ year, month, date, hour, minutes }) {
-  console.log()
   const deStringedMonth = getMonthIdx(month)
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
@@ -224,7 +223,7 @@ export default function AddEvent({
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     // end.setYear(start.getYear())
-    console.log(start, end)
+
     // let arrayed = Object.keys(input[0])
     // arrayed.map((x) => {
     //   if (toBeDeleted.includes(x)) {
@@ -302,7 +301,11 @@ export default function AddEvent({
           <FromReturn
             formSet={handleChange}
             form={form}
-            formNames={{ Title: '', Location: '', Link: '' }}
+            formNames={[
+              { label: 'Title', name: 'title' },
+              { label: 'Location', name: 'location' },
+              { label: 'Link', name: 'link' },
+            ]}
           />
           <DropDowns
             form={form}
@@ -397,21 +400,25 @@ export default function AddEvent({
           </div>
           <hr></hr>
           <h4>Social links:</h4>
-          {/* check this is working and then tidy up code + make these into an object inside it? Or not worth it for refactoring purposes? */}
           <FromReturn
             formSet={handleChange}
             form={form}
-            formNames={{ Facebook: '', Instagram: '', Twitter: '' }}
+            formNames={[
+              { label: 'Facebook', name: 'facebook' },
+              { label: 'Instagram', name: 'instagram' },
+              { label: 'Twitter', name: 'twitter' },
+            ]}
           />
+
+          <NotesForMod
+            globalFromSetter={modNotesFromSetter}
+            editDetails={editDetails}
+          />
+          <button onClick={handleSubmit} aria-label="save event">
+            {' '}
+            Save Event{' '}
+          </button>
         </form>
-        <NotesForMod
-          globalFromSetter={modNotesFromSetter}
-          editDetails={editDetails}
-        />
-        <button onClick={handleSubmit} aria-label="save event">
-          {' '}
-          Save Event{' '}
-        </button>
       </div>
       <div className="popuppreview">
         <Popup details={form} />

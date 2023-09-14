@@ -96,7 +96,7 @@ describe('form test', () => {
     await user.type(contact, 'Person1')
 
     const altContact = screen.getByRole('textbox', {
-      name: 'AlternativeContact',
+      name: 'Alternative Contact',
     })
     await user.type(altContact, 'Person2')
     const organisation = screen.getByRole('textbox', {
@@ -196,7 +196,7 @@ describe('form test', () => {
     await user.type(contact, 'Person1')
 
     const altContact = screen.getByRole('textbox', {
-      name: 'AlternativeContact',
+      name: 'Alternative Contact',
     })
     await user.type(altContact, 'Person2')
     const organisation = screen.getByRole('textbox', {

@@ -4,32 +4,25 @@ export default function FromReturn({ formNames, formSet, form }) {
   function handleChange(e) {
     formSet(e)
   }
-  // console.log(formNames)
-  function formGen(name) {
-    const label = name.toString()
 
-    const nameStr = label.toLowerCase()
-
+  function formGen({ name, label }) {
     return (
       <>
-        <label htmlFor={nameStr}> {label} </label>
+        <label htmlFor={name}> {label} </label>
         <input
-          id={nameStr}
+          id={name}
           onChange={handleChange}
-          value={form[nameStr]}
-          name={nameStr}
-          placeholder={nameStr}
+          value={form[name]}
+          name={name}
+          placeholder={name}
         />
       </>
     )
   }
 
-  //If it's an object getting pased use this:
-  const names = Object.keys(formNames)
-
   function makeForms() {
-    return names.map((x) => {
-      return <Fragment key={x}> {formGen(x)} </Fragment>
+    return formNames.map((x) => {
+      return <Fragment key={x.name}> {formGen(x)} </Fragment>
     })
   }
 
