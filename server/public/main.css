@@ -1,11 +1,13 @@
-/* @import 'react-big-calendar/lib/sass/styles' */
 @import '!style-loader!css-loader!./sass/styles.scss';
-/* import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css */
 /* :root {
  --popupcorners: 13px
 } */
 
-
+#app {
+  width: 100%;
+  flex-wrap: wrap;
+  display:block;
+}
 
 
 i {
@@ -26,11 +28,7 @@ header {
   width: 100%;
 }
 
-#app {
-  width: 100%;
-  flex-wrap: wrap;
-  display:block;
-}
+
 
 h1 {
   text-align: center;
@@ -61,15 +59,16 @@ a {
   font-style: italic;
 }
 
-.addEvent {
-display: inline-block;
-
+label {
+  
+  font-size: 1rem;;
 }
 
-.addEvent form {
-  margin: 1.5rem;;
-}
 
+textarea {
+  width: 50vw;
+  height: 20vh;
+}
 
 
 .textBox {
@@ -82,10 +81,7 @@ display: inline-block;
 }
 
 
-label {
-  
-  font-size: 20px;
-}
+
 
 .textarea {
   margin: 2em;
@@ -99,15 +95,17 @@ label {
 }
 
 
-textarea {
-  width: 50vw;
-  height: 20vh;
-}
 
+
+.addEvent {
+  display: inline-block;
+  
+  }
 
 .AddEventContainer {
 float: left;
 }
+
 
 #popimg {
   object-fit: contain;
@@ -120,20 +118,12 @@ float: left;
 }
 
 
-.costandirl{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  white-space: pre-wrap;
-}
 
 .popup {
-
 width: inherit;
 height: inherit;
 position: inherit;
 z-index: 5;
-
 background-color: #00275e;
 margin: 0px;
 padding: 1rem;
@@ -153,7 +143,6 @@ word-wrap: break-word
   border: solid white;
   border-width: 0.2px;
   border-radius: 12px;
-
   height: auto;
   display: flex;
   box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
@@ -178,8 +167,6 @@ word-wrap: break-word
 }
 
 .popuplink {
- 
-
   flex-grow:unset;
   /* border: solid red; */
   display: flex;
@@ -188,10 +175,6 @@ word-wrap: break-word
   overflow: hidden;
 
 }
-/* .licontainer li {
-  overflow-wrap: break-word;
-} */
-
 
 .aboutsection {
   display: flex;
@@ -199,7 +182,6 @@ word-wrap: break-word
   flex-Wrap: wrap;
 
 }
-
 
 .popup p {
   font-size: 0.8rem;
@@ -221,6 +203,7 @@ padding: 0.2rem;
 
 }
 
+
 .popup button {
   display: block;
   width: 100%;
@@ -241,17 +224,23 @@ padding: 0.2rem;
   color: whitesmoke;
   font-size: 0.8rem;
   border-radius: 0%;
-   margin: 0
+  margin: 0;
+  padding:0px;
+  width: 10%;
   /* opacity: 0; */
 }
 
+.costandirl{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+}
 
 #insidemorebutton:hover {
   background-color: whitesmoke;
   opacity: 0.5;
   color: black; 
-
-  /* color: whitesmoke; */
 }
 
 .popup ul {
@@ -259,16 +248,6 @@ padding: 0.2rem;
   padding: 0px;
   margin-bottom: 0;
 }
-
-
-/* .popup li {
-list-style: none;
-border: .5px solid black;
-padding: 0 0.5rem ;}
- */
-
-
-
 
 .sociallistcont {
 
@@ -282,9 +261,6 @@ padding: 0 0.5rem ;}
   width: 30%;
   
 }
-
-
-
 .sociallist {
 
   list-style: none;

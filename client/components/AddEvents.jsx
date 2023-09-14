@@ -100,42 +100,40 @@ function makeDateObject({ year, month, date, hour, minutes }) {
   const deStringedMonth = getMonthIdx(month)
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
-
-function recurringEvent(firstEvent, length) {
-  // make variable for weekly or monthly
-  // if weekly 7 else monthtly get getMonth = 1 ??
-
-  const daysAdded = length
-  console.log('req top', firstEvent)
-  const weeklyEvents = [firstEvent]
-  for (let i = 1; i < length; i++) {
-    let newDate = {
-      ...firstEvent,
-      //copying last loops datetime
-      start: new Date(weeklyEvents[i - 1].start.valueOf()),
-      end: new Date(weeklyEvents[i - 1].end.valueOf()),
-    }
-    //adding the 7 days to the last weeks datetime
-    newDate.start.setDate(newDate.start.getDate() + daysAdded)
-    newDate.end.setDate(newDate.end.getDate() + daysAdded)
-    //push to returning array
-    weeklyEvents.push(newDate)
-  }
-  console.log('recurring', weeklyEvents)
-  // return weeklyEvents
-}
+//TODOO implement below
+// function recurringEvent(firstEvent, length) {
+//   // make variable for weekly or monthly
+//   // if weekly 7 else monthtly get getMonth = 1 ??
+//   const daysAdded = length
+//   console.log('req top', firstEvent)
+//   const weeklyEvents = [firstEvent]
+//   for (let i = 1; i < length; i++) {
+//     let newDate = {
+//       ...firstEvent,
+//       //copying last loops datetime
+//       start: new Date(weeklyEvents[i - 1].start.valueOf()),
+//       end: new Date(weeklyEvents[i - 1].end.valueOf()),
+//     }
+//     //adding the 7 days to the last weeks datetime
+//     newDate.start.setDate(newDate.start.getDate() + daysAdded)
+//     newDate.end.setDate(newDate.end.getDate() + daysAdded)
+//     //push to returning array
+//     weeklyEvents.push(newDate)
+//   }
+//   console.log('recurring', weeklyEvents)
+//   // return weeklyEvents
+// }
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 export default function AddEvent({
   eventsSetter,
   showAddEventSetter,
-  details,
+  editDetails,
 }) {
-  const [form, setForm] = useState(details || initDetails)
+  const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
-  // console.log(form)
-  const editDetails = details ? details.modNotes : null
+  // const modDetails = editDetails ? editDetails.modNotes : null
 
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -219,21 +217,22 @@ export default function AddEvent({
     //Reminder events must be an array for the calendar
     let input = [{ ...form }]
     const { start, end } = input[0]
+
     //fixing bug that comes from being able to preview end times
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     // end.setYear(start.getYear())
 
-    // let arrayed = Object.keys(input[0])
-    // arrayed.map((x) => {
-    //   if (toBeDeleted.includes(x)) {
-    //     delete input[0][x]
-    //   }
-    // })
+    let arrayed = Object.keys(input[0])
+    arrayed.map((x) => {
+      if (toBeDeleted.includes(x)) {
+        delete input[0][x]
+      }
+    })
 
     form.koha ? (input[0].buyTixLink = null) : ''
-    //back up for event-type maybe unnessecary
-    form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
+    //back up for event-type maybe unnessecary is breaking edit probably remove then
+    // form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
 
     eventsSetter(input)
     showAddEventSetter()

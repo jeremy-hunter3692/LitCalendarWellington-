@@ -135,7 +135,7 @@ export default function Popup({
                 <div>
                   {details.inperson === 'Both'
                     ? 'Online and In Person'
-                    : ` ${details.inperson}`}
+                    : `${details.inperson}`}
                 </div>
               </div>
               <div>
