@@ -223,12 +223,12 @@ export default function AddEvent({
     end.setMonth(start.getMonth())
     // end.setYear(start.getYear())
 
-    let arrayed = Object.keys(input[0])
-    arrayed.map((x) => {
-      if (toBeDeleted.includes(x)) {
-        delete input[0][x]
-      }
-    })
+    // let arrayed = Object.keys(input[0])
+    // arrayed.map((x) => {
+    //   if (toBeDeleted.includes(x)) {
+    //     delete input[0][x]
+    //   }
+    // })
 
     form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary is breaking edit probably remove then
@@ -377,7 +377,7 @@ export default function AddEvent({
             <RadioButtons
               radioDataObj={[
                 { id: 'inperson', value: 'In Person' },
-                { id: 'online/stream', value: 'On line/streamed' },
+                { id: 'online/stream', value: 'On line/Streamed' },
                 { id: 'both', value: 'Both' },
               ]}
               form={form}

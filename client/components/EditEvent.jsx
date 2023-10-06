@@ -9,6 +9,7 @@ export default function EditEvent({ details }) {
     returnDetails.month = start.toLocaleString('default', {
       month: 'long',
     })
+    
     returnDetails.date = start.getDate().toString()
     returnDetails.hour = start.getHours()
     returnDetails.minutes = start.getMinutes()

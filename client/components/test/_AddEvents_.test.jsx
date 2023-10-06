@@ -151,7 +151,7 @@ describe('form test', () => {
     ])
   })
 
-  test('correct snape with type Other and Koha checked', async () => {
+  test('correct shape with type Other and Koha checked', async () => {
     const month = screen.getByRole('combobox', { name: /month/i })
     await user.selectOptions(month, 'March')
     const date = screen.getByRole('combobox', { name: 'Date:' })
@@ -222,7 +222,7 @@ describe('form test', () => {
         endHours: '19',
         endMinutes: '30',
         title: 'Kates Event',
-        type: 'othertext',
+        type: 'Other',
         link: 'www.stuff.co.nz',
         location: 'a bookstore',
         imageURL: '',

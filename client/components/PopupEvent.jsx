@@ -20,7 +20,6 @@ export default function Popup({
   const [style, setStyle] = useState(styleData || initStyle)
   const [imageIdx, setImageIdx] = useState(0)
   const [fullScreen, setFullScreen] = useState(false)
-  // console.log('top', imageIdx)
 
   //why does this work with setInterval but not setTimeout
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function Popup({
         padding: 0,
         position: 'absolute',
         width: '97vw',
-        height: '99vh',
+        height: '95vh',
         left: 2,
         top: 3,
       })
@@ -60,7 +59,8 @@ export default function Popup({
   const unwagedDisplay = () => {
     return (
       <>
-        /{details.unwagedCost} <i>waged/unwaged</i>
+        /{details.unwagedCost}
+        <i>-waged/unwaged</i>
       </>
     )
   }
@@ -98,15 +98,20 @@ export default function Popup({
                 {' '}
                 <strong>{details.title} </strong>
               </div>
-              <div>
+              {/* TO DO this should probably be for everything here rather than ecah div */}
+              <div className="secondlineMoveDown">
                 {' '}
                 {details.type === 'Other'
                   ? details.typeother
                   : details.type} at {details.location}{' '}
               </div>
-              <div className="popuplink">
-                <i>
+              <div className="secondlineMoveDown">
+                <i className="popuplink">
                   {date} at {timeFixed} till {endTimeFixed} |{' '}
+                </i>
+
+                <i className="popuplink">
+                  {' '}
                   <a
                     href={'https://' + details.link}
                     target="_blank"
@@ -116,7 +121,7 @@ export default function Popup({
                   </a>
                 </i>
               </div>
-              <div className="costandirl">
+              <div className="secondlineMoveDown">
                 <div>
                   {details.koha > 0 && details.cost > 0
                     ? `Suggested Koha :$${details.cost}`
@@ -155,7 +160,6 @@ export default function Popup({
                 src={imageArr[imageIdx]}
                 alt="book cover"
                 width="30%"
-                // onMouseOver={handleImages}
               ></img>
               <div className="aboutsection">
                 <p> {details.about}</p>
