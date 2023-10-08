@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import unpackDetails from './unpackDetails.js'
+import unpackDetails from './functions.js'
 
 describe('edit event', () => {
   test('unpacks date object correctly', () => {

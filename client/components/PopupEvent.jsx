@@ -96,14 +96,13 @@ export default function Popup({
             <ul>
               <div>
                 {' '}
-                <strong>{details.title} </strong>
+                <h3>{details.title} </h3>
               </div>
               {/* TO DO this should probably be for everything here rather than ecah div */}
               <div className="secondlineMoveDown">
                 {' '}
-                {details.type === 'Other'
-                  ? details.typeother
-                  : details.type} at {details.location}{' '}
+                {details.type === 'Other' ? details.typeother : details.type}
+                {` at ${details.location} `}
               </div>
               <div className="secondlineMoveDown">
                 <i className="popuplink">

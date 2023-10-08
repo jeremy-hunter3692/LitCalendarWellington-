@@ -4,111 +4,20 @@ import NotesForMod from './NotesForMod'
 import DropDowns from './DropDowns'
 import RadioButtons from './RadioButtons'
 import FromReturn from './FormReturn'
+import {
+  deleteExtras,
+  makeDateObject,
+  getDaysOfSelectedMonth,
+} from './javascript/functions'
+import {
+  initDetails,
+  toBeDeleted,
+  months,
+  hours,
+  minutes,
+  eventType,
+} from './javascript/initCalendarData'
 
-const eventType = [
-  'Book Launch',
-  'Author Talk',
-  'Reading',
-  'Book Club',
-  'Other',
-]
-const yearNow = new Date().getFullYear()
-
-const initDetails = {
-  month: 'January',
-  date: '1',
-  hour: '0',
-  year: yearNow,
-  start: new Date(yearNow, '0', '01', '00'),
-  //this end date object is probably pointless on init
-  end: new Date(yearNow, '01', '00', '01'),
-  minutes: '0',
-  endHours: '0',
-  endMinutes: '0',
-  title: '',
-  type: 'Book Launch',
-  link: '',
-  location: '',
-  imageURL: '',
-  about: '',
-  facebook: '',
-  instagram: '',
-  twitter: '',
-  typeother: '',
-  inperson: 'In Person',
-  cost: '',
-  modNotes: {},
-  koha: false,
-  buyTixLink: '',
-  unwagedCost: '',
-  // weekly: 0,
-}
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-const toBeDeleted = [
-  'year',
-  'date',
-  'month',
-  'hour',
-  'minutes',
-  'endMinutes',
-  'endHours',
-]
-
-const hours = Array(24)
-  .fill(0)
-  .map((_, idx) => idx)
-
-const minutes = Array(12)
-  .fill(0)
-  .map((_, idx) => idx * 5)
-
-const daysInMonth = (month) => new Date(2023, month, 0).getDate()
-
-const daysEachMonth = months.map((x, idx) => daysInMonth(idx + 1))
-
-function getMonthIdx(month) {
-  return months.findIndex((x) => x === month)
-}
-
-function getDaysOfSelectedMonth(month) {
-  let numbers = []
-  if (month) {
-    const idx = getMonthIdx(month)
-    numbers = Array(daysEachMonth[idx])
-      .fill(0)
-      .map((_, idx) => idx + 1)
-  }
-  return numbers
-}
-
-function makeDateObject({ year, month, date, hour, minutes }) {
-  const deStringedMonth = getMonthIdx(month)
-  return new Date(year, deStringedMonth, date, hour, minutes)
-}
-
-function deleteExtras(input) {
-  let arrayed = Object.keys(input)
-  arrayed.map((x) => {
-    if (toBeDeleted.includes(x)) {
-      delete input[0][x]
-    }
-  })
-}
 //TODOO implement below
 // function recurringEvent(firstEvent, length) {
 //   // make variable for weekly or monthly
@@ -244,9 +153,8 @@ export default function AddEvent({
   }
 
   //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  // re write formname props as label and object key not worth trying ot make them the same thing
-  //Bug if you select end  time and date is on default
-  //becasue date object is only updated when you edit endHours not anything else.
+  //Bug if you select end  time and date is on default -- fixed?: check
+  //becasue date object is only updated when you edit endHours not anything else -- fixed?
   //maybe make something that copies start date to end at the submit part
   //--------
   //reoccuring event? i.e. book club - get from other calendar repo
