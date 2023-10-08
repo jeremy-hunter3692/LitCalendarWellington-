@@ -19,9 +19,9 @@ const initDetails = {
   date: '1',
   hour: '0',
   year: yearNow,
-  start: new Date(yearNow, '01', '00', '00'),
+  start: new Date(yearNow, '0', '01', '00'),
   //this end date object is probably pointless on init
-  end: new Date(yearNow, '01', '00', '00'),
+  end: new Date(yearNow, '01', '00', '01'),
   minutes: '0',
   endHours: '0',
   endMinutes: '0',
@@ -100,6 +100,15 @@ function makeDateObject({ year, month, date, hour, minutes }) {
   const deStringedMonth = getMonthIdx(month)
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
+
+function deleteExtras(input) {
+  let arrayed = Object.keys(input)
+  arrayed.map((x) => {
+    if (toBeDeleted.includes(x)) {
+      delete input[0][x]
+    }
+  })
+}
 //TODOO implement below
 // function recurringEvent(firstEvent, length) {
 //   // make variable for weekly or monthly
@@ -134,7 +143,7 @@ export default function AddEvent({
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
   // const modDetails = editDetails ? editDetails.modNotes : null
-
+  console.log('top', { editDetails })
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
@@ -222,13 +231,7 @@ export default function AddEvent({
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     // end.setYear(start.getYear())
-
-    // let arrayed = Object.keys(input[0])
-    // arrayed.map((x) => {
-    //   if (toBeDeleted.includes(x)) {
-    //     delete input[0][x]
-    //   }
-    // })
+    // deleteExtras(input[0])
 
     form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary is breaking edit probably remove then

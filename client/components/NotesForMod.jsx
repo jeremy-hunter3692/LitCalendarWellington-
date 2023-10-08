@@ -13,8 +13,8 @@ formNames.forEach((x) => {
 })
 
 export default function NotesForMod({ globalFromSetter, editDetails }) {
-  const [form, setForm] = useState(editDetails || initNames)
-
+  const [form, setForm] = useState(editDetails?.modNotes || initNames)
+  console.log('notes', form)
   useEffect(() => {
     globalFromSetter(form)
   }, [form])

@@ -4,7 +4,7 @@ export default function FromReturn({ formNames, formSet, form }) {
   function handleChange(e) {
     formSet(e)
   }
-
+  console.log('form ret', form)
   function formGen({ name, label }) {
     return (
       <>

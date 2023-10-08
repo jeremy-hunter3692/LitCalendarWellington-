@@ -9,7 +9,9 @@ export default function RadioButtons({ radioDataObj, handleChange, form }) {
           type="radio"
           name="inperson"
           value={value}
+          aria-labelledby={id}
           id={id}
+          aria-checked={form.inperson === value}
           checked={form.inperson === value}
           onChange={handleChange}
         />
