@@ -82,7 +82,6 @@ textarea {
 
 
 
-
 .textarea {
   margin: 2em;
   display: flex;
@@ -96,7 +95,6 @@ textarea {
 
 
 
-
 .addEvent {
   display: inline-block;
   
@@ -106,6 +104,10 @@ textarea {
 float: left;
 }
 
+.radioli {
+  list-style: none;
+  display:inline-block;
+}
 
 #popimg {
   object-fit: contain;

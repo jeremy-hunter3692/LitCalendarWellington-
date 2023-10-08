@@ -192,6 +192,7 @@ export default function AddEvent({
   return (
     <div className="AddEventContainer">
       <div className="addEvent">
+        {/* Remember this and try changing to it? <input type="date"></input> */}
         <form>
           <DropDowns
             form={form}
@@ -292,6 +293,7 @@ export default function AddEvent({
                 { id: 'both', value: 'Both' },
               ]}
               form={form}
+              aria-labelledby="OnlineOrIRL"
               handleChange={handleChange}
             />
           </div>

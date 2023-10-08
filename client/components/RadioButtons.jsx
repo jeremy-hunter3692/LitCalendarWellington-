@@ -4,18 +4,19 @@ export default function RadioButtons({ radioDataObj, handleChange, form }) {
   function radioGen({ id, value }) {
     return (
       <>
-        {' '}
-        <input
-          type="radio"
-          name="inperson"
-          value={value}
-          aria-labelledby={id}
-          id={id}
-          aria-checked={form.inperson === value}
-          checked={form.inperson === value}
-          onChange={handleChange}
-        />
-        <label htmlFor={id}>{value}</label>
+        <li className='radioli'>
+          {' '}
+          <input
+            type="radio"
+            name="inperson"
+            value={value}
+            id={id}
+            aria-checked={form.inperson === value}
+            checked={form.inperson === value}
+            onChange={handleChange}
+          />
+          <label htmlFor={id}>{value}</label>
+        </li>
       </>
     )
   }

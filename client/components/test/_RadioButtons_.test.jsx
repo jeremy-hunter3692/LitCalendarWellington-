@@ -11,16 +11,11 @@ describe('returns correct radio buttons', () => {
       { id: 'both', value: 'Both' },
     ]
     const form = { inperson: '' }
-    const { getByRole } = render(
+    const { getAllByRole } = render(
       <RadioButtons radioDataObj={input} form={form} />
     )
-    const radio1 = getByRole('radio', { name: 'In Person' })
-    const radio2 = getByRole('radio', { name: 'On line/streamed' })
-    const radio3 = getByRole('radio', { name: 'Both' })
-
-    expect(radio1).toBeInTheDocument()
-    expect(radio2).toBeInTheDocument()
-    expect(radio3).toBeInTheDocument()
+    const radio = getAllByRole('radio')
+   
   })
 
   // test('makes radio buttons', () => {

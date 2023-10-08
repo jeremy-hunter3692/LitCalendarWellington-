@@ -6,11 +6,11 @@ import userEvent from '@testing-library/user-event'
 
 describe('renders child components', () => {
   test('renders form correctly with children', () => {
-    const { getByLabelText, getByText, getByRole } = render(<AddEvent />)
+    const { getByLabelText, getByText, getByRole, getAllByRole } = render(
+      <AddEvent />
+    )
 
-    const radio1 = getByRole('radio', { name: 'In Person' })
-    const radio2 = getByRole('radio', { name: 'On line/streamed' })
-    const radio3 = getByRole('radio', { name: 'Both' })
+    const radio = getAllByRole('radio')
     const notesForMod = getByText('Extra notes for moderator')
     const social1 = getByText('Facebook')
     const social2 = getByText('Instagram')
@@ -27,9 +27,10 @@ describe('renders child components', () => {
     expect(title).toBeInTheDocument()
     expect(location).toBeInTheDocument()
     expect(date).toBeInTheDocument()
-    expect(radio1).toBeInTheDocument()
-    expect(radio2).toBeInTheDocument()
-    expect(radio3).toBeInTheDocument()
+
+    expect(radio[0].id).toBe('inperson')
+    expect(radio[1].id).toBe('online/stream')
+    expect(radio[2].id).toBe('both')
     expect(social1).toBeInTheDocument()
     expect(social2).toBeInTheDocument()
     expect(social3).toBeInTheDocument()
@@ -181,7 +182,7 @@ describe('form test', () => {
       name: 'cost',
     })
     await user.type(cost, '10')
-    const radio = screen.getByRole('radio', { name: 'On line/streamed' })
+    const radio = screen.getByRole('radio', { name: 'Both' })
     await user.click(radio)
     const about = screen.getByRole('textbox', { name: /about/i })
     await user.type(about, 'some words that will be in the about section')
@@ -231,7 +232,7 @@ describe('form test', () => {
         instagram: 'www.instagram.com',
         twitter: 'www.twitter.com',
         typeother: 'othertext',
-        inperson: 'On line/streamed',
+        inperson: 'Both',
         cost: '10',
         modNotes: {
           alternativeContact: 'Person2',
