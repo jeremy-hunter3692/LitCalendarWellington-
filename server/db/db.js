@@ -18,8 +18,8 @@ function getEventById(id, db = connection) {
 }
 
 function addEvents(info, db = connection) {
-  console.log('info', info)
-  return db('sessions').insert(info)
+  // console.log('db info', info)
+  return db('events').insert(info)
 }
 
 function getAllStudents(db = connection) {

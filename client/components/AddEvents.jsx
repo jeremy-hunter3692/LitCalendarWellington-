@@ -143,12 +143,12 @@ export default function AddEvent({
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     // end.setYear(start.getYear())
-    // deleteExtras(input[0])
 
     form.koha ? (input[0].buyTixLink = null) : ''
     //back up for event-type maybe unnessecary is breaking edit probably remove then
     // form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
-
+    console.log(input[0], input)
+    deleteExtras(input[0])
     eventsSetter(input)
     showAddEventSetter()
     addEvents(input)

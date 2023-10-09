@@ -41,7 +41,7 @@ function deleteExtras(input) {
   let arrayed = Object.keys(input)
   arrayed.map((x) => {
     if (toBeDeleted.includes(x)) {
-      delete input[0][x]
+      delete input[x]
     }
   })
 }

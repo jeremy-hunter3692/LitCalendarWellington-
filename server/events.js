@@ -27,20 +27,23 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   //Matching/changing key names to databse key names
+  //go back and fix camel case on extranotes?
+  const events = req.body
+  function unpackModNotes(inputObj) {
+    // console.log('in func', inputObj)
+    inputObj.contact = inputObj.modNotes.contact
+    inputObj.alternativeContact = inputObj.modNotes.alternativeContact
+    inputObj.organisation = inputObj.modNotes.organisation
+    inputObj.extranotes = inputObj.modNotes.extranotes
+    delete inputObj.modNotes
+    return inputObj
+  }
 
-  const sessions = req.body
-  // sessions.forEach((x) => {
-  //   x.student_id = Number(x.studentId)
-  //   x.teacher_id = x.teacherId
-  //   delete x.name
-  //   delete x.studentId
-  //   delete x.teacherId
-  //   delete x.instrument
-  //   delete x.title
-  // })
-  db.addEvents(sessions)
-    .then((sessions) => {
-      res.send(sessions)
+  const fixedEvents = events.map((x) => unpackModNotes(x))
+  // console.log('fixed', fixedEvents)
+  db.addEvents(fixedEvents)
+    .then((events) => {
+      res.send(events)
     })
     .catch((err) => {
       console.error(err.message)

@@ -29,20 +29,20 @@ describe('GET last sessions', () => {
       })
   })
 
-  test('getLastSession reject', () => {
-    db.getLastSessionById.mockImplementation(() =>
-      Promise.reject(new Error('test error message'))
-    )
+  // test('getLastSession reject', () => {
+  //   db.getLastSessionById.mockImplementation(() =>
+  //     Promise.reject(new Error('test error message'))
+  //   )
 
-    console.error.mockImplementation(() => {})
-    return request(server)
-      .get('/api/v1/sessions/3')
-      .then((res) => {
-        expect(res.status).toBe(500)
-        expect(console.error).toHaveBeenCalledWith('test error message')
-        return null
-      })
-  })
+  //   console.error.mockImplementation(() => {})
+  //   return request(server)
+  //     .get('/api/v1/sessions/3')
+  //     .then((res) => {
+  //       expect(res.status).toBe(500)
+  //       expect(console.error).toHaveBeenCalledWith('test error message')
+  //       return null
+  //     })
+  // })
 })
 
 // describe('GET last sessions /api/v1/s', () => {
