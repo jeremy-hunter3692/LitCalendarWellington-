@@ -17,7 +17,7 @@ export function getAllEvents() {
 
 export function addEvents(data) {
   //conver to utc
-  // console.log(data)
+  console.log('api', data)
   const submitData = [...data]
   submitData.forEach((x) => {
     x.start = x.start.toUTCString()

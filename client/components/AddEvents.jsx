@@ -4,6 +4,7 @@ import NotesForMod from './NotesForMod'
 import DropDowns from './DropDowns'
 import RadioButtons from './RadioButtons'
 import FromReturn from './FormReturn'
+import { addEvents } from '../eventsAPI'
 import {
   deleteExtras,
   makeDateObject,
@@ -52,7 +53,7 @@ export default function AddEvent({
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
   // const modDetails = editDetails ? editDetails.modNotes : null
-  console.log('top', { editDetails })
+  // console.log('top', { editDetails })
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
@@ -132,8 +133,10 @@ export default function AddEvent({
 
   function handleSubmit(e) {
     e.preventDefault()
+    console.log(form)
     //Reminder events must be an array for the calendar
-    let input = [{ ...form }]
+    let input = [{ ...form, ...form.start, ...form.end, ...form.modNotes }]
+
     const { start, end } = input[0]
 
     //fixing bug that comes from being able to preview end times
@@ -148,6 +151,7 @@ export default function AddEvent({
 
     eventsSetter(input)
     showAddEventSetter()
+    addEvents(input)
     //Todo finsh this below returns an array of events. Figure out how we will save this.
     // recurringEvent(input[0], form.weekly)
   }

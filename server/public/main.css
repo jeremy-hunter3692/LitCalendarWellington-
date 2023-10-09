@@ -34,12 +34,12 @@ h1 {
   text-align: center;
   margin: 0;
   font-family:Arial, Helvetica, sans-serif;
-  font-size: 50px;
+  font-size: 2rem;
 }
 
 h2 {
   text-align: center;
-  margin: 30px auto;
+  margin: 1rem auto;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 40px;
   color: rgb(208, 0, 0);
@@ -91,6 +91,10 @@ textarea {
 
 .calendar{
   padding: 3rem;
+  width: 90vw;
+
+  width: 90%;
+
 }
 
 

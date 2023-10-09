@@ -2,7 +2,7 @@ const knex = require('knex')
 const config = require('./knexfile').test
 const testDb = knex(config)
 
-const { getLastSessionById, getAllStudents, addSessions } = require('./db.js')
+const { addEvents, getEventById, getAllEvents } = require('./db.js')
 
 beforeAll(() => {
   return testDb.migrate.latest()

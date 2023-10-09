@@ -3,7 +3,7 @@ const router = express.Router()
 const db = require('./db/db')
 
 router.get('/', (req, res) => {
-  db.getAllSessions()
+  db.getAllEvents()
     .then((data) => {
       res.send(data)
     })
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = req.params.id
-  db.getLastSessionById(id)
+  db.getEventById(id)
     .then((data) => {
       res.send(data)
     })
@@ -29,16 +29,16 @@ router.post('/', (req, res) => {
   //Matching/changing key names to databse key names
 
   const sessions = req.body
-  sessions.forEach((x) => {
-    x.student_id = Number(x.studentId)
-    x.teacher_id = x.teacherId
-    delete x.name
-    delete x.studentId
-    delete x.teacherId
-    delete x.instrument
-    delete x.title
-  })
-  db.addSessions(sessions)
+  // sessions.forEach((x) => {
+  //   x.student_id = Number(x.studentId)
+  //   x.teacher_id = x.teacherId
+  //   delete x.name
+  //   delete x.studentId
+  //   delete x.teacherId
+  //   delete x.instrument
+  //   delete x.title
+  // })
+  db.addEvents(sessions)
     .then((sessions) => {
       res.send(sessions)
     })

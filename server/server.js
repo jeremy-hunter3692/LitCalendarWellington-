@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 
-const sessions = require('./sessions')
+const sessions = require('./events')
 const students = require('./students')
 
 const server = express()

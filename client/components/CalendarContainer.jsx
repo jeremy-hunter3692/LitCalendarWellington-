@@ -50,17 +50,16 @@ export default function MyCalendar({ eventsProps }) {
 
   return (
     <div className="calendar">
-      <h1>Calender</h1>
-
       {displayPop && (
         <PopupEvent details={popDetails} styleData={mousePos} close={close} />
       )}
+      <h1>Calender</h1>
       <Calendar
         localizer={localizer}
         events={eventsProps}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 700 }}
+        style={{ height: 600 }}
         defaultView={Views.MONTH}
         // selectable={true}
         onSelectEvent={handleSelect}

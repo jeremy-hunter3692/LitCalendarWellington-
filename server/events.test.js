@@ -21,7 +21,7 @@ describe('GET last sessions', () => {
     expect.assertions(1)
     db.getLastSessionById.mockReturnValue(Promise.resolve(mockSessionData))
     return request(server)
-      .get(`/api/v1/sessions/${id}`)
+      .get(`/api/v1/events/${id}`)
       .then((res) => {
         expect(res.body[0].id).toBe(5)
 
