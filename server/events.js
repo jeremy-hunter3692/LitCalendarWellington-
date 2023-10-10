@@ -26,21 +26,14 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  //Matching/changing key names to databse key names
   //go back and fix camel case on extranotes?
   const events = req.body
-  function unpackModNotes(inputObj) {
-    // console.log('in func', inputObj)
-    inputObj.contact = inputObj.modNotes.contact
-    inputObj.alternativeContact = inputObj.modNotes.alternativeContact
-    inputObj.organisation = inputObj.modNotes.organisation
-    inputObj.extranotes = inputObj.modNotes.extranotes
-    delete inputObj.modNotes
-    return inputObj
-  }
-
-  const fixedEvents = events.map((x) => unpackModNotes(x))
-  // console.log('fixed', fixedEvents)
+  const fixedEvents = events.map((x) => {
+    x = { ...x, ...x.modNotes }
+    delete x.modNotes
+    return x
+  })
+  console.log('fixed', fixedEvents)
   db.addEvents(fixedEvents)
     .then((events) => {
       res.send(events)

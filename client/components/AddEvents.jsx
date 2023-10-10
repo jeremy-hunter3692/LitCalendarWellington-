@@ -52,8 +52,7 @@ export default function AddEvent({
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
-  // const modDetails = editDetails ? editDetails.modNotes : null
-  // console.log('top', { editDetails })
+  // console.log('top', form)
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
@@ -131,24 +130,33 @@ export default function AddEvent({
     }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    console.log(form)
-    //Reminder events must be an array for the calendar
-    let input = [{ ...form, ...form.start, ...form.end, ...form.modNotes }]
-
-    const { start, end } = input[0]
-
+  function sanitizeSubmitObject(obj) {
+    //TO DO check date object copying here rather than taking the date object.
+    console.log('obj in', obj)
+    let copiedObj = [
+      {
+        ...obj,
+        modNotes: { ...obj.modNotes },
+      },
+    ]
+    console.log('copiedObj', copiedObj)
+    const { start, end } = copiedObj[0]
+    console.log(start, end)
     //fixing bug that comes from being able to preview end times
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
-    // end.setYear(start.getYear())
 
-    form.koha ? (input[0].buyTixLink = null) : ''
-    //back up for event-type maybe unnessecary is breaking edit probably remove then
-    // form.typeother !== '' ? (input[0].type = input[0].typeother) : ''
-    console.log(input[0], input)
-    deleteExtras(input[0])
+    form.koha ? (copiedObj[0].buyTixLink = null) : ''
+    console.log(copiedObj)
+    deleteExtras(copiedObj[0])
+    console.log(copiedObj[0])
+    return copiedObj
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    //Reminder events must be an array for the calendar
+    let input = sanitizeSubmitObject(form)
     eventsSetter(input)
     showAddEventSetter()
     addEvents(input)
