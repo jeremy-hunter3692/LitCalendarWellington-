@@ -33,7 +33,6 @@ router.post('/', (req, res) => {
     delete x.modNotes
     return x
   })
-  console.log('fixed', fixedEvents)
   db.addEvents(fixedEvents)
     .then((events) => {
       res.send(events)

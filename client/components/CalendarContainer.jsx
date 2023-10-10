@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar'
+
 import moment from 'moment'
 import PopupEvent from './PopupEvent'
 
@@ -15,7 +16,7 @@ export default function MyCalendar({ eventsProps }) {
 
   // console.log('calendar init', eventsProps)
   // const [events, setEvents] = useState(eventsProps)
-
+  
   useEffect(() => {
     const handleMouseMove = (event) => {
       setMousePos({

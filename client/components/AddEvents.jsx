@@ -132,24 +132,18 @@ export default function AddEvent({
 
   function sanitizeSubmitObject(obj) {
     //TO DO check date object copying here rather than taking the date object.
-    console.log('obj in', obj)
-    let copiedObj = [
-      {
-        ...obj,
-        modNotes: { ...obj.modNotes },
-      },
-    ]
-    console.log('copiedObj', copiedObj)
-    const { start, end } = copiedObj[0]
-    console.log(start, end)
+    let copiedObj = {
+      ...obj,
+      modNotes: { ...obj.modNotes },
+    }
+
+    const { start, end } = copiedObj
     //fixing bug that comes from being able to preview end times
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
 
-    form.koha ? (copiedObj[0].buyTixLink = null) : ''
-    console.log(copiedObj)
-    deleteExtras(copiedObj[0])
-    console.log(copiedObj[0])
+    form.koha ? (copiedObj.buyTixLink = null) : ''
+    deleteExtras(copiedObj)
     return copiedObj
   }
 
@@ -157,9 +151,9 @@ export default function AddEvent({
     e.preventDefault()
     //Reminder events must be an array for the calendar
     let input = sanitizeSubmitObject(form)
-    eventsSetter(input)
+    eventsSetter([input])
     showAddEventSetter()
-    addEvents(input)
+    addEvents([input])
     //Todo finsh this below returns an array of events. Figure out how we will save this.
     // recurringEvent(input[0], form.weekly)
   }

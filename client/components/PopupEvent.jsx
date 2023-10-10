@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import SocialLinks from './SocialLinks'
 
 const initStyle = {
@@ -49,8 +49,8 @@ export default function Popup({
       setFullScreen(true)
     }
   }
-
-  const date = details.start?.toDateString()
+  console.log(details.start, typeof details.start)
+  const date = details.start.toDateString()
   //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US') || ''
   const timeFixed = time?.slice(0, -6) + time?.slice(-2)

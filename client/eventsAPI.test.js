@@ -5,7 +5,7 @@ const { getEventById, getAllEvents, addEvents } = require('./eventsAPI')
 const apiUrl = '/api/v1/events'
 
 describe('getAllEvents', () => {
-  test('gets All events from db', () => {
+  test('gets All events from db and TODO doesnt change date object', () => {
     const scope = nock('http://localhost')
       .get(apiUrl)
       .reply(200, { data: 'testing data' })

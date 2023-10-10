@@ -3,7 +3,7 @@ const config = require('./knexfile')[environment]
 const connection = require('knex')(config)
 
 function getAllEvents(db = connection) {
-  return db('sessions').join('students', 'student_id', 'students.id').select()
+  return db('events').select()
 }
 
 // function getLastSessionById(id, db = connection) {
@@ -18,7 +18,6 @@ function getEventById(id, db = connection) {
 }
 
 function addEvents(info, db = connection) {
-  // console.log('db info', info)
   return db('events').insert(info)
 }
 
