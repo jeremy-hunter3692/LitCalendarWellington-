@@ -1,5 +1,32 @@
 import { months, daysEachMonth, toBeDeleted } from './initCalendarData'
 
+//TODOO implement below
+// function recurringEvent(firstEvent, length) {
+//   // make variable for weekly or monthly
+//   // if weekly 7 else monthtly get getMonth = 1 ??
+//   const daysAdded = length
+//   console.log('req top', firstEvent)
+//   const weeklyEvents = [firstEvent]
+//   for (let i = 1; i < length; i++) {
+//     let newDate = {
+//       ...firstEvent,
+//       //copying last loops datetime
+//       start: new Date(weeklyEvents[i - 1].start.valueOf()),
+//       end: new Date(weeklyEvents[i - 1].end.valueOf()),
+//     }
+//     //adding the 7 days to the last weeks datetime
+//     newDate.start.setDate(newDate.start.getDate() + daysAdded)
+//     newDate.end.setDate(newDate.end.getDate() + daysAdded)
+//     //push to returning array
+//     weeklyEvents.push(newDate)
+//   }
+//   console.log('recurring', weeklyEvents)
+//   // return weeklyEvents
+// }
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+
 function unpackDetails(details) {
   console.log(details)
   const { start, end } = details
@@ -38,6 +65,18 @@ function makeDateObject({ year, month, date, hour, minutes }) {
   return new Date(year, deStringedMonth, date, hour, minutes)
 }
 
+function copyWithNewDateObj(data) {
+  //array in
+  return data.map((x) => {
+    return {
+      ...x,
+      start: new Date(x.start),
+      end: new Date(x.end),
+      modNotes: { ...x.modNotes },
+    }
+  })
+}
+
 function deleteExtras(input) {
   let arrayed = Object.keys(input)
   arrayed.map((x) => {
@@ -52,4 +91,5 @@ export {
   getDaysOfSelectedMonth,
   getMonthIdx,
   unpackDetails,
+  copyWithNewDateObj,
 }

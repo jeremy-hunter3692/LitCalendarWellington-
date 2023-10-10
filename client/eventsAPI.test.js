@@ -5,12 +5,33 @@ const { getEventById, getAllEvents, addEvents } = require('./eventsAPI')
 const apiUrl = '/api/v1/events'
 
 describe('getAllEvents', () => {
-  test('gets All events from db and TODO doesnt change date object', () => {
+  test('gets All events from db and remakes the date object', () => {
+    const date = new Date('2023-10-10T20:33:33.967Z')
     const scope = nock('http://localhost')
       .get(apiUrl)
-      .reply(200, { data: 'testing data' })
+      .reply(200, [
+        {
+          start: '2023-10-10T20:33:33.967Z',
+          end: '2023-10-10T20:33:33.967Z',
+          alternativeContact: '2',
+          contact: '1',
+          organisation: '3',
+          extranotes: '1234',
+        },
+      ])
     return getAllEvents().then((result) => {
-      expect(result).toEqual({ data: 'testing data' })
+      expect(result).toEqual([
+        {
+          start: date,
+          end: date,
+          modNotes: {
+            alternativeContact: '2',
+            contact: '1',
+            organisation: '3',
+            extranotes: '1234',
+          },
+        },
+      ])
       expect(scope.isDone()).toBe(true)
     })
   })
@@ -27,30 +48,29 @@ describe('getAllEvents', () => {
 
   //TO DOOOOO
   //check what type of object you are actually sending here and what format it will be in
-  test('adds events to the database with times in utc', () => {
-    const scope = nock('http://localhost')
-      .post(apiUrl)
-      .reply(200, { data: 'testing data' })
+
+  test('adds events to the database with times in utc and does not mutate', () => {
     const data = [
-      { start: new Date(), end: new Date() },
-      { start: new Date('1995-12-17T03:24:00'), end: new Date() },
+      {
+        start: new Date('1995-12-17T03:24:00'),
+        end: new Date('1995-12-20T03:24:00'),
+      },
+      {
+        start: new Date('1998-12-17T03:24:00'),
+        end: new Date('1998-12-18T03:24:00'),
+      },
     ]
-
-    const dataRes = data[0].start.toUTCString()
-    const dataRes1 = data[1].start.toUTCString()
-    const dataResEnd = data[0].end.toUTCString()
-    const dataRes1End = data[1].end.toUTCString()
-
-    // data.map((x) => {
-    //   x.start = 1 //x.start.toUTCString()
-    // })
+    const scope = nock('http://localhost').post(apiUrl).reply(200, data)
 
     return addEvents(data).then((result) => {
-      expect(result[0]).toEqual({ data: 'testing data' })
-      expect(result[1][0].start).toEqual(dataRes)
-      expect(result[1][0].end).toEqual(dataResEnd)
-      expect(result[1][1].start).toEqual(dataRes1)
-      expect(result[1][1].end).toEqual(dataRes1End)
+      const returnData = result[1]
+      expect(returnData[0].start).toEqual(data[0].start)
+      expect(returnData[0].start).not.toBe(data[0].start)
+      expect(returnData[0].end).not.toBe(data[0].end)
+      expect(returnData[1].start).not.toBe(data[1].start)
+      expect(returnData[1].end).not.toBe(data[1].end)
+      expect(returnData).not.toBe(data)
+
       expect(scope.isDone()).toBe(true)
     })
   })

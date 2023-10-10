@@ -60,6 +60,10 @@ const toBeDeleted = [
   'minutes',
   'endMinutes',
   'endHours',
+  'alternativeContact',
+  'contact',
+  'organisation',
+  'extranotes',
 ]
 
 const hours = Array(24)

@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import request from 'superagent'
 // eslint-disable-next-line no-unused-vars
+import { deleteExtras, copyWithNewDateObj } from './javascript/functions'
 const apiUrl = '/api/v1/events'
 
 export function getEventById(id) {
@@ -18,7 +19,7 @@ export function getAllEvents() {
       contact: data[0].contact,
       alternativeContact: data[0].alternativeContact,
     }
-
+    deleteExtras(data[0])
     data[0].start = new Date(data[0].start)
     data[0].end = new Date(data[0].end)
     return res.body
@@ -26,15 +27,8 @@ export function getAllEvents() {
 }
 
 export function addEvents(data) {
-  //conver to utc
-  const submitData = [...data]
-  submitData.forEach((x) => {
-    let start = new Date(x.start.toUTCString())
-    let end = new Date(x.end.toUTCString())
-    x.start = start
-    x.end = end
-  })
-  // console.log('api', typeof data[0].start)
+  // const submitData = structuredClone(data)
+  const submitData = copyWithNewDateObj(data)
   return request
     .post(apiUrl)
     .send(submitData)

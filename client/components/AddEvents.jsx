@@ -9,7 +9,8 @@ import {
   deleteExtras,
   makeDateObject,
   getDaysOfSelectedMonth,
-} from './javascript/functions'
+  copyWithNewDateObj,
+} from '../javascript/functions'
 import {
   initDetails,
   toBeDeleted,
@@ -17,34 +18,8 @@ import {
   hours,
   minutes,
   eventType,
-} from './javascript/initCalendarData'
+} from '../javascript/initCalendarData'
 
-//TODOO implement below
-// function recurringEvent(firstEvent, length) {
-//   // make variable for weekly or monthly
-//   // if weekly 7 else monthtly get getMonth = 1 ??
-//   const daysAdded = length
-//   console.log('req top', firstEvent)
-//   const weeklyEvents = [firstEvent]
-//   for (let i = 1; i < length; i++) {
-//     let newDate = {
-//       ...firstEvent,
-//       //copying last loops datetime
-//       start: new Date(weeklyEvents[i - 1].start.valueOf()),
-//       end: new Date(weeklyEvents[i - 1].end.valueOf()),
-//     }
-//     //adding the 7 days to the last weeks datetime
-//     newDate.start.setDate(newDate.start.getDate() + daysAdded)
-//     newDate.end.setDate(newDate.end.getDate() + daysAdded)
-//     //push to returning array
-//     weeklyEvents.push(newDate)
-//   }
-//   console.log('recurring', weeklyEvents)
-//   // return weeklyEvents
-// }
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
 export default function AddEvent({
   eventsSetter,
   showAddEventSetter,
@@ -132,19 +107,15 @@ export default function AddEvent({
 
   function sanitizeSubmitObject(obj) {
     //TO DO check date object copying here rather than taking the date object.
-    let copiedObj = {
-      ...obj,
-      modNotes: { ...obj.modNotes },
-    }
-
-    const { start, end } = copiedObj
+    const copiedObj = copyWithNewDateObj([obj])
+    const deArrayed = copiedObj[0]
+    const { start, end } = deArrayed
     //fixing bug that comes from being able to preview end times
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
-
-    form.koha ? (copiedObj.buyTixLink = null) : ''
-    deleteExtras(copiedObj)
-    return copiedObj
+    form.koha ? (deArrayed.buyTixLink = null) : ''
+    deleteExtras(deArrayed)
+    return deArrayed
   }
 
   function handleSubmit(e) {
@@ -327,13 +298,11 @@ export default function AddEvent({
               { label: 'Twitter', name: 'twitter' },
             ]}
           />
-
           <NotesForMod
             globalFromSetter={modNotesFromSetter}
             editDetails={editDetails}
           />
           <button onClick={handleSubmit} aria-label="save event">
-            {' '}
             Save Event{' '}
           </button>
         </form>

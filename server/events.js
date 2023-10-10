@@ -28,6 +28,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   //go back and fix camel case on extranotes?
   const events = req.body
+  console.log(req.body[0].start)
   const fixedEvents = events.map((x) => {
     x = { ...x, ...x.modNotes }
     delete x.modNotes
