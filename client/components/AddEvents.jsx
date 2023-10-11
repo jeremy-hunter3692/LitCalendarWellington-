@@ -65,7 +65,6 @@ export default function AddEvent({
           hour: value,
           minutes: form.endMinutes,
         })
-
         setForm({
           ...form,
           modNotes: { ...form.modNotes },
@@ -79,7 +78,6 @@ export default function AddEvent({
           hour: form.endHours,
           minutes: value,
         })
-
         setForm({
           ...form,
           modNotes: { ...form.modNotes },
@@ -121,7 +119,7 @@ export default function AddEvent({
   function handleSubmit(e) {
     e.preventDefault()
     //Reminder events must be an array for the calendar
-    let input = sanitizeSubmitObject(form)
+    const input = sanitizeSubmitObject(form)
     eventsSetter([input])
     showAddEventSetter()
     addEvents([input])
@@ -129,34 +127,6 @@ export default function AddEvent({
     // recurringEvent(input[0], form.weekly)
   }
 
-  //TO DO: //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\
-  //Bug if you select end  time and date is on default -- fixed?: check
-  //becasue date object is only updated when you edit endHours not anything else -- fixed?
-  //maybe make something that copies start date to end at the submit part
-  //--------
-  //reoccuring event? i.e. book club - get from other calendar repo
-  //--------
-  // put in stream link in location here if online?
-  ///-------
-  //checking for white space + required froms etc?
-  //Uploading image to some where/storage generally
-  //Full css work for the pop up
-  //--------
-  //------
-  //replicate event could be edit + save as new
-  //------
-  //make check if it's a link or not function and implemnet in appropriate places
-  //-------
-  // pass down state to notes for mods to add to  'global' state.-----working with use state and passed down setter - revisit this
-  //--------
-  //make check if it's a link or not function and implemnet in appropriate places
-  //save regular organiser/submitters ?
-  //save new ?
-  //some way to differentiate
-  // stretch: turn off earlier options for end time setting
-  //stop social media favicons changing size: set max size? - works great with non link displaying so maybe fine
-
-  //////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\\\\\\\\\\\\\\\\\\\\//////////////////\\
   const dropDownMenus = [
     { label: 'Month:', data: months, name: 'month' },
     { label: 'Date:', data: getDaysOfSelectedMonth(form.month), name: 'date' },

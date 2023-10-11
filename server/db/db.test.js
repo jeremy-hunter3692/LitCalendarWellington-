@@ -2,7 +2,7 @@ const knex = require('knex')
 const config = require('./knexfile').test
 const testDb = knex(config)
 
-const { addEvents, getEventById, getAllEvents } = require('./db.js')
+const { addEvents, getAllEvents } = require('./db.js')
 
 beforeAll(() => {
   return testDb.migrate.latest()
@@ -16,59 +16,74 @@ afterAll(() => {
   return testDb.destroy()
 })
 
-describe('getLastSession', () => {
-  test('gets last session from the database', () => {
-    const id = 8
-    expect.assertions(1)
-    return getLastSessionById(id, testDb).then((sessions) => {
-      expect(sessions.id).toBe(8)
-    })
-  })
-})
-describe('getAllStudents', () => {
+describe('getAllEvents', () => {
   test('gets students from the database', () => {
     expect.assertions(1)
-    return getAllStudents(testDb).then((students) => {
-      expect(students).toHaveLength(4)
+    return getAllEvents(testDb).then((students) => {
+      expect(students).toHaveLength(2)
     })
   })
 })
 
-describe('addSessions', () => {
-  test('adds a new session to the database', () => {
-    expect.assertions(7)
-
+describe('addEvents', () => {
+  test('addsnew Events to db', () => {
     const mockInfo = [
       {
-        start: '22-10-02',
-        end: '06:04',
-        student_id: 7,
-        studentNotes: 'Hello',
-        teacher_id: 2,
-        teacherNotes: 'Goodbye',
+        start: new Date(),
+        end: new Date(),
+        title: 'Kates Event',
+        type: 'Reading',
+        link: 'www.stuff.co.nz',
+        location: 'a bookstore',
+        imageURL: '',
+        about: 'some words that will be in the about section',
+        facebook: 'www.facebook.com',
+        instagram: 'www.instagram.com',
+        twitter: 'www.twitter.com',
+        typeother: '',
+        inperson: 'In Person',
+        cost: '10',
+        alternativeContact: 'Person2',
+        contact: 'Person1',
+        organisation: 'Place1',
+        extranotes: 'notes in extra notes mod',
+
+        koha: false,
+        buyTixLink: 'www.stuff.co.nz',
+        unwagedCost: '5',
       },
       {
-        start: '21-10-06',
-        end: '05:24',
-        student_id: 4,
-        studentNotes: 'Hey',
-        teacher_id: 7,
-        teacherNotes: 'Bye',
+        start: new Date(),
+        end: new Date(),
+        title: 'Kates Event',
+        type: 'Reading',
+        link: 'www.stuff.co.nz',
+        location: 'a bookstore',
+        imageURL: '',
+        about: 'some words that will be in the about section',
+        facebook: 'www.facebook.com',
+        instagram: 'www.instagram.com',
+        twitter: 'www.twitter.com',
+        typeother: '',
+        inperson: 'In Person',
+        cost: '10',
+        alternativeContact: 'Person2',
+        contact: 'Person1',
+        organisation: 'Place1',
+        extranotes: 'notes in extra notes mod',
+
+        koha: false,
+        buyTixLink: 'www.stuff.co.nz',
+        unwagedCost: '5',
       },
     ]
 
-    return addSessions(mockInfo, testDb)
+    return addEvents(mockInfo, testDb)
       .then(() => {
-        return testDb('sessions').select()
+        return testDb('events').select()
       })
-      .then((sessions) => {
-        expect(sessions).toHaveLength(7)
-        expect(sessions[5].student_id).toBe(7)
-        expect(sessions[5].teacher_id).toBe(2)
-        expect(sessions[5].studentNotes).toBe('Hello')
-        expect(sessions[5].teacherNotes).toBe('Goodbye')
-        expect(sessions[5].start).toBe('22-10-02')
-        expect(sessions[5].end).toBe('06:04')
+      .then((events) => {
+        expect(events).toHaveLength(4)
       })
   })
 })

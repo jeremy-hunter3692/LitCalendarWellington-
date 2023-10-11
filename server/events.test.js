@@ -10,39 +10,37 @@ afterEach(() => {
   console.error.mockReset()
 })
 
-describe('GET last sessions', () => {
-  test('returns last session from db', () => {
-    let id = 3
+describe('gets all events', () => {
+  test('returns events', () => {
     const mockSessionData = [
       { id: 5, name: 'Summer Lovin' },
       { id: 6, name: 'Winter Chills' },
       { id: 7, name: 'Autum Blues' },
     ]
-    expect.assertions(1)
-    db.getLastSessionById.mockReturnValue(Promise.resolve(mockSessionData))
+    // expect.assertions(1)
+    db.getAllEvents.mockReturnValue(Promise.resolve(mockSessionData))
     return request(server)
-      .get(`/api/v1/events/${id}`)
+      .get('/api/v1/events')
       .then((res) => {
-        expect(res.body[0].id).toBe(5)
-
+        expect(res.body).toEqual(mockSessionData)
         return null
       })
   })
 
-  // test('getLastSession reject', () => {
-  //   db.getLastSessionById.mockImplementation(() =>
-  //     Promise.reject(new Error('test error message'))
-  //   )
+  test('gets all events fail', () => {
+    db.getAllEvents.mockImplementation(() =>
+      Promise.reject(new Error('test error message'))
+    )
 
-  //   console.error.mockImplementation(() => {})
-  //   return request(server)
-  //     .get('/api/v1/sessions/3')
-  //     .then((res) => {
-  //       expect(res.status).toBe(500)
-  //       expect(console.error).toHaveBeenCalledWith('test error message')
-  //       return null
-  //     })
-  // })
+    console.error.mockImplementation(() => {})
+    return request(server)
+      .get('/api/v1/events')
+      .then((res) => {
+        expect(res.status).toBe(500)
+        expect(console.error).toHaveBeenCalledWith('test error message')
+        return null
+      })
+  })
 })
 
 // describe('GET last sessions /api/v1/s', () => {
@@ -65,8 +63,8 @@ describe('GET last sessions', () => {
 //   })
 // })
 
-describe('Post a session /api/v1/sessions', () => {
-  test('Posts a sessions and returns the session details', () => {
+describe('adds events', () => {
+  test('posts events to the sever', () => {
     const mockPostSessionData = [
       {
         start: '22-10-02',
@@ -76,6 +74,7 @@ describe('Post a session /api/v1/sessions', () => {
         studentNotes: 'Hello',
         teacherId: 2,
         teacherNotes: 'Goodbye',
+        modNotes: { conatact: 'blah', otherthing: 'blach' },
       },
     ]
 
@@ -83,30 +82,31 @@ describe('Post a session /api/v1/sessions', () => {
       {
         start: '22-10-02',
         end: '06:04',
-        student_id: 7,
+        studentId: 7,
         studentNotes: 'Hello',
-        teacher_id: 2,
         teacherNotes: 'Goodbye',
       },
     ]
 
-    expect.assertions(1)
-    db.addSessions.mockReturnValue(Promise.resolve(mockPostSessionData))
+    expect.assertions(2)
+    db.addEvents.mockReturnValue(Promise.resolve(mockReturnObject))
     return request(server)
-      .post('/api/v1/sessions')
+      .post('/api/v1/events')
       .send(mockPostSessionData)
       .then((res) => {
-        expect(res.body).toBe(mockReturnObject)
+        console.log('restest', res.body)
+        expect(res.body).toEqual(mockReturnObject)
+        expect(res.body).not.toContain(mockReturnObject.modnotes)
       })
   })
 
-  test('addSessions reject', () => {
-    db.addSessions.mockImplementation(() =>
+  test('addsEvents reject', () => {
+    db.addEvents.mockImplementation(() =>
       Promise.reject(new Error('test error message'))
     )
     console.error.mockImplementation(() => {})
     return request(server)
-      .post('/api/v1/sessions')
+      .post('/api/v1/events')
       .then((res) => {
         expect(res.status).toBe(500)
         // expect(console.error).toHaveBeenCalledWith('test error message')

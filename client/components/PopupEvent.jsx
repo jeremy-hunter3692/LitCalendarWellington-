@@ -49,7 +49,7 @@ export default function Popup({
       setFullScreen(true)
     }
   }
-  console.log(details.start, typeof details.start)
+  // console.log(details.start, typeof details.start)
   const date = details.start.toDateString()
   //TO DO DOUBLECheck this doesn't mess anything up
   const time = details.start?.toLocaleTimeString('en-US') || ''

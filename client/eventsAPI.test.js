@@ -64,7 +64,10 @@ describe('getAllEvents', () => {
 
     return addEvents(data).then((result) => {
       const returnData = result[1]
-      expect(returnData[0].start).toEqual(data[0].start)
+      expect(returnData[0].start).toEqual(data[0].start.toUTCString())
+      expect(returnData[0].end).toEqual(data[0].end.toUTCString())
+      expect(returnData[1].start).toEqual(data[1].start.toUTCString())
+      expect(returnData[1].end).toEqual(data[1].end.toUTCString())
       expect(returnData[0].start).not.toBe(data[0].start)
       expect(returnData[0].end).not.toBe(data[0].end)
       expect(returnData[1].start).not.toBe(data[1].start)

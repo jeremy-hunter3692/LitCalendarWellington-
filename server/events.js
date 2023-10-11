@@ -13,30 +13,34 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
-  const id = req.params.id
-  db.getEventById(id)
-    .then((data) => {
-      res.send(data)
-    })
-    .catch((err) => {
-      console.error(err.message)
-      res.status(500).json({ message: 'Something went wrong' })
-    })
-})
+// router.get('/:id', (req, res) => {
+//   const id = req.params.id
+//   db.getEventById(id)
+//     .then((data) => {
+//       res.send(data)
+//     })
+//     .catch((err) => {
+//       console.error(err.message)
+//       res.status(500).json({ message: 'Something went wrong' })
+//     })
+// })
 
 router.post('/', (req, res) => {
   //go back and fix camel case on extranotes?
   const events = req.body
-  console.log(req.body[0].start)
   const fixedEvents = events.map((x) => {
-    x = { ...x, ...x.modNotes }
+    x = {
+      ...x,
+      ...x.modNotes,
+    }
     delete x.modNotes
     return x
   })
+  // console.log({ fixedEvents })
   db.addEvents(fixedEvents)
-    .then((events) => {
-      res.send(events)
+    .then((anything) => {
+      console.log({ anything })
+      res.send(anything)
     })
     .catch((err) => {
       console.error(err.message)

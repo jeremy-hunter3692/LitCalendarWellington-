@@ -29,6 +29,11 @@ export function getAllEvents() {
 export function addEvents(data) {
   // const submitData = structuredClone(data)
   const submitData = copyWithNewDateObj(data)
+  submitData.forEach((x) => {
+    x.start = x.start.toUTCString()
+    x.end = x.end.toUTCString()
+  })
+
   return request
     .post(apiUrl)
     .send(submitData)

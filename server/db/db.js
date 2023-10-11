@@ -6,29 +6,17 @@ function getAllEvents(db = connection) {
   return db('events').select()
 }
 
-// function getLastSessionById(id, db = connection) {
-//   return db('sessions')
-//     .where('sessions.student_id', id)
-//     .join('students', 'student_id', 'students.id')
-//     .then((ids) => ids[ids.length - 1])
-// }
-
 function getEventById(id, db = connection) {
   return db('sessions').where('id', id).select().first()
 }
 
 function addEvents(info, db = connection) {
+  console.log('in', info)
   return db('events').insert(info)
-}
-
-function getAllStudents(db = connection) {
-  return db('students').select()
 }
 
 module.exports = {
   addEvents,
   getEventById,
   getAllEvents,
-  // getLastSessionById,
-  getAllStudents,
 }
