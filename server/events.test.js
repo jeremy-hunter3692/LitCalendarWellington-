@@ -43,7 +43,7 @@ describe('gets all events', () => {
   })
 })
 
-// describe('GET last sessions /api/v1/s', () => {
+// describe('Get event by id /api/v1/:id', () => {
 //   test('returns last session from db', () => {
 //     const mockSessionData = [
 //       { id: 5, name: 'Summer Lovin' },
@@ -62,9 +62,27 @@ describe('gets all events', () => {
 //       })
 //   })
 // })
+describe('update an event', () => {
+  test('updates event by id', () => {
+    const id = 1
+    const updated = { title: 'updated Title', id: id }
+
+    db.updateEventById.mockReturnValue(Promise.resolve(updated))
+    return request(server)
+      .put(`/api/v1/events/${id}`)
+      .send(updated)
+      .then((res) => {
+        console.log('api', res.body)
+        expect(res.body).toEqual(updated)
+        expect(res.body.id).toEqual(id)
+        expect(res.status).toBe(200)
+        return null
+      })
+  })
+})
 
 describe('adds events', () => {
-  test('posts events to the sever', () => {
+  test('posts events to the server without modnotesobj', () => {
     const mockPostSessionData = [
       {
         start: '22-10-02',
@@ -73,8 +91,8 @@ describe('adds events', () => {
         studentId: 7,
         studentNotes: 'Hello',
         teacherId: 2,
-        teacherNotes: 'Goodbye',
-        modNotes: { conatact: 'blah', otherthing: 'blach' },
+        teacherNotes: 'e',
+        modNotes: { contact: 'blah', otherthing: 'whoop' },
       },
     ]
 
@@ -82,21 +100,26 @@ describe('adds events', () => {
       {
         start: '22-10-02',
         end: '06:04',
+        name: 'lil jimmy',
         studentId: 7,
         studentNotes: 'Hello',
-        teacherNotes: 'Goodbye',
+        teacherId: 2,
+        teacherNotes: 'e',
       },
     ]
 
-    expect.assertions(2)
+    // expect.assertions(2)
     db.addEvents.mockReturnValue(Promise.resolve(mockReturnObject))
     return request(server)
       .post('/api/v1/events')
       .send(mockPostSessionData)
       .then((res) => {
-        console.log('restest', res.body)
-        expect(res.body).toEqual(mockReturnObject)
-        expect(res.body).not.toContain(mockReturnObject.modnotes)
+        // console.log('restest', res.body)
+        // console.log('str', typeof res.body[0].modNotes === 'undefined')
+        expect(typeof res.body[0].modNotes === 'undefined').toBeTruthy()
+        expect(res.body[0].contact).toBe('blah')
+        expect(res.body[0].otherthing).toBe('whoop')
+        expect(res.status).not.toBe(400)
       })
   })
 

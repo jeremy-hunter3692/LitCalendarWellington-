@@ -13,16 +13,19 @@ export function getEventById(id) {
 export function getAllEvents() {
   return request.get(apiUrl).then((res) => {
     const data = res.body
-    data[0].modNotes = {
-      extranotes: data[0].extranotes,
-      organisation: data[0].organisation,
-      contact: data[0].contact,
-      alternativeContact: data[0].alternativeContact,
-    }
-    deleteExtras(data[0])
-    data[0].start = new Date(data[0].start)
-    data[0].end = new Date(data[0].end)
-    return res.body
+    data.forEach((x) => {
+      x.modNotes = {
+        extranotes: x.extranotes,
+        organisation: x.organisation,
+        contact: x.contact,
+        alternativeContact: x.alternativeContact,
+      }
+      deleteExtras(x)
+      x.start = new Date(x.start)
+      x.end = new Date(x.end)
+    })
+
+    return data
   })
 }
 

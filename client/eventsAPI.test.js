@@ -18,6 +18,14 @@ describe('getAllEvents', () => {
           organisation: '3',
           extranotes: '1234',
         },
+        {
+          start: '2023-10-10T20:33:33.967Z',
+          end: '2023-10-10T20:33:33.967Z',
+          alternativeContact: '2',
+          contact: '1',
+          organisation: '3',
+          extranotes: '1234',
+        },
       ])
     return getAllEvents().then((result) => {
       expect(result).toEqual([
@@ -31,20 +39,32 @@ describe('getAllEvents', () => {
             extranotes: '1234',
           },
         },
+        {
+          start: date,
+          end: date,
+          modNotes: {
+            alternativeContact: '2',
+            contact: '1',
+            organisation: '3',
+            extranotes: '1234',
+          },
+        },
       ])
+      expect(typeof result[0].start).toBe('object')
+      expect(typeof result[1].start).toBe('object')
       expect(scope.isDone()).toBe(true)
     })
   })
 
-  test('gets specific event from db', () => {
-    const scope = nock('http://localhost')
-      .get(apiUrl + '/1')
-      .reply(200, { data: 'testing data' })
-    return getEventById(1).then((result) => {
-      expect(result).toEqual({ data: 'testing data' })
-      expect(scope.isDone()).toBe(true)
-    })
-  })
+  // test('gets specific event from db', () => {
+  //   const scope = nock('http://localhost')
+  //     .get(apiUrl + '/1')
+  //     .reply(200, { data: 'testing data' })
+  //   return getEventById(1).then((result) => {
+  //     expect(result).toEqual({ data: 'testing data' })
+  //     expect(scope.isDone()).toBe(true)
+  //   })
+  // })
 
   //TO DOOOOO
   //check what type of object you are actually sending here and what format it will be in

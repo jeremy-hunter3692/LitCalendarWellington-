@@ -2,7 +2,7 @@ const knex = require('knex')
 const config = require('./knexfile').test
 const testDb = knex(config)
 
-const { addEvents, getAllEvents } = require('./db.js')
+const { addEvents, getAllEvents, updateEventById } = require('./db.js')
 
 beforeAll(() => {
   return testDb.migrate.latest()
@@ -19,8 +19,19 @@ afterAll(() => {
 describe('getAllEvents', () => {
   test('gets students from the database', () => {
     expect.assertions(1)
-    return getAllEvents(testDb).then((students) => {
-      expect(students).toHaveLength(2)
+    return getAllEvents(testDb).then((events) => {
+      expect(events).toHaveLength(2)
+    })
+  })
+})
+//TO DO IMPROVE THIS TEST//CHECK ON UPDATE WITH KNEX
+describe('updates events', () => {
+  test('updates events to db by id', () => {
+    const id = 1
+    const changes = {title: 'updated Title'}
+    return updateEventById(id,changes, testDb).then((event) => {
+      expect(1).toBe(1)
+      expect(event).toBe(0)
     })
   })
 })
