@@ -28,8 +28,7 @@ export default function AddEvent({
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
-  // console.log('editDeets', editDetails)
-  // console.log('top', form)
+
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
   }
@@ -103,23 +102,26 @@ export default function AddEvent({
           [name]: value,
         })
     }
+
+    //fixing bug that comes from being able to preview end times is also used below for edit
+    const { start, end } = form
+    end.setDate(start.getDate())
+    end.setMonth(start.getMonth())
   }
 
   function editUpdate(e) {
     e.preventDefault()
+    const { start, end } = form
+    end.setDate(start.getDate())
+    end.setMonth(start.getMonth())
     updateEvent(form)
-  
   }
 
   function sanitizeSubmitObject(obj) {
     //TO DO check date object copying here rather than taking the date object.
     const copiedObj = copyWithNewDateObj([obj])
     const deArrayed = copiedObj[0]
-    const { start, end } = deArrayed
-    //fixing bug that comes from being able to preview end times
-    end.setDate(start.getDate())
-    end.setMonth(start.getMonth())
-    form.koha ? (deArrayed.buyTixLink = null) : ''
+    deArrayed.koha ? (deArrayed.buyTixLink = null) : ''
     deleteExtras(deArrayed)
     return deArrayed
   }

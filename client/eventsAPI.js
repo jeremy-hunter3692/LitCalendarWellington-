@@ -9,7 +9,7 @@ export function upDateEvent(changes) {
   console.log('api', id, changes)
   const submitData = copyWithNewDateObj([changes])
   deleteExtras(submitData[0])
-  console.log('deketed', submitData)
+  console.log('deleted extras', submitData)
   submitData.forEach((x) => {
     x.start = x.start.toUTCString()
     x.end = x.end.toUTCString()

@@ -27,9 +27,9 @@ router.get('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params
   const update = req.body
-  console.log('update', update)
+  console.log('update', update, 'id', id)
   const fixedEvents = deleteModNotes(update)
-
+  console.log('fixed events', fixedEvents)
   db.updateEventById(id, fixedEvents[0])
     .then((data) => {
       res.status(200).send(fixedEvents[0])

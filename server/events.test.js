@@ -70,7 +70,7 @@ describe('update an event', () => {
     db.updateEventById.mockReturnValue(Promise.resolve(updated))
     return request(server)
       .put(`/api/v1/events/${id}`)
-      .send(updated)
+      .send([updated])
       .then((res) => {
         expect(res.body).toEqual(updated)
         expect(res.body.id).toEqual(id)

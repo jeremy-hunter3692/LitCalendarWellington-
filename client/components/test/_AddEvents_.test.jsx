@@ -116,7 +116,7 @@ describe('form test', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /save event/i }))
     // expect(title.value).toBe('Kates Event')
-    expect(onSubmit).toHaveBeenCalledWith([
+    expect(onSubmit).toHaveBeenCalledWith(
       {
         // month: 'March',
         // date: '10',
@@ -149,7 +149,7 @@ describe('form test', () => {
         buyTixLink: 'www.stuff.co.nz',
         unwagedCost: '5',
       },
-    ])
+    )
   })
 
   test('correct shape with type Other and Koha checked', async () => {
@@ -211,7 +211,7 @@ describe('form test', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /save event/i }))
     // expect(title.value).toBe('Kates Event')
-    expect(onSubmit).toHaveBeenCalledWith([
+    expect(onSubmit).toHaveBeenCalledWith(
       {
         // month: 'March',
         // date: '10',
@@ -243,6 +243,6 @@ describe('form test', () => {
         buyTixLink: null,
         unwagedCost: '',
       },
-    ])
+    )
   })
 })
