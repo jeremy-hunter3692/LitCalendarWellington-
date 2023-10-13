@@ -2,6 +2,17 @@ const express = require('express')
 const router = express.Router()
 const db = require('./db/db')
 
+function deleteModNotes(arrIn) {
+  return arrIn.map((x) => {
+    x = {
+      ...x,
+      ...x.modNotes,
+    }
+    delete x.modNotes
+    return x
+  })
+}
+
 router.get('/', (req, res) => {
   db.getAllEvents()
     .then((data) => {
@@ -14,13 +25,14 @@ router.get('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  const {id} = req.params
+  const { id } = req.params
   const update = req.body
-  console.log('id', id, update)
-  db.updateEventById(id, update)
+  console.log('update', update)
+  const fixedEvents = deleteModNotes(update)
+
+  db.updateEventById(id, fixedEvents[0])
     .then((data) => {
-      console.log('event', data)
-      res.send(data)
+      res.status(200).send(fixedEvents[0])
     })
     .catch((err) => {
       console.error(err.message)
@@ -30,15 +42,7 @@ router.put('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   //go back and fix camel case on extranotes?
-  const events = req.body
-  const fixedEvents = events.map((x) => {
-    x = {
-      ...x,
-      ...x.modNotes,
-    }
-    delete x.modNotes
-    return x
-  })
+  const fixedEvents = deleteModNotes(req.body)
 
   if (typeof fixedEvents[0].modNotes != 'undefined') {
     console.log('if', fixedEvents.modNotes)

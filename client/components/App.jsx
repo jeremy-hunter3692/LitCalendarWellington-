@@ -8,7 +8,11 @@ import { getAllEvents } from '../eventsAPI'
 const App = () => {
   const [globalEvents, setGlobalEvents] = useState([])
   const [showAddEvents, setShowAddEvents] = useState(false)
-  const [edit, showEdit] = useState(false)
+  const [showEditEventPage, setShowEditEventPage] = useState(false)
+  const [editingSelection, setEditingSelection] = useState(false)
+  const [editDetails, setEditDetails] = useState()
+  console.log({ showEditEventPage }, { editingSelection }, { editDetails })
+
 
   useEffect(() => {
     getAllEvents()
@@ -22,12 +26,25 @@ const App = () => {
   }, [])
 
   function globalEventSetter(input) {
-    setGlobalEvents(input)
+    if (editingSelection) {
+      const update = globalEvents.filter((x) => x.id != input.id)
+      console.log('update', update)
+      setGlobalEvents([...update, input])
+    } else {
+      setGlobalEvents([...globalEvents, input])
+    }
     console.log('applevelstate:', input, globalEvents)
   }
 
   function showAddEventSetter() {
     setShowAddEvents(!showAddEvents)
+  }
+
+  function showEditEvent(e) {
+    showEditEventPage ? setEditingSelection(!editingSelection) : ''
+   setShowEditEventPage(!showEditEventPage)
+    setEditDetails(e)
+    console.log('showEidd', showEditEventPage, editingSelection)
   }
 
   return (
@@ -36,17 +53,33 @@ const App = () => {
       <button onClick={showAddEventSetter}>
         {showAddEvents ? 'Back' : 'Submit new event'}
       </button>
-
-      {!edit && <button onClick={() => showEdit(true)}>edit</button>}
-
-      {edit ? <EditEvent details={globalEvents[0]} /> : ''}
+      {editingSelection && <h1>EDITING EVENTS</h1>}
+      <button onClick={() => setEditingSelection(!editingSelection)}>
+        {' '}
+        {editingSelection ? 'Back' : 'Edit'}
+      </button>
+      {showEditEventPage? (
+        <EditEvent
+          details={editDetails}
+          showEditSetter={showEditEvent}
+          addToGlobalEvents={globalEventSetter}
+        />
+      ) : (
+        ''
+      )}
       {showAddEvents ? (
         <AddEvent
           eventsSetter={globalEventSetter}
           showAddEventSetter={showAddEventSetter}
         />
       ) : (
-        !edit && <CalendarContainer eventsProps={globalEvents} />
+        !showEditEventPage && (
+          <CalendarContainer
+            eventsProps={globalEvents}
+            showEditSetter={showEditEvent}
+            editing={editingSelection}
+          />
+        )
       )}
     </>
   )

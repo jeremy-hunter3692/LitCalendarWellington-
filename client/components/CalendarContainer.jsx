@@ -9,14 +9,14 @@ import '!style-loader!css-loader!../../server/public/sass/styles.css'
 
 const localizer = momentLocalizer(moment)
 
-export default function MyCalendar({ eventsProps }) {
+export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
   const [displayPop, setDisplayPop] = useState()
   const [popDetails, setPopDetails] = useState({})
   const [mousePos, setMousePos] = useState({})
 
   // console.log('calendar init', eventsProps)
   // const [events, setEvents] = useState(eventsProps)
-  
+
   useEffect(() => {
     const handleMouseMove = (event) => {
       setMousePos({
@@ -39,6 +39,11 @@ export default function MyCalendar({ eventsProps }) {
   // console.log(mousePos)
 
   function handleSelect(e) {
+    if (editing) {
+      console.log(e)
+      showEditSetter(e)
+      setDisplayPop(false)
+    }
     //Add newEvent to redux state
     // console.log('handle select', e)
     setDisplayPop(true)

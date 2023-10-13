@@ -1,6 +1,11 @@
 import nock from 'nock'
 
-const { getEventById, getAllEvents, addEvents } = require('./eventsAPI')
+const {
+  getEventById,
+  getAllEvents,
+  addEvents,
+  upDateEvent,
+} = require('./eventsAPI')
 
 const apiUrl = '/api/v1/events'
 
@@ -108,6 +113,21 @@ describe('getAllEvents', () => {
     ]
     return addEvents(data).then((result) => {
       expect(result).toBe('post not saved')
+      expect(scope.isDone()).toBe(true)
+    })
+  })
+})
+
+describe('updates ans event with given id', () => {
+  test('updates with correct id', () => {
+    const changes = { title: 'titleChanged', id: 1 }
+    const { id } = changes
+    const scope = nock('http://localhost')
+      .put(apiUrl + '/' + id)
+      .reply(200, changes)
+    return upDateEvent(changes).then((res) => {
+      expect(res.id).toBe(id)
+      expect(1).toBe(1)
       expect(scope.isDone()).toBe(true)
     })
   })

@@ -72,7 +72,6 @@ describe('update an event', () => {
       .put(`/api/v1/events/${id}`)
       .send(updated)
       .then((res) => {
-        console.log('api', res.body)
         expect(res.body).toEqual(updated)
         expect(res.body.id).toEqual(id)
         expect(res.status).toBe(200)

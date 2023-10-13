@@ -24,9 +24,11 @@ export default function AddEvent({
   eventsSetter,
   showAddEventSetter,
   editDetails,
+  updateEvent,
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
+  // console.log('editDeets', editDetails)
   // console.log('top', form)
   function modNotesFromSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -103,6 +105,12 @@ export default function AddEvent({
     }
   }
 
+  function editUpdate(e) {
+    e.preventDefault()
+    updateEvent(form)
+  
+  }
+
   function sanitizeSubmitObject(obj) {
     //TO DO check date object copying here rather than taking the date object.
     const copiedObj = copyWithNewDateObj([obj])
@@ -120,7 +128,7 @@ export default function AddEvent({
     e.preventDefault()
     //Reminder events must be an array for the calendar
     const input = sanitizeSubmitObject(form)
-    eventsSetter([input])
+    eventsSetter(input)
     showAddEventSetter()
     addEvents([input])
     //Todo finsh this below returns an array of events. Figure out how we will save this.
@@ -272,9 +280,13 @@ export default function AddEvent({
             globalFromSetter={modNotesFromSetter}
             editDetails={editDetails}
           />
-          <button onClick={handleSubmit} aria-label="save event">
-            Save Event{' '}
-          </button>
+          {!editDetails ? (
+            <button onClick={handleSubmit} aria-label="save event">
+              Save Event{' '}
+            </button>
+          ) : (
+            <button onClick={editUpdate}>Update Event</button>
+          )}
         </form>
       </div>
       <div className="popuppreview">

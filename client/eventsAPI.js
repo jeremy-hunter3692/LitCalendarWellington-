@@ -4,12 +4,29 @@ import request from 'superagent'
 import { deleteExtras, copyWithNewDateObj } from './javascript/functions'
 const apiUrl = '/api/v1/events'
 
+export function upDateEvent(changes) {
+  const { id } = changes
+  console.log('api', id, changes)
+  const submitData = copyWithNewDateObj([changes])
+  deleteExtras(submitData[0])
+  console.log('deketed', submitData)
+  submitData.forEach((x) => {
+    x.start = x.start.toUTCString()
+    x.end = x.end.toUTCString()
+  })
+  return request
+    .put(`${apiUrl}/${id}`)
+    .send(submitData)
+    .then((res) => {
+      return res.body, id, changes
+    })
+}
+
 export function getEventById(id) {
   return request.get(`${apiUrl}/${id}`).then((res) => {
     return res.body
   })
 }
-
 export function getAllEvents() {
   return request.get(apiUrl).then((res) => {
     const data = res.body
@@ -20,6 +37,7 @@ export function getAllEvents() {
         contact: x.contact,
         alternativeContact: x.alternativeContact,
       }
+      //THIS SHOULD BE ON ADD NOTE GET???
       deleteExtras(x)
       x.start = new Date(x.start)
       x.end = new Date(x.end)
