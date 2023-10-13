@@ -9,10 +9,11 @@ export default function EditEvent({
   addToGlobalEvents,
 }) {
   function onSubmit(inpt) {
-    // console.log({ inpt })
+    //add to global state for instant update//with out re calling db
     addToGlobalEvents(inpt)
     //below is actul api call
     upDateEvent(inpt)
+    //return to calendar page
     showEditSetter()
   }
   const fixedDetails = unpackDetails(details)

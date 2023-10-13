@@ -29,7 +29,7 @@ export default function AddEvent({
   const [form, setForm] = useState(editDetails || initDetails)
   const [disabled, setDisabled] = useState(true)
 
-  function modNotesFromSetter(input) {
+  function modNotesFormSetter(input) {
     setForm({ ...form, modNotes: input })
   }
 
@@ -279,7 +279,7 @@ export default function AddEvent({
             ]}
           />
           <NotesForMod
-            globalFromSetter={modNotesFromSetter}
+            globalFromSetter={modNotesFormSetter}
             editDetails={editDetails}
           />
           {!editDetails ? (
