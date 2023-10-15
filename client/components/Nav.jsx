@@ -5,7 +5,9 @@ export default function navBar() {
     <>
       <div className="nav">
         <header>
-          <h1>Lit Calendar Wellington</h1>
+          <h1 style={{ backgroundColor: '#f5f5f4' }}>
+            Lit Calendar Wellington
+          </h1>
           {/* <Link to="/">Home</Link>
           <Link to="/calendar">Calendar</Link> */}
         </header>

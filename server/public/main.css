@@ -97,8 +97,20 @@ textarea {
 
 }
 
+.arrows {
+  color: white;
 
+ 
+  align-items: center;
+  
+}
+.arrows:hover {
+  color: black;
+   background: #ffffff;
+  opacity: 30%;
 
+  
+}
 .addEvent {
   display: inline-block;
   
@@ -113,9 +125,13 @@ float: left;
   display:inline-block;
 }
 
-#popimg {
+.popimg {
+  margin: 1rem;
+  display: flex;
   object-fit: contain;
-  max-height: 40%;
+
+  overflow: hidden;
+  /* max-height: 30%; */
   /* max-width: 40%; */
 }
 
@@ -142,6 +158,11 @@ flex-direction: column;
 word-wrap: break-all;
 } 
 
+.popup h4 {
+  margin: 0;
+  /* background-color:#130561 ; */
+  text-align: center;
+}
 
 .licontainer {
   padding: 0rem 1rem 1rem 1rem;

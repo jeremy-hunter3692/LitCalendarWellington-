@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SocialLinks from './SocialLinks'
-
+import PopUpImages from './PopUpImage'
 const initStyle = {
   margin: 0,
   padding: 0,
@@ -10,7 +10,6 @@ const initStyle = {
   left: 50,
   top: 50,
 }
-const imageArr = ['cover0.png', 'cover1.png', 'cover2.png']
 
 export default function Popup({
   details,
@@ -18,22 +17,10 @@ export default function Popup({
   close,
 }) {
   const [style, setStyle] = useState(styleData || initStyle)
-  const [imageIdx, setImageIdx] = useState(0)
+
   const [fullScreen, setFullScreen] = useState(false)
 
   //why does this work with setInterval but not setTimeout
-  useEffect(() => {
-    const clearTimeOut = setInterval(() => {
-      const length = imageArr.length
-      // console.log('ranTimeOut', imageIdx, imageArr.length)
-      setImageIdx(imageIdx === length - 1 ? 0 : (imageIdx) => imageIdx + 1)
-    }, 2000)
-    //clear old time out from the images moving
-    return () => {
-      // console.log('ranCleanUp', imageIdx, imageArr.length)
-      clearInterval(clearTimeOut)
-    }
-  }, [imageIdx])
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -79,7 +66,6 @@ export default function Popup({
         <div className="popup">
           <div className="licontainer">
             <div className="poptoprightbuttons">
-              <div></div>
               {style !== initStyle ? (
                 <>
                   <button onClick={close}>X</button>
@@ -94,10 +80,8 @@ export default function Popup({
               )}
             </div>
             <ul>
-              <div>
-                {' '}
-                <h3>{details.title} </h3>
-              </div>
+              {' '}
+              <h4>{details.title} </h4>
               {/* TO DO this should probably be for everything here rather than ecah div */}
               <div className="secondlineMoveDown">
                 {' '}
@@ -154,12 +138,7 @@ export default function Popup({
                   </a>
                 )}
               </div>
-              <img
-                id="popimg"
-                src={imageArr[imageIdx]}
-                alt="book cover"
-                width="30%"
-              ></img>
+              <PopUpImages />
               <div className="aboutsection">
                 <p> {details.about}</p>
                 {details.about.length > 255 && !fullScreen ? (

@@ -25,8 +25,8 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
         width: '20rem',
         height: '35rem',
         position: 'absolute',
-        left: event.clientX > 650 ? event.clientX - 400 : event.clientX,
-        top: event.clientY > 470 ? event.clientY - 300 : event.clientY,
+        left: event.clientX > 650 ? event.clientX - 300 : event.clientX,
+        top: event.clientY > 470 ? event.clientY - 500 : event.clientY - 299,
       })
     }
 
@@ -36,18 +36,15 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
       window.removeEventListener('mousemove', handleMouseMove)
     }
   }, [displayPop])
-  // console.log(mousePos)
 
   function handleSelect(e) {
+    setDisplayPop(false)
     if (editing) {
-      console.log(e)
       showEditSetter(e)
       setDisplayPop(false)
     }
-    //Add newEvent to redux state
-    // console.log('handle select', e)
-    setDisplayPop(true)
     setPopDetails(e)
+    setTimeout(() => setDisplayPop(true), 1)
   }
 
   function close() {

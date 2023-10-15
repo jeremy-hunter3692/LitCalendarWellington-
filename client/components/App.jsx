@@ -46,35 +46,42 @@ const App = () => {
     console.log('showEidd', showEditEventPage, editingSelection)
   }
 
+  function backButtonForEditing() {
+    setEditingSelection(!editingSelection)
+    showEditEvent ? setShowEditEventPage(false) : ''
+  }
+
+  console.log('SHOWING:', editingSelection, showAddEvents, showEditEventPage)
   return (
     <>
       <Nav />
+
+
 
       {!editingSelection && (
         <button onClick={showAddEventSetter}>
           {showAddEvents ? 'Back' : 'Submit new event'}
         </button>
       )}
+
       {!showAddEvents && (
-        <button onClick={() => setEditingSelection(!editingSelection)}>
+        <button onClick={backButtonForEditing}>
           {' '}
-          {editingSelection ? 'Back' : 'Edit'}
+          {editingSelection ? 'Back' : 'Edit Events'}
         </button>
       )}
 
       {editingSelection && (
-        <h1 style={{ 'background-color': 'red' }}>EDITING EVENTS</h1>
+        <h1 style={{ backgroundColor: 'red' }}>EDITING EVENTS</h1>
       )}
+
       {showEditEventPage ? (
         <EditEvent
           details={editDetails}
           showEditSetter={showEditEvent}
           addToGlobalEvents={globalEventSetter}
         />
-      ) : (
-        ''
-      )}
-      {showAddEvents ? (
+      ) : showAddEvents ? (
         <div>
           <AddEvent
             eventsSetter={globalEventSetter}

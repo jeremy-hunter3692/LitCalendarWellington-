@@ -27,7 +27,6 @@ export default function AddEvent({
   updateEvent,
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
-  const [disabled, setDisabled] = useState(true)
 
   function modNotesFormSetter(input) {
     setForm({ ...form, modNotes: input })
@@ -48,11 +47,11 @@ export default function AddEvent({
     let tempObj = {}
     switch (true) {
       case value === 'Other':
-        setDisabled(false)
+   
         setForm({ ...form, modNotes: { ...form.modNotes }, [name]: value })
         break
       case name === 'type' && value !== 'Other':
-        setDisabled(true)
+    
         setForm({
           ...form,
           modNotes: { ...form.modNotes },
@@ -184,13 +183,11 @@ export default function AddEvent({
             <>
               <label htmlFor="typeother">Other:</label>
               <input
-                autoFocus
                 name="typeother"
                 id="typetother"
                 onChange={handleChange}
                 value={form.typeother}
                 placeholder="other event type here"
-                disabled={disabled}
               />
             </>
           )}
