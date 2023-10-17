@@ -3,20 +3,16 @@
  --popupcorners: 13px
 } */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 #app {
   width: 100%;
   flex-wrap: wrap;
-  display: block;
-
+  display:block;
 }
 
 
+i {
+  font-size: .7em;
+}
 
 html, body, .viewport {
   width: 100%;
@@ -26,11 +22,6 @@ html, body, .viewport {
   background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-i {
-  font-size: .7em;
-}
-
 
 
 header {
@@ -91,19 +82,35 @@ textarea {
 
 
 
-
-
-.calendar{
+.textarea {
+  margin: 2em;
   display: flex;
-  justify-content: center;
-  padding: 0rem;
-  width: 100vw;
+
 
 }
 
+.calendar{
+  padding: 3rem;
+  width: 90vw;
 
+  width: 90%;
 
+}
 
+.arrows {
+  color: white;
+
+ 
+  align-items: center;
+  
+}
+.arrows:hover {
+  color: black;
+   background: #ffffff;
+  opacity: 30%;
+
+  
+}
 .addEvent {
   display: inline-block;
   
@@ -113,15 +120,20 @@ textarea {
 float: left;
 }
 
-
-.textarea {
-  margin: 2em;
-  display: flex;
-
-
+.radioli {
+  list-style: none;
+  display:inline-block;
 }
 
+.popimg {
+  margin: 1rem;
+  display: flex;
+  object-fit: contain;
 
+  overflow: hidden;
+  /* max-height: 30%; */
+  /* max-width: 40%; */
+}
 
 .popuppreview {
   float: right;
@@ -141,104 +153,10 @@ color: #ffffff;
 border-radius: 25px;
 box-shadow: 5px 5px #d2d2d2 ;
 display: flex;
-font: arial; 
 /* flex: grow; */
 flex-direction: column;
-/* word-wrap: break-all; */
+word-wrap: break-all;
 } 
-
-
-.radioli {
-  list-style: none;
-  display:inline-block;
-}
-
-
-
-
-.poptoprightbuttons {
-  display: flex;
-  /* border: red solid; */
-  flex-direction: row-reverse;
-  padding: 0.4rem;
-  /* padding: 0.2rem;
-
-  /* background-color: whitesmoke; */
-  }
-
-  .poptoprightbuttons button {
-    /* margin: 0.4rem; */
-    margin: 0;
-    padding: 0, 0.4rem;
-    font-size: .6rem;
-  }
-  /* .popupclosebutton {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-  
-    color:#00275e;
-  
-    width: 3rem;
-
-    margin-top:  .2rem;
-    margin-bottom:  .1rem;
-  
-  } 
-  */
-
-
-
-
-.arrows  {
-  /* all: unset; */
-  display: flex;
-  background-color: inherit;
-  color:black;
-  margin-left: 0;
-  margin-right: 0;
-  align-items: center;
-  width: 10%;
-  opacity: 100%;
-  border-radius: 0%;
-  border: none;
-}
-
-
-
-.arrows:hover {
-  color: black;
-  background: #ffffff;
-  opacity: 30%;
-
-}
-
-
-
-
-#insidemorebutton {
-  background-color: transparent;
-  border: none;
-  color: whitesmoke;
-  font-size: 0.8rem;
-  border-radius: 0%;
-  margin: 0;
-  padding:0px;
-  width: 10%;
-
-}
-
-
-#insidemorebutton:hover {
-  background-color: whitesmoke;
-  opacity: 0.5;
-  color: black; 
-}
-
-
-
-
-
 
 .popup h4 {
   margin: 0;
@@ -247,7 +165,8 @@ flex-direction: column;
 }
 
 .licontainer {
-  padding: 0rem 0.5rem 1rem;
+  padding: 0rem 1rem 1rem 1rem;
+
   border: solid white;
   border-width: 0.2px;
   border-radius: 12px;
@@ -257,31 +176,22 @@ flex-direction: column;
   flex-direction: column;
   flex-grow: 1;
   flex-wrap: wrap;
-  white-space: nowrap;
+   white-space: nowrap;
   height: 90%;
   background-color: #1a1511;
 }
 
-  .popimgcont{
-  display: block;
-  align-items: end;
-  }
-  
-  .popimg img {
-    height: 100px;
-    justify-content: center;
-    max-width: 60px;
-    max-height: 20%;
-  }
-  
-  
-  .popimg {
-    max-height: 20%;
-    margin: 1rem;
-    display: flex;
-    justify-content: center;
-  }
 
+
+.licontainer img {
+  display: block;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+
+}
 
 .popuplink {
   flex-grow:unset;
@@ -313,11 +223,51 @@ flex-direction: column;
   
 }
 
+.poptoprightbuttons {
+display: flex;
+flex-direction: row-reverse;
+padding: 0.2rem;
+
+}
+
+
+.popup button {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  background-color: whitesmoke;
+  color:#00275e;
+  padding: 0 0.4rem;
+  width: 3rem;
+  font-size: .6rem;
+  margin-top:  .2rem;
+  margin-bottom:  .1rem;
+  border-radius: 20%;
+}
+
+#insidemorebutton {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  font-size: 0.8rem;
+  border-radius: 0%;
+  margin: 0;
+  padding:0px;
+  width: 10%;
+  /* opacity: 0; */
+}
+
 .secondlineMoveDown{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   white-space: pre-wrap;
+}
+
+#insidemorebutton:hover {
+  background-color: whitesmoke;
+  opacity: 0.5;
+  color: black; 
 }
 
 .popup ul {
@@ -327,30 +277,24 @@ flex-direction: column;
 }
 
 .sociallistcont {
-  display: flex;
-  justify-content: center;
-  border: red solid;
+
   width: auto;
   margin-top: auto;
-
-  padding: 0;
-  max-height:100%; 
-  max-width:100%;
-  margin-bottom: 1rem;
-
+  margin-bottom: 0;
+  bottom: 0;
 }
 
 .sociallist img {
-justify-content: center;
   width: 30%;
-
+  
 }
-
-
 .sociallist {
 
   list-style: none;
-  display: flex;  
-
+  display: flex; 
+  justify-content: space-between;   
+  max-height:100%; 
+  max-width:100%;
+  margin-bottom: 1rem;
 }
 
