@@ -1,7 +1,7 @@
 import React from 'react'
 import AddEvent from './AddEvents'
 import { unpackDetails } from '../javascript/functions.js'
-import { upDateEvent } from '../eventsAPI'
+import { upDateEvent, deleteEvent } from '../eventsAPI'
 
 export default function EditEvent({
   details,
@@ -16,9 +16,14 @@ export default function EditEvent({
     //return to calendar page
     showEditSetter()
   }
+  function ApiDeleteEvent() {
+    console.log('edit:', details.id, details)
+    deleteEvent(details.id)
+  }
   const fixedDetails = unpackDetails(details)
   return (
     <>
+      <button onClick={ApiDeleteEvent}>Delete Event</button>
       <AddEvent editDetails={fixedDetails} updateEvent={onSubmit} />
     </>
   )

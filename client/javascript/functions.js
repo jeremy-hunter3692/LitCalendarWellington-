@@ -85,6 +85,17 @@ function deleteExtras(input) {
     }
   })
 }
+
+function timeCheck(form) {
+  return form.start?.getHours() > form.end?.getHours()
+    ? 'End time is before start time'
+    : form.start?.getHours() === form.end?.getHours()
+    ? form.start?.getMinutes() > form.end?.getMinutes()
+      ? 'End time is before start time'
+      : ''
+    : ''
+}
+
 export {
   deleteExtras,
   makeDateObject,
@@ -92,4 +103,5 @@ export {
   getMonthIdx,
   unpackDetails,
   copyWithNewDateObj,
+  timeCheck,
 }

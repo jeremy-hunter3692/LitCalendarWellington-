@@ -6,10 +6,8 @@ const apiUrl = '/api/v1/events'
 
 export function upDateEvent(changes) {
   const { id } = changes
-  console.log('api', id, changes)
   const submitData = copyWithNewDateObj([changes])
   deleteExtras(submitData[0])
-  console.log('deleted extras', submitData)
   submitData.forEach((x) => {
     x.start = x.start.toUTCString()
     x.end = x.end.toUTCString()
@@ -69,4 +67,19 @@ export function addEvents(data) {
     .catch((err) => {
       return err.status, 'post not saved'
     })
+}
+
+export function deleteEvent(id) {
+  console.log('id', id, 'aip', `${apiUrl}/${id}`)
+  return (
+    request
+      .post(`${apiUrl}/${id}`)
+      // .query({ items: itemsToDelete })
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err.status, 'data not found'
+      })
+  )
 }

@@ -10,6 +10,7 @@ import {
   makeDateObject,
   getDaysOfSelectedMonth,
   copyWithNewDateObj,
+  timeCheck,
 } from '../javascript/functions'
 import {
   initDetails,
@@ -32,26 +33,14 @@ export default function AddEvent({
     setForm({ ...form, modNotes: input })
   }
 
-  function timeCheck() {
-    return form.start?.getHours() > form.end?.getHours()
-      ? 'End time is before start time'
-      : form.start?.getHours() === form.end?.getHours()
-      ? form.start?.getMinutes() > form.end?.getMinutes()
-        ? 'End time is before start time'
-        : ''
-      : ''
-  }
-
   function handleChange(e) {
     const { name, value } = e.target
     let tempObj = {}
     switch (true) {
       case value === 'Other':
-   
         setForm({ ...form, modNotes: { ...form.modNotes }, [name]: value })
         break
       case name === 'type' && value !== 'Other':
-    
         setForm({
           ...form,
           modNotes: { ...form.modNotes },
@@ -155,7 +144,7 @@ export default function AddEvent({
             formSet={handleChange}
             dropData={dropDownMenus}
           />
-          {timeCheck()}
+          {timeCheck(form)}
           {/* Reccuring event?
           <label htmlFor="weekly">How many weeks?</label>
           <input

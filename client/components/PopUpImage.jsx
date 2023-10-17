@@ -18,7 +18,7 @@ export default function PopUpImages() {
     const length = imageArr.length - 1
     if (e.target.id === 'leftArrow') {
       setImageIdx(imageIdx === 0 ? length : (imageIdx) => imageIdx - 1)
-      // console.log(e.target.id, imageIdx)
+      console.log(e.target.id, imageIdx)
     }
     if (e.target.id === 'rightArrow') {
       nextImg()
@@ -32,20 +32,18 @@ export default function PopUpImages() {
 
   return (
     <>
-      <div className="popimg">
-        <div className="arrows" id="leftArrow" onClick={arrowClick}>
-          {'<<'}
-        </div>
-        <img
-          id="popimg"
-          src={imageArr[imageIdx]}
-          alt="book cover"
-          width="30%"
-        ></img>
-        <div className="arrows" id="rightArrow" onClick={arrowClick}>
-          {'>>'}
-        </div>
-      </div>
+      <button className="arrows" id="leftArrow" onClick={arrowClick}>
+        {'<'}
+      </button>
+      <img
+        id="popimg"
+        src={imageArr[imageIdx]}
+        alt="book cover"
+        width="30%"
+      ></img>
+      <button className="arrows" id="rightArrow" onClick={arrowClick}>
+        {'>'}
+      </button>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import SocialLinks from './SocialLinks'
 import PopUpImages from './PopUpImage'
 const initStyle = {
@@ -11,16 +11,10 @@ const initStyle = {
   top: 50,
 }
 
-export default function Popup({
-  details,
-  styleData = { ...initStyle },
-  close,
-}) {
+export default function Popup({ details, styleData, close }) {
   const [style, setStyle] = useState(styleData || initStyle)
 
   const [fullScreen, setFullScreen] = useState(false)
-
-  //why does this work with setInterval but not setTimeout
 
   function clickThrough() {
     if (style !== initStyle) {
@@ -59,7 +53,6 @@ export default function Popup({
   //     : details.about.slice(0, 300)
 
   // it's less than 300 nothing
-
   return (
     <>
       <div style={style}>
@@ -76,7 +69,7 @@ export default function Popup({
                   )}
                 </>
               ) : (
-                ' '
+                ''
               )}
             </div>
             <ul>
@@ -138,7 +131,9 @@ export default function Popup({
                   </a>
                 )}
               </div>
-              <PopUpImages />
+              <div className="popimgcont">
+                <PopUpImages />
+              </div>
               <div className="aboutsection">
                 <p> {details.about}</p>
                 {details.about.length > 255 && !fullScreen ? (

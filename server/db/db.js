@@ -7,7 +7,7 @@ function getAllEvents(db = connection) {
 }
 
 function updateEventById(id, changes, db = connection) {
-  console.log(id,changes)
+  // console.log(id, changes)
   return db('events').where('id', id).update(changes)
 }
 
@@ -18,10 +18,15 @@ function getEventById(id, db = connection) {
 function addEvents(info, db = connection) {
   return db('events').insert(info)
 }
+function deleteEvents(id, db = connection) {
+  console.log(id, db)
+  return db('events').where('id', id).del()
+}
 
 module.exports = {
   addEvents,
   getEventById,
   getAllEvents,
   updateEventById,
+  deleteEvents,
 }

@@ -59,4 +59,18 @@ router.post('/', (req, res) => {
     })
 })
 
+router.delete('/:id', (res, req) => {
+  // console.log('s', req.body)
+  const { id } = req.params
+  console.log('server route', id)
+  db.deleteEvents(id)
+    .then((res) => {
+      res.send
+    })
+    .catch((err) => {
+      console.error(err.message)
+      res.status(500).json({ message: 'Something went wrong ' })
+    })
+})
+
 module.exports = router

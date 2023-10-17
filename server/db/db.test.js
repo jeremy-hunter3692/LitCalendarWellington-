@@ -2,7 +2,12 @@ const knex = require('knex')
 const config = require('./knexfile').test
 const testDb = knex(config)
 
-const { addEvents, getAllEvents, updateEventById } = require('./db.js')
+const {
+  addEvents,
+  getAllEvents,
+  updateEventById,
+  deleteEvents,
+} = require('./db.js')
 
 beforeAll(() => {
   return testDb.migrate.latest()
@@ -28,8 +33,8 @@ describe('getAllEvents', () => {
 describe('updates events', () => {
   test('updates events to db by id', () => {
     const id = 1
-    const changes = {title: 'updated Title'}
-    return updateEventById(id,changes, testDb).then((event) => {
+    const changes = { title: 'updated Title' }
+    return updateEventById(id, changes, testDb).then((event) => {
       expect(1).toBe(1)
       expect(event).toBe(0)
     })
@@ -96,5 +101,15 @@ describe('addEvents', () => {
       .then((events) => {
         expect(events).toHaveLength(4)
       })
+  })
+})
+
+describe('deletes an event', () => {
+  test('deletes an event', () => {
+    const id = 45
+    return deleteEvents(id, testDb).then((res) => {
+      console.log('re', res)
+      expect(res).toBe(0)
+    })
   })
 })

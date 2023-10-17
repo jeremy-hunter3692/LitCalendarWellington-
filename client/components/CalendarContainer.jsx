@@ -38,6 +38,7 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
   }, [displayPop])
 
   function handleSelect(e) {
+    console.log(e)
     setDisplayPop(false)
     if (editing) {
       showEditSetter(e)
@@ -52,23 +53,26 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
   }
 
   return (
-    <div className="calendar">
-      {displayPop && (
-        <PopupEvent details={popDetails} styleData={mousePos} close={close} />
-      )}
+    <>
       <h1>Calender</h1>
-      <Calendar
-        localizer={localizer}
-        events={eventsProps}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 600 }}
-        defaultView={Views.MONTH}
-        // selectable={true}
-        onSelectEvent={handleSelect}
-        // eventPropGetter={(event, start, end, isSelected) => {className: string, style?: Object}}
-        longPressThreshold={10}
-      />
-    </div>
+      <div className="calendar">
+        {displayPop && (
+          <PopupEvent details={popDetails} styleData={mousePos} close={close} />
+        )}
+
+        <Calendar
+          localizer={localizer}
+          events={eventsProps}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 600, width: '90%' }}
+          defaultView={Views.MONTH}
+          // selectable={true}
+          onSelectEvent={handleSelect}
+          // eventPropGetter={(event, start, end, isSelected) => {className: string, style?: Object}}
+          longPressThreshold={10}
+        />
+      </div>
+    </>
   )
 }

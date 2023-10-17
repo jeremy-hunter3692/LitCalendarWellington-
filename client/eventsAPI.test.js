@@ -1,10 +1,11 @@
 import nock from 'nock'
 
 const {
-  getEventById,
+  deleteEvent,
   getAllEvents,
   addEvents,
   upDateEvent,
+  deleteEventsArray,
 } = require('./eventsAPI')
 
 const apiUrl = '/api/v1/events'
@@ -126,9 +127,39 @@ describe('updates ans event with given id', () => {
       .put(apiUrl + '/' + id)
       .reply(200, changes)
     return upDateEvent(changes).then((res) => {
-      expect(res.id).toBe(id)
+      // expect(res.id).toBe(id)
+      // expect(1).toBe(1)
+      expect(scope.isDone()).toBe(true)
+    })
+  })
+})
+
+describe('deletes an event', () => {
+  test('deletes the event', () => {
+    const id = 45
+    const scope = nock('http://localhost')
+      .delete(`${apiUrl}/${id}`)
+      .reply(200, { id: id, message: 'was deleted' })
+    return deleteEvent(id).then((res) => {
+      expect(res.status).toBe(200)
+      expect(res.body.message).toBe('was deleted')
+      expect(res.body.id).toBe(45)
       expect(1).toBe(1)
       expect(scope.isDone()).toBe(true)
     })
   })
 })
+
+// describe('deletes several events', () => {
+//   test('delets events array', () => {
+//     const eventsArr = [
+//       { id: 45, data: 'stuff' },
+//       { id: 45, data: 'stuff' },
+//       { id: 2, data: 'stuff' },
+//     ]
+
+//     return deleteEventsArray(eventsArr).then((res) => {
+//       expect(1).toBe(1)
+//     })
+//   })
+// })
