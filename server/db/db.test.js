@@ -6,7 +6,8 @@ const {
   addEvents,
   getAllEvents,
   updateEventById,
-  deleteEvents,
+  deleteEvent,
+  deleteEventsArray,
 } = require('./db.js')
 
 beforeAll(() => {
@@ -104,12 +105,28 @@ describe('addEvents', () => {
   })
 })
 
-describe('deletes an event', () => {
+describe('deletes an event by id', () => {
   test('deletes an event', () => {
     const id = 45
-    return deleteEvents(id, testDb).then((res) => {
-      console.log('re', res)
+    return deleteEvent(id, testDb).then((res) => {
       expect(res).toBe(0)
+    })
+  })
+})
+
+describe('deletes an array of events', () => {
+  //doublecheck/learn about  this it's from chatgpt
+  let eventsToDeleteIds
+
+  beforeEach(async () => {
+    eventsToDeleteIds = await testDb('events')
+      .whereIn('title', ['Kates Event', '2Kates Event'])
+      .pluck('id')
+  })
+  test('deletes an event array', () => {
+    const dummyArray = eventsToDeleteIds
+    return deleteEventsArray(dummyArray, testDb).then((res) => {
+      expect(res).toBe(2)
     })
   })
 })

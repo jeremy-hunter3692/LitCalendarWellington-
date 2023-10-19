@@ -6,24 +6,29 @@ import { upDateEvent, deleteEvent } from '../eventsAPI'
 export default function EditEvent({
   details,
   showEditSetter,
-  addToGlobalEvents,
+  globalEventsAddandUpdate,
+  globalEventsDelete,
 }) {
   function onSubmit(inpt) {
     //add to global state for instant update//with out re calling db
-    addToGlobalEvents(inpt)
+    globalEventsAddandUpdate(inpt)
     //below is actul api call
     upDateEvent(inpt)
     //return to calendar page
     showEditSetter()
   }
-  function ApiDeleteEvent() {
-    console.log('edit:', details.id, details)
+  function apiDeleteEvent() {
+    //delete at api level
     deleteEvent(details.id)
+    //remove from state
+    globalEventsDelete(details)
+    //return to calendar page
+    showEditSetter()
   }
   const fixedDetails = unpackDetails(details)
   return (
     <>
-      <button onClick={ApiDeleteEvent}>Delete Event</button>
+      <button onClick={apiDeleteEvent}>Delete Event</button>
       <AddEvent editDetails={fixedDetails} updateEvent={onSubmit} />
     </>
   )

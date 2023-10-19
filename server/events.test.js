@@ -4,11 +4,13 @@ const server = require('./server')
 
 jest.mock('./db/db')
 
-jest.spyOn(console, 'error')
+// jest.spyOn(console, 'error')
 
 afterEach(() => {
   console.error.mockReset()
 })
+
+//chat gpt test of tes
 
 describe('gets all events', () => {
   test('returns events', () => {
@@ -132,6 +134,36 @@ describe('adds events', () => {
       .then((res) => {
         expect(res.status).toBe(500)
         // expect(console.error).toHaveBeenCalledWith('test error message')
+        return null
+      })
+  })
+})
+
+describe('deleting routes', () => {
+  test('deletes item with given id', () => {
+    const id = 22
+    db.deleteEvent.mockReturnValue(Promise.resolve())
+    return request(server)
+      .delete(`/api/v1/events/${id}`)
+      .then((res) => {
+        expect(res.text).toBe('item with id:22 deleted')
+        expect(res.status).toBe(200)
+      })
+  })
+
+  test('handles deletion error', () => {
+    const id = 22
+    db.deleteEvent.mockReturnValue(() =>
+      Promise.reject(new Error('Deletion error'))
+    )
+    console.error.mockImplementation(() => {})
+    return request(server)
+      .delete(`/api/v1/events/${id}`)
+      .then((res) => {
+        // console.log(res.error)
+
+        expect(console.error).toHaveBeenCalledWith('Deletion error')
+        // expect(res.status).toBe(500)
         return null
       })
   })

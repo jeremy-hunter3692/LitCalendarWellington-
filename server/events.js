@@ -27,9 +27,8 @@ router.get('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params
   const update = req.body
-  console.log('update', update, 'id', id)
   const fixedEvents = deleteModNotes(update)
-  console.log('fixed events', fixedEvents)
+  // console.log('fixed events', fixedEvents)
   db.updateEventById(id, fixedEvents[0])
     .then((data) => {
       res.status(200).send(fixedEvents[0])
@@ -59,13 +58,25 @@ router.post('/', (req, res) => {
     })
 })
 
-router.delete('/:id', (res, req) => {
-  // console.log('s', req.body)
+router.delete('/:id', (req, res) => {
   const { id } = req.params
-  console.log('server route', id)
-  db.deleteEvents(id)
-    .then((res) => {
-      res.send
+  db.deleteEvent(id)
+    .then(() => {
+      res.send(`item with id:${id} deleted`)
+    })
+    .catch((err) => {
+      console.log('catch', err)
+      console.error(err.message)
+      res.status(500).json({ message: 'Something went wrong' })
+    })
+})
+
+router.post('/delete', (req, res) => {
+  const eventArrayToDelete = req.params.body
+  db.deleteEventsArray(eventArrayToDelete)
+    .then((data) => {
+      // console.log({ data })
+      res.send(data)
     })
     .catch((err) => {
       console.error(err.message)

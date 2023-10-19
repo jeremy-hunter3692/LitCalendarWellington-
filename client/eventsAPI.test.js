@@ -150,16 +150,17 @@ describe('deletes an event', () => {
   })
 })
 
-// describe('deletes several events', () => {
-//   test('delets events array', () => {
-//     const eventsArr = [
-//       { id: 45, data: 'stuff' },
-//       { id: 45, data: 'stuff' },
-//       { id: 2, data: 'stuff' },
-//     ]
-
-//     return deleteEventsArray(eventsArr).then((res) => {
-//       expect(1).toBe(1)
-//     })
-//   })
-// })
+describe('deletes several events', () => {
+  test('delets events array', () => {
+    const eventsArr = [
+      { id: 45, data: 'stuff' },
+      { id: 46, data: 'stuff' },
+      { id: 2, data: 'stuff' },
+    ]
+    const scope = nock('http://localhost').post(eventsArr).reply(200)
+    return deleteEventsArray(eventsArr).then((res) => {
+      expect(res).toBe([45, 46, 2])
+      expect(scope.isDone()).toBe(true)
+    })
+  })
+})

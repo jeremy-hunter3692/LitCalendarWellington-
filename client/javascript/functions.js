@@ -28,7 +28,6 @@ import { months, daysEachMonth, toBeDeleted } from './initCalendarData'
 ///////////////////////////////////////////////////////////////
 
 function unpackDetails(details) {
-  console.log(details)
   const { start, end } = details
   const returnDetails = { ...details }
   returnDetails.year = start.getFullYear()

@@ -166,7 +166,6 @@ word-wrap: break-all;
 
 .licontainer {
   padding: 0rem 1rem 1rem 1rem;
-
   border: solid white;
   border-width: 0.2px;
   border-radius: 12px;
@@ -181,17 +180,6 @@ word-wrap: break-all;
   background-color: #1a1511;
 }
 
-
-
-.licontainer img {
-  display: block;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
-  margin-left: auto !important;
-  margin-right: auto !important;
-
-
-}
 
 .popuplink {
   flex-grow:unset;
@@ -210,6 +198,27 @@ word-wrap: break-all;
 
 }
 
+
+.popimgcont {
+display: flex;
+justify-content: center;
+margin: 1rem;
+
+}
+
+.popimgcont button {
+  padding: 0;
+  border-radius: 0;
+  width: 0.8rem;
+  border: none;
+  background-color: #1a1511;
+}
+
+#popimg {
+  margin: 0px;
+}
+
+
 .popup p {
   font-size: 0.8rem;
   display: -webkit-box;
@@ -227,22 +236,23 @@ word-wrap: break-all;
 display: flex;
 flex-direction: row-reverse;
 padding: 0.2rem;
+font-size: .2rem;
 
 }
 
 
 .popup button {
   display: block;
-  width: 100%;
+  /* width: 100%; */
   white-space: nowrap;
-  background-color: whitesmoke;
+
   color:#00275e;
-  padding: 0 0.4rem;
+  /* padding: 0 0.4rem;
   width: 3rem;
   font-size: .6rem;
   margin-top:  .2rem;
-  margin-bottom:  .1rem;
-  border-radius: 20%;
+  margin-bottom:  .1rem; */
+
 }
 
 #insidemorebutton {
@@ -265,6 +275,8 @@ padding: 0.2rem;
 }
 
 #insidemorebutton:hover {
+  padding: 0;
+  margin: 0;
   background-color: whitesmoke;
   opacity: 0.5;
   color: black; 
@@ -277,16 +289,12 @@ padding: 0.2rem;
 }
 
 .sociallistcont {
-
+  display: flex;
+  justify-content: center;
   width: auto;
   margin-top: auto;
   margin-bottom: 0;
   bottom: 0;
-}
-
-.sociallist img {
-  width: 30%;
-  
 }
 .sociallist {
 
@@ -296,5 +304,15 @@ padding: 0.2rem;
   max-height:100%; 
   max-width:100%;
   margin-bottom: 1rem;
+}
+
+.sociallist a {
+  display: flex;
+  justify-content: center;
+}
+
+.sociallist img {
+  width: 30%;
+  
 }
 

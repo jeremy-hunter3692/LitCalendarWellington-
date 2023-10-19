@@ -11,12 +11,11 @@ const App = () => {
   const [showEditEventPage, setShowEditEventPage] = useState(false)
   const [editingSelection, setEditingSelection] = useState(false)
   const [editDetails, setEditDetails] = useState()
-  console.log({ showEditEventPage }, { editingSelection }, { editDetails })
+  // console.log({ showEditEventPage }, { editingSelection }, { editDetails })
 
   useEffect(() => {
     getAllEvents()
       .then((res) => {
-        console.log('inuse', res)
         setGlobalEvents(res)
       })
       .catch((err) => {
@@ -27,14 +26,16 @@ const App = () => {
   function globalEventSetter(input) {
     if (editingSelection) {
       const update = globalEvents.filter((x) => x.id != input.id)
-      console.log('updating filtered array', update)
       setGlobalEvents([...update, input])
     } else {
       setGlobalEvents([...globalEvents, input])
     }
-    console.log('applevelstate:', input, globalEvents)
   }
 
+  function globalDelete(input) {
+    const filtered = globalEvents.filter((x) => x.id != input.id)
+    setGlobalEvents(filtered)
+  }
   function showAddEventSetter() {
     setShowAddEvents(!showAddEvents)
   }
@@ -43,7 +44,6 @@ const App = () => {
     showEditEventPage ? setEditingSelection(!editingSelection) : ''
     setShowEditEventPage(!showEditEventPage)
     setEditDetails(e)
-    console.log('showEidd', showEditEventPage, editingSelection)
   }
 
   function backButtonForEditing() {
@@ -51,12 +51,9 @@ const App = () => {
     showEditEvent ? setShowEditEventPage(false) : ''
   }
 
-  console.log('SHOWING:', editingSelection, showAddEvents, showEditEventPage)
   return (
     <>
       <Nav />
-
-
 
       {!editingSelection && (
         <button onClick={showAddEventSetter}>
@@ -79,7 +76,8 @@ const App = () => {
         <EditEvent
           details={editDetails}
           showEditSetter={showEditEvent}
-          addToGlobalEvents={globalEventSetter}
+          globalEventsDelete={globalDelete}
+          globalEventsAddandUpdate={globalEventSetter}
         />
       ) : showAddEvents ? (
         <div>

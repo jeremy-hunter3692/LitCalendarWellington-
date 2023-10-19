@@ -70,16 +70,26 @@ export function addEvents(data) {
 }
 
 export function deleteEvent(id) {
-  console.log('id', id, 'aip', `${apiUrl}/${id}`)
-  return (
-    request
-      .post(`${apiUrl}/${id}`)
-      // .query({ items: itemsToDelete })
-      .then((res) => {
-        return res
-      })
-      .catch((err) => {
-        return err.status, 'data not found'
-      })
-  )
+  return request
+    .del(`${apiUrl}/${id}`)
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      return err.status, 'data not found'
+    })
+}
+
+export function deleteEventsArray(data) {
+  console.log(data)
+  const idArray = data.map((x) => x.id)
+  console.log(idArray)
+  return request
+    .post(idArray)
+    .then((res) => {
+      return idArray
+    })
+    .catch((err) => {
+      return err.status, 'data not found'
+    })
 }
