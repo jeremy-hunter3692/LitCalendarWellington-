@@ -26,10 +26,10 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing }) {
         height: '35rem',
         position: 'absolute',
         left: event.clientX > 650 ? event.clientX - 300 : event.clientX,
-        top: event.clientY > 470 ? event.clientY - 500 : event.clientY - 299,
+        top: event.clientY > 470 ? event.clientY - 300 : event.clientY - 399,
       })
     }
-
+    console.log(mousePos.left, mousePos.top)
     window.addEventListener('mousemove', handleMouseMove)
 
     return () => {

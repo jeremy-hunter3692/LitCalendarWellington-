@@ -60,14 +60,14 @@ router.post('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params
+  console.log('id', id)
   db.deleteEvent(id)
-    .then(() => {
+    .then((res) => {
       res.send(`item with id:${id} deleted`)
     })
     .catch((err) => {
-      console.log('catch', err)
-      console.error(err.message)
       res.status(500).json({ message: 'Something went wrong' })
+      console.error(err.message)
     })
 })
 

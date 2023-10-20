@@ -3,8 +3,8 @@ const request = require('supertest')
 const server = require('./server')
 
 jest.mock('./db/db')
-
-// jest.spyOn(console, 'error')
+//
+jest.spyOn(console, 'error').mockImplementation(() => {})
 
 afterEach(() => {
   console.error.mockReset()
@@ -20,6 +20,7 @@ describe('gets all events', () => {
       { id: 7, name: 'Autum Blues' },
     ]
     // expect.assertions(1)
+    db.getAllEvents.mockReset()
     db.getAllEvents.mockReturnValue(Promise.resolve(mockSessionData))
     return request(server)
       .get('/api/v1/events')
@@ -30,6 +31,7 @@ describe('gets all events', () => {
   })
 
   test('gets all events fail', () => {
+    db.getAllEvents.mockReset()
     db.getAllEvents.mockImplementation(() =>
       Promise.reject(new Error('test error message'))
     )
@@ -65,6 +67,7 @@ describe('gets all events', () => {
 //   })
 // })
 describe('update an event', () => {
+  db.updateEventById.mockReset()
   test('updates event by id', () => {
     const id = 1
     const updated = { title: 'updated Title', id: id }
@@ -109,7 +112,7 @@ describe('adds events', () => {
       },
     ]
 
-    // expect.assertions(2)
+    db.addEvents.mockReset()
     db.addEvents.mockReturnValue(Promise.resolve(mockReturnObject))
     return request(server)
       .post('/api/v1/events')
@@ -125,6 +128,7 @@ describe('adds events', () => {
   })
 
   test('addsEvents reject', () => {
+    db.addEvents.mockReset()
     db.addEvents.mockImplementation(() =>
       Promise.reject(new Error('test error message'))
     )
@@ -142,6 +146,7 @@ describe('adds events', () => {
 describe('deleting routes', () => {
   test('deletes item with given id', () => {
     const id = 22
+    db.deleteEvent.mockReset()
     db.deleteEvent.mockReturnValue(Promise.resolve())
     return request(server)
       .delete(`/api/v1/events/${id}`)
@@ -151,17 +156,20 @@ describe('deleting routes', () => {
       })
   })
 
-  test('handles deletion error', () => {
+  test('handles deletion by error', () => {
     const id = 22
-    db.deleteEvent.mockReturnValue(() =>
+    db.deleteEvent.mockReset()
+
+    db.deleteEvent.mockImplementation(() =>
       Promise.reject(new Error('Deletion error'))
     )
-    console.error.mockImplementation(() => {})
+
+    // console.error.mockImplementation(() => {})
     return request(server)
       .delete(`/api/v1/events/${id}`)
       .then((res) => {
         // console.log(res.error)
-
+        expect(res.status).toBe(500)
         expect(console.error).toHaveBeenCalledWith('Deletion error')
         // expect(res.status).toBe(500)
         return null

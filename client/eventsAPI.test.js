@@ -157,9 +157,9 @@ describe('deletes several events', () => {
       { id: 46, data: 'stuff' },
       { id: 2, data: 'stuff' },
     ]
-    const scope = nock('http://localhost').post(eventsArr).reply(200)
+    const scope = nock('http://localhost').post('/deleteManyEvents').reply(200)
     return deleteEventsArray(eventsArr).then((res) => {
-      expect(res).toBe([45, 46, 2])
+      expect(res).toEqual([45, 46, 2])
       expect(scope.isDone()).toBe(true)
     })
   })

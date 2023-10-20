@@ -81,11 +81,11 @@ export function deleteEvent(id) {
 }
 
 export function deleteEventsArray(data) {
-  console.log(data)
   const idArray = data.map((x) => x.id)
   console.log(idArray)
   return request
-    .post(idArray)
+    .post('/deleteManyEvents')
+    .send(idArray)
     .then((res) => {
       return idArray
     })

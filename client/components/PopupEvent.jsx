@@ -75,49 +75,41 @@ export default function Popup({ details, styleData, close }) {
             <ul>
               {' '}
               <h4>{details.title} </h4>
-              {/* TO DO this should probably be for everything here rather than ecah div */}
-              <div className="secondlineMoveDown">
+              {/* TO DO this should probably be for everything here rather than ecah div */}{' '}
+              {details.type === 'Other' ? details.typeother : details.type}
+              {` at ${details.location} `}
+              <i className="popuplink">
+                {date} at {timeFixed} till {endTimeFixed} |{' '}
+              </i>
+              <i className="popuplink">
                 {' '}
-                {details.type === 'Other' ? details.typeother : details.type}
-                {` at ${details.location} `}
+                <a
+                  href={'https://' + details.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {details.link}
+                </a>
+              </i>
+              <div>
+                {details.koha > 0 && details.cost > 0
+                  ? `Suggested Koha :$${details.cost}`
+                  : details.cost > 0
+                  ? `Cost :$${details.cost}`
+                  : details.koha
+                  ? 'Koha '
+                  : 'Free '}
+                {!details.koha &&
+                Number(details.unwagedCost) > 0 &&
+                !(Number(details.unwagedCost) >= Number(details.cost))
+                  ? unwagedDisplay()
+                  : ''}
+                {' | '}
               </div>
-              <div className="secondlineMoveDown">
-                <i className="popuplink">
-                  {date} at {timeFixed} till {endTimeFixed} |{' '}
-                </i>
-
-                <i className="popuplink">
-                  {' '}
-                  <a
-                    href={'https://' + details.link}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {details.link}
-                  </a>
-                </i>
-              </div>
-              <div className="secondlineMoveDown">
-                <div>
-                  {details.koha > 0 && details.cost > 0
-                    ? `Suggested Koha :$${details.cost}`
-                    : details.cost > 0
-                    ? `Cost :$${details.cost}`
-                    : details.koha
-                    ? 'Koha '
-                    : 'Free '}
-                  {!details.koha &&
-                  Number(details.unwagedCost) > 0 &&
-                  !(Number(details.unwagedCost) >= Number(details.cost))
-                    ? unwagedDisplay()
-                    : ''}
-                  {' | '}
-                </div>
-                <div>
-                  {details.inperson === 'Both'
-                    ? 'Online and In Person'
-                    : `${details.inperson}`}
-                </div>
+              <div>
+                {details.inperson === 'Both'
+                  ? 'Online and In Person'
+                  : `${details.inperson}`}
               </div>
               <div>
                 {/* This is probably not neede and will be check at input stage */}
