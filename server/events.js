@@ -62,7 +62,7 @@ router.delete('/delete/:id', (req, res) => {
   db.deleteEvent(id)
     .then(() => {
       let response = `item with id:${id} deleted`
-      res.send({message: response})
+      res.send({ message: response })
     })
     .catch((err) => {
       res.status(500).json({ message: 'Something went wrong' })
@@ -70,11 +70,13 @@ router.delete('/delete/:id', (req, res) => {
     })
 })
 
-router.post('/delete', (req, res) => {
-  const eventArrayToDelete = req.params.body
+router.post('/deleteManyEvents', (req, res) => {
+  //expects array in
+  const eventArrayToDelete = req.body
   db.deleteEventsArray(eventArrayToDelete)
-    .then((data) => {
-      res.send(data)
+    .then((returnData) => {
+      let response = `deleted ${returnData} events with ids of ${eventArrayToDelete}`
+      res.send({ message: response })
     })
     .catch((err) => {
       console.error(err.message)

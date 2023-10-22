@@ -91,21 +91,17 @@ textarea {
 }
 
 .calendar{
+  display: flex;
+  justify-content: center;
   padding: 3rem;
   width: 90vw;
-
   width: 90%;
-
 }
-
-
-
 
 
 .addEvent {
   display: inline-block;
-  
-  }
+}
 
 .AddEventContainer {
 float: left;
@@ -186,13 +182,16 @@ float: left;
 .popimg {
   margin: 1rem;
   display: flex;
-  object-fit: contain;
+
   overflow: hidden;
-  /* max-height: 30%; */
-  /* max-width: 40%; */
+
 }
 
-
+#popimg {
+  margin: 0px;
+  max-height: 40%;
+  max-width:  20%;
+}
 
 .arrows {
   color: white;
@@ -228,6 +227,7 @@ float: left;
 display: flex;
 justify-content: center;
 margin: 1rem;
+max-height: 30%;
 
 }
 
@@ -239,9 +239,7 @@ margin: 1rem;
   background-color: #1a1511;
 }
 
-#popimg {
-  margin: 0px;
-}
+
 
 
 .popup p {

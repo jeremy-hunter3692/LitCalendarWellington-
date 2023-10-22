@@ -12,8 +12,8 @@ afterEach(() => {
 
 //chat gpt test of tes
 
-describe('gets all events', () => {
-  test('returns events', () => {
+describe('GET /events/', () => {
+  test('getAllEVents - returns events', () => {
     const mockSessionData = [
       { id: 5, name: 'Summer Lovin' },
       { id: 6, name: 'Winter Chills' },
@@ -30,7 +30,7 @@ describe('gets all events', () => {
       })
   })
 
-  test('gets all events fail', () => {
+  test('Gets all events fail', () => {
     db.getAllEvents.mockReset()
     db.getAllEvents.mockImplementation(() =>
       Promise.reject(new Error('test error message'))
@@ -66,9 +66,10 @@ describe('gets all events', () => {
 //       })
 //   })
 // })
-describe('update an event', () => {
+
+describe('Update /:id', () => {
   db.updateEventById.mockReset()
-  test('updates event by id', () => {
+  test('Updates event by id', () => {
     const id = 1
     const updated = { title: 'updated Title', id: id }
 
@@ -85,7 +86,7 @@ describe('update an event', () => {
   })
 })
 
-describe('adds events', () => {
+describe('.post events/ addsevents', () => {
   test('posts events to the server without modnotesobj', () => {
     const mockPostSessionData = [
       {
@@ -172,7 +173,26 @@ describe('deleting routes', () => {
 
         expect(console.error).toHaveBeenCalledWith('Deletion error')
         expect(res.status).toBe(500)
-        // expect(res.status).toBe(500)
+
+        return null
+      })
+  })
+
+  test('deletes an array', () => {
+    const mockSendData = [1, 34, 3]
+    const mockReturnData = 3
+    const shouldEqual = `deleted 3 events with ids of 1,34,3`
+    db.deleteEventsArray.mockReset()
+    db.deleteEventsArray.mockImplementation(() =>
+      Promise.resolve(mockReturnData)
+    )
+
+    return request(server)
+      .post('/api/v1/events/deleteManyEvents')
+      .send(mockSendData)
+      .then((res) => {
+        expect(res.body.message).toBe(shouldEqual)
+        expect(res.status).toBe(200)
         return null
       })
   })
