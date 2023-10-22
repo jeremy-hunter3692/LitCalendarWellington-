@@ -138,7 +138,7 @@ describe('deletes an event', () => {
   test('deletes the event', () => {
     const id = 45
     const scope = nock('http://localhost')
-      .delete(`${apiUrl}/${id}`)
+      .delete(`${apiUrl}/delete/${id}`)
       .reply(200, { id: id, message: 'was deleted' })
     return deleteEvent(id).then((res) => {
       expect(res.status).toBe(200)

@@ -1,7 +1,3 @@
-@import '!style-loader!css-loader!./sass/styles.scss';
-/* :root {
- --popupcorners: 13px
-} */
 
 *,
 *::before,
@@ -107,7 +103,7 @@ textarea {
 .addEvent {
   display: inline-block;
   
-  }
+}
 
 .AddEventContainer {
 float: left;
@@ -117,8 +113,6 @@ float: left;
 .textarea {
   margin: 2em;
   display: flex;
-
-
 }
 
 
@@ -265,6 +259,7 @@ flex-direction: column;
   .popimgcont{
   display: block;
   align-items: end;
+  
   }
   
   .popimg img {

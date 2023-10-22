@@ -71,7 +71,7 @@ export function addEvents(data) {
 
 export function deleteEvent(id) {
   return request
-    .del(`${apiUrl}/${id}`)
+    .del(`${apiUrl}/delete/${id}`)
     .then((res) => {
       return res
     })
@@ -82,7 +82,6 @@ export function deleteEvent(id) {
 
 export function deleteEventsArray(data) {
   const idArray = data.map((x) => x.id)
-  console.log(idArray)
   return request
     .post('/deleteManyEvents')
     .send(idArray)

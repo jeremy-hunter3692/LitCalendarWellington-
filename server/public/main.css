@@ -2,6 +2,7 @@
 /* :root {
  --popupcorners: 13px
 } */
+@import pop.css
 
 #app {
   width: 100%;
@@ -97,20 +98,10 @@ textarea {
 
 }
 
-.arrows {
-  color: white;
 
- 
-  align-items: center;
-  
-}
-.arrows:hover {
-  color: black;
-   background: #ffffff;
-  opacity: 30%;
 
-  
-}
+
+
 .addEvent {
   display: inline-block;
   
@@ -125,59 +116,93 @@ float: left;
   display:inline-block;
 }
 
+/* PopUp CSS Below */
+
+
+.popup {
+  width: inherit;
+  height: inherit;
+  position: inherit;
+  z-index: 5;
+  background-color: #00275e;
+  margin: 0px;
+  padding: 1rem;
+  color: #ffffff;
+  border-radius: 25px;
+  box-shadow: 5px 5px #d2d2d2 ;
+  display: flex;
+  /* flex: grow; */
+  flex-direction: column;
+  overflow-wrap: break-word;
+  word-wrap: break-all;
+
+} 
+
+.licontainer {
+    padding: 0rem 1rem 1rem 1rem;
+    border: solid white;
+    border-width: 0.2px;
+    border-radius: 12px;
+    height: auto;
+    display: flex;
+    box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    white-space: normal;
+    height: 90%;
+    background-color: #1a1511;
+}
+/* 
+  .secondlineMoveDown{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+  }
+   */
+.popup h4 {
+    margin: 0;
+    /* background-color:#130561 ; */
+    text-align: center;
+}
+  
+.popuppreview {
+    float: right;
+}
+  
+
+
+.poptoprightbuttons {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0.2rem;
+  font-size: .2rem;
+  
+}
+  
+
+
 .popimg {
   margin: 1rem;
   display: flex;
   object-fit: contain;
-
   overflow: hidden;
   /* max-height: 30%; */
   /* max-width: 40%; */
 }
 
-.popuppreview {
-  float: right;
+
+
+.arrows {
+  color: white;
+  align-items: center;
 }
 
-
-
-.popup {
-width: inherit;
-height: inherit;
-position: inherit;
-z-index: 5;
-background-color: #00275e;
-margin: 0px;
-padding: 1rem;
-color: #ffffff;
-border-radius: 25px;
-box-shadow: 5px 5px #d2d2d2 ;
-display: flex;
-/* flex: grow; */
-flex-direction: column;
-word-wrap: break-all;
-} 
-
-.popup h4 {
-  margin: 0;
-  /* background-color:#130561 ; */
-  text-align: center;
-}
-
-.licontainer {
-  padding: 0rem 1rem 1rem 1rem;
-  border: solid white;
-  border-width: 0.2px;
-  border-radius: 12px;
-  height: auto;
-  display: flex;
-  box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
-  flex-direction: column;
-  flex-grow: 1;
-  flex-wrap: wrap;
-   white-space: nowrap;
-  height: 90%;
-  background-color: #1a1511;
+.arrows:hover {
+  color: black;
+   background: #ffffff;
+  opacity: 30%;
 }
 
 
@@ -232,14 +257,6 @@ margin: 1rem;
   
 }
 
-.poptoprightbuttons {
-display: flex;
-flex-direction: row-reverse;
-padding: 0.2rem;
-font-size: .2rem;
-
-}
-
 
 .popup button {
   display: block;
@@ -267,12 +284,7 @@ font-size: .2rem;
   /* opacity: 0; */
 }
 
-.secondlineMoveDown{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  white-space: pre-wrap;
-}
+
 
 #insidemorebutton:hover {
   padding: 0;

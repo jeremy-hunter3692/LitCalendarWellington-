@@ -147,11 +147,11 @@ describe('deleting routes', () => {
   test('deletes item with given id', () => {
     const id = 22
     db.deleteEvent.mockReset()
-    db.deleteEvent.mockReturnValue(Promise.resolve())
+    db.deleteEvent.mockReturnValue(Promise.resolve(id))
     return request(server)
-      .delete(`/api/v1/events/${id}`)
+      .delete(`/api/v1/events/delete/${id}`)
       .then((res) => {
-        expect(res.text).toBe('item with id:22 deleted')
+        expect(res.body.message).toBe('item with id:22 deleted')
         expect(res.status).toBe(200)
       })
   })
@@ -166,11 +166,12 @@ describe('deleting routes', () => {
 
     // console.error.mockImplementation(() => {})
     return request(server)
-      .delete(`/api/v1/events/${id}`)
+      .delete(`/api/v1/events/delete/${id}`)
       .then((res) => {
         // console.log(res.error)
-        expect(res.status).toBe(500)
+
         expect(console.error).toHaveBeenCalledWith('Deletion error')
+        expect(res.status).toBe(500)
         // expect(res.status).toBe(500)
         return null
       })
