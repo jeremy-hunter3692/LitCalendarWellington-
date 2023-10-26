@@ -2,7 +2,7 @@
 /* :root {
  --popupcorners: 13px
 } */
-@import pop.css
+
 
 #app {
   width: 100%;
@@ -179,18 +179,35 @@ float: left;
   
 
 
-.popimg {
-  margin: 1rem;
+
+
+  .popimgcont button {
+    padding: 0;
+    border-radius: 0;
+    width: 0.8rem;
+    border: none;
+    color: #1a1511; 
+    background-color: #1a1511;
+  }
+  
+
+.popimgcont {
   display: flex;
-
+  justify-content: center;
+  margin: 1rem;
+  max-height: 50%;
   overflow: hidden;
+  
+  }
+  
 
-}
 
 #popimg {
+  /* somehow losing my buttons on fullscreen */
   margin: 0px;
-  max-height: 40%;
-  max-width:  20%;
+ /* width: fit-content; */
+ object-fit: scale-down;
+ object-position: 50% 50%;
 }
 
 .arrows {
@@ -223,22 +240,6 @@ float: left;
 }
 
 
-.popimgcont {
-display: flex;
-justify-content: center;
-margin: 1rem;
-max-height: 30%;
-
-}
-
-.popimgcont button {
-  padding: 0;
-  border-radius: 0;
-  width: 0.8rem;
-  border: none;
-  background-color: #1a1511;
-}
-
 
 
 
@@ -261,7 +262,7 @@ max-height: 30%;
   /* width: 100%; */
   white-space: nowrap;
 
-  color:#00275e;
+  /* color:#00275e; */
   /* padding: 0 0.4rem;
   width: 3rem;
   font-size: .6rem;

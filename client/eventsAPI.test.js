@@ -3,6 +3,7 @@ import nock from 'nock'
 const {
   deleteEvent,
   getAllEvents,
+  getEventById,
   addEvents,
   upDateEvent,
   deleteEventsArray,
@@ -62,15 +63,15 @@ describe('getAllEvents', () => {
     })
   })
 
-  // test('gets specific event from db', () => {
-  //   const scope = nock('http://localhost')
-  //     .get(apiUrl + '/1')
-  //     .reply(200, { data: 'testing data' })
-  //   return getEventById(1).then((result) => {
-  //     expect(result).toEqual({ data: 'testing data' })
-  //     expect(scope.isDone()).toBe(true)
-  //   })
-  // })
+  test('gets specific event from db', () => {
+    const scope = nock('http://localhost')
+      .get(apiUrl + '/1')
+      .reply(200, { data: 'testing data' })
+    return getEventById(1).then((result) => {
+      expect(result).toEqual({ data: 'testing data' })
+      expect(scope.isDone()).toBe(true)
+    })
+  })
 
   //TO DOOOOO
   //check what type of object you are actually sending here and what format it will be in
@@ -119,7 +120,7 @@ describe('getAllEvents', () => {
   })
 })
 
-describe('updates ans event with given id', () => {
+describe('updat ans event with given id', () => {
   test('updates with correct id', () => {
     const changes = { title: 'titleChanged', id: 1 }
     const { id } = changes

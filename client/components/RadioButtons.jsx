@@ -4,7 +4,7 @@ export default function RadioButtons({ radioDataObj, handleChange, form }) {
   function radioGen({ id, value }) {
     return (
       <>
-        <li className='radioli'>
+        <li className="radioli">
           {' '}
           <input
             type="radio"

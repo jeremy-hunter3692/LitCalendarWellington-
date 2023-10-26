@@ -82,11 +82,12 @@ export function deleteEvent(id) {
 
 export function deleteEventsArray(data) {
   const idArray = data.map((x) => x.id)
+  console.log(idArray)
   return request
-    .post('/deleteManyEvents')
+    .post(apiUrl + '/deleteManyEvents')
     .send(idArray)
     .then((res) => {
-      return idArray
+      return res.message
     })
     .catch((err) => {
       return err.status, 'data not found'

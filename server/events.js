@@ -71,6 +71,7 @@ router.delete('/delete/:id', (req, res) => {
 })
 
 router.post('/deleteManyEvents', (req, res) => {
+
   //expects array in
   const eventArrayToDelete = req.body
   db.deleteEventsArray(eventArrayToDelete)

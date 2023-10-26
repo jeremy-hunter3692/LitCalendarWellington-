@@ -32,8 +32,10 @@ const App = () => {
     }
   }
 
-  function globalDelete(input) {
-    const filtered = globalEvents.filter((x) => x.id != input.id)
+  function globalSateDelete(input) {
+    console.log('input', input)
+    const filtered = globalEvents.filter((x) => !input.includes(x))
+    console.log('filtered', filtered)
     setGlobalEvents(filtered)
   }
   function showAddEventSetter() {
@@ -76,7 +78,7 @@ const App = () => {
         <EditEvent
           details={editDetails}
           showEditSetter={showEditEvent}
-          globalEventsDelete={globalDelete}
+          globalEventsDelete={globalSateDelete}
           globalEventsAddandUpdate={globalEventSetter}
         />
       ) : showAddEvents ? (
@@ -92,6 +94,7 @@ const App = () => {
             eventsProps={globalEvents}
             showEditSetter={showEditEvent}
             editing={editingSelection}
+            globalEventsDelete={globalSateDelete}
           />
         )
       )}

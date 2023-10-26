@@ -20,8 +20,8 @@ export default function EditEvent({
   function apiDeleteEvent() {
     //delete at api level
     deleteEvent(details.id)
-    //remove from state
-    globalEventsDelete(details)
+    //remove from state - takes an array in
+    globalEventsDelete([details])
     //return to calendar page
     showEditSetter()
   }
