@@ -10,6 +10,7 @@ const App = () => {
   const [showAddEvents, setShowAddEvents] = useState(false)
   const [showEditEventPage, setShowEditEventPage] = useState(false)
   const [editingSelection, setEditingSelection] = useState(false)
+  const [multiDelete, setMultiDelete] = useState(false)
   const [editDetails, setEditDetails] = useState()
   // console.log({ showEditEventPage }, { editingSelection }, { editDetails })
 
@@ -23,23 +24,22 @@ const App = () => {
       })
   }, [])
 
-  function globalEventSetter(input) {
+  function filterEventsArr(inputArr) {
+    return globalEvents.filter((x) => !inputArr.includes(x))
+  }
+
+  function globalEventSetter(event) {
     if (editingSelection) {
-      const update = globalEvents.filter((x) => x.id != input.id)
-      setGlobalEvents([...update, input])
+      //have to do this by id because everythign else is getting updated
+      const update = globalEvents.filter((x) => x.id != event.id)
+      setGlobalEvents([...update, event])
     } else {
-      setGlobalEvents([...globalEvents, input])
+      setGlobalEvents([...globalEvents, event])
     }
   }
 
-  function globalSateDelete(input) {
-    console.log('input', input)
-    const filtered = globalEvents.filter((x) => !input.includes(x))
-    console.log('filtered', filtered)
-    setGlobalEvents(filtered)
-  }
-  function showAddEventSetter() {
-    setShowAddEvents(!showAddEvents)
+  function globalSateDelete(inputArr) {
+    setGlobalEvents(filterEventsArr(inputArr))
   }
 
   function showEditEvent(e) {
@@ -53,10 +53,17 @@ const App = () => {
     showEditEvent ? setShowEditEventPage(false) : ''
   }
 
+  function showAddEventSetter() {
+    setShowAddEvents(!showAddEvents)
+  }
+
+  function multiDeleteSetter(){
+    setMultiDelete(!multiDelete)
+  }
+
   return (
     <>
       <Nav />
-
       {!editingSelection && (
         <button onClick={showAddEventSetter}>
           {showAddEvents ? 'Back' : 'Submit new event'}
@@ -73,6 +80,10 @@ const App = () => {
       {editingSelection && (
         <h1 style={{ backgroundColor: 'red' }}>EDITING EVENTS</h1>
       )}
+      {multiDelete && <h2>Multi Deleting</h2>}
+      <button onClick={() => setMultiDelete(!multiDelete)}>
+        {multiDelete ? 'cancel multi delete' : 'MultiDelete'}
+      </button>
 
       {showEditEventPage ? (
         <EditEvent
@@ -95,6 +106,8 @@ const App = () => {
             showEditSetter={showEditEvent}
             editing={editingSelection}
             globalEventsDelete={globalSateDelete}
+            multiDelete={multiDelete}
+            multiDeleteSetter={multiDeleteSetter}
           />
         )
       )}

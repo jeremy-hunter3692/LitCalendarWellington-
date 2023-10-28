@@ -1,20 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar'
 
 import moment from 'moment'
 import PopupEvent from './PopupEvent'
+import DeleteTheseEventsPop from './DeleteTheseEventsPop'
 import { deleteEventsArray } from '../eventsAPI'
 
 import '!style-loader!css-loader!../../server/public/sass/styles.css'
+
 // import '/public/sass/styles.css'
 
 const localizer = momentLocalizer(moment)
-const eventsToBeDeletedArr = []
-export default function MyCalendar({ eventsProps, showEditSetter, editing, globalEventsDelete }) {
+
+export default function MyCalendar({
+  eventsProps,
+  showEditSetter,
+  editing,
+  globalEventsDelete,
+  multiDelete,
+  multiDeleteSetter,
+}) {
   const [displayPop, setDisplayPop] = useState()
   const [popDetails, setPopDetails] = useState({})
   const [mousePos, setMousePos] = useState({})
-  const [multiDelete, setMultiDelete] = useState(false)
+  const [eventsToBeDeletedArr, setEventsToBeDeletedArr] = useState([])
+  const [deletePop, setDeletePop] = useState()
 
   // console.log('calendar init', eventsProps)
   // const [events, setEvents] = useState(eventsProps)
@@ -42,9 +52,9 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing, globa
   function handleSelect(e) {
     // console.log(e)
     setDisplayPop(false)
-
     if (multiDelete) {
-      getIds(e)
+      console.log('setting', e)
+      setEventsToBeDeletedArr([...eventsToBeDeletedArr, e])
     } else if (editing) {
       showEditSetter(e)
       setDisplayPop(false)
@@ -58,26 +68,34 @@ export default function MyCalendar({ eventsProps, showEditSetter, editing, globa
     setDisplayPop(false)
   }
 
-  function getIds(e) {
-    eventsToBeDeletedArr.push(e)
-    console.log(eventsToBeDeletedArr)
-  }
-
   function handleDelete() {
     deleteEventsArray(eventsToBeDeletedArr)
     globalEventsDelete(eventsToBeDeletedArr)
-
+    setEventsToBeDeletedArr([])
+    multiDeleteSetter()
   }
 
+  function handleNo() {
+    multiDeleteSetter()
+    setEventsToBeDeletedArr([])
+  }
   return (
     <>
+      <DeleteTheseEventsPop eventsToBeDeletedArr={eventsToBeDeletedArr} />
+      {/* {deletePop ? (
+      ) : (
+        ''
+      )} */}
+
+      {multiDelete && (
+        <>
+          {' '}
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={handleNo}>No</button>
+        </>
+      )}
       <h1>Calender</h1>
       <div className="calendar">
-        {multiDelete && <h2>Multi Deleting</h2>}
-        <button onClick={() => setMultiDelete(!multiDelete)}>
-          MultiDelete
-        </button>
-        <button onClick={handleDelete}>detele confrim</button>
         {displayPop && (
           <PopupEvent details={popDetails} styleData={mousePos} close={close} />
         )}

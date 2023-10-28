@@ -120,7 +120,7 @@ describe('getAllEvents', () => {
   })
 })
 
-describe('updat ans event with given id', () => {
+describe('update an event with given id', () => {
   test('updates with correct id', () => {
     const changes = { title: 'titleChanged', id: 1 }
     const { id } = changes
@@ -158,9 +158,13 @@ describe('deletes several events', () => {
       { id: 46, data: 'stuff' },
       { id: 2, data: 'stuff' },
     ]
-    const scope = nock('http://localhost').post('/deleteManyEvents').reply(200)
+    const scope = nock('http://localhost')
+      .post(apiUrl + '/deleteManyEvents')
+      .reply(200, { message: '3 rows with ids 45,46,2 deleted' })
     return deleteEventsArray(eventsArr).then((res) => {
-      expect(res).toEqual([45, 46, 2])
+      // expect(res).toEqual([45, 46, 2])
+      // expect(res.status).toBe(200)
+      expect(res.body.message).toBe('3 rows with ids 45,46,2 deleted')
       expect(scope.isDone()).toBe(true)
     })
   })

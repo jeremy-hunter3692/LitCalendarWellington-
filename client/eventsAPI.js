@@ -87,7 +87,7 @@ export function deleteEventsArray(data) {
     .post(apiUrl + '/deleteManyEvents')
     .send(idArray)
     .then((res) => {
-      return res.message
+      return res
     })
     .catch((err) => {
       return err.status, 'data not found'
