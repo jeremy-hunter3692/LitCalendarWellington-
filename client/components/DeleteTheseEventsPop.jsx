@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 function DeleteTheseEventsPop({ eventsToBeDeletedArr }) {
-  console.log(eventsToBeDeletedArr)
+  // console.log(eventsToBeDeletedArr)
   return (
     <>
       {eventsToBeDeletedArr.length > 0 && (

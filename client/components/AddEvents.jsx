@@ -6,11 +6,10 @@ import RadioButtons from './RadioButtons'
 import FromReturn from './FormReturn'
 import { addEvents } from '../eventsAPI'
 import {
-  deleteExtras,
   makeDateObject,
   getDaysOfSelectedMonth,
-  copyWithNewDateObj,
   timeCheck,
+  sanitizeSubmitObject,
 } from '../javascript/functions'
 import {
   initDetails,
@@ -28,12 +27,21 @@ export default function AddEvent({
   updateEvent,
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
-
+  const [warningTwo, setWarningTwo] = useState()
   function modNotesFormSetter(input) {
     setForm({ ...form, modNotes: input })
   }
 
+  function checkInputIsNumber(e) {
+    const regex = /^[0-9.\b]*$/
+    if (e.target.value === '' || regex.test(e.target.value)) {
+      handleChange(e)
+    }
+  }
+
   function handleChange(e) {
+
+
     const { name, value } = e.target
     let tempObj = {}
     switch (true) {
@@ -90,11 +98,12 @@ export default function AddEvent({
           [name]: value,
         })
     }
-
     //fixing bug that comes from being able to preview end times is also used below for edit
     const { start, end } = form
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
+    console.log(form.unwagedCost, form.cost)
+    setWarningTwo(cost > unwaged ? 'Unwaged cost is higher than cost' : '')
   }
 
   function editUpdate(e) {
@@ -103,15 +112,6 @@ export default function AddEvent({
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     updateEvent(form)
-  }
-
-  function sanitizeSubmitObject(obj) {
-    //TO DO check date object copying here rather than taking the date object.
-    const copiedObj = copyWithNewDateObj([obj])
-    const deArrayed = copiedObj[0]
-    deArrayed.koha ? (deArrayed.buyTixLink = null) : ''
-    deleteExtras(deArrayed)
-    return deArrayed
   }
 
   function handleSubmit(e) {
@@ -144,7 +144,7 @@ export default function AddEvent({
             formSet={handleChange}
             dropData={dropDownMenus}
           />
-          {timeCheck(form)}
+          {<p className="warningTextSmall"> {timeCheck(form)}</p>}
           {/* Reccuring event?
           <label htmlFor="weekly">How many weeks?</label>
           <input
@@ -195,25 +195,31 @@ export default function AddEvent({
             <input
               id="cost"
               type="text"
-              onChange={handleChange}
+              onChange={checkInputIsNumber}
               value={form.cost}
               aria-label="cost"
               name="cost"
-              placeholder="0"
+              placeholder="0.0"
             />
-            Leave empty if {form.koha ? 'no suggested Koha' : 'free'}
+            <p className="deemphasized">
+              Leave empty if {form.koha ? 'no suggested Koha |' : 'free |'}
+            </p>
             {!form.koha && (
-              <label htmlFor="unwagedCost">
-                {' '}
-                Optional unwaged cost: $
-                <input
-                  id="unwagedCost"
-                  onChange={handleChange}
-                  value={form.unwagedCost}
-                  name="unwagedCost"
-                  placeholder="0"
-                />
-              </label>
+              <>
+                <label htmlFor="unwagedCost">
+                  {'    '}
+                  Optional unwaged cost: $
+                  <input
+                    id="unwagedCost"
+                    type="text"
+                    onChange={checkInputIsNumber}
+                    value={form.unwagedCost}
+                    name="unwagedCost"
+                    placeholder="0.0"
+                  />
+                </label>
+                <p className="warningTextSmall">{warningTwo}</p>
+              </>
             )}
           </div>
           {!form.koha && form.cost > 0 && (

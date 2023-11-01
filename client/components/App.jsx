@@ -57,7 +57,7 @@ const App = () => {
     setShowAddEvents(!showAddEvents)
   }
 
-  function multiDeleteSetter(){
+  function multiDeleteSetter() {
     setMultiDelete(!multiDelete)
   }
 
@@ -78,12 +78,21 @@ const App = () => {
       )}
 
       {editingSelection && (
-        <h1 style={{ backgroundColor: 'red' }}>EDITING EVENTS</h1>
+        <h1 style={{ backgroundColor: 'red', color: 'white' }}>
+          EDITING EVENTS
+        </h1>
       )}
-      {multiDelete && <h2>Multi Deleting</h2>}
-      <button onClick={() => setMultiDelete(!multiDelete)}>
-        {multiDelete ? 'cancel multi delete' : 'MultiDelete'}
-      </button>
+      {multiDelete && (
+        <h2 style={{ backgroundColor: 'red', color: 'white' }}>
+          Multi Deleting
+        </h2>
+      )}
+
+      {!editingSelection && !showAddEvents && (
+        <button onClick={() => setMultiDelete(!multiDelete)}>
+          {multiDelete ? 'back' : 'MultiDelete'}
+        </button>
+      )}
 
       {showEditEventPage ? (
         <EditEvent

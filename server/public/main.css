@@ -112,6 +112,19 @@ float: left;
   display:inline-block;
 }
 
+.warningTextSmall {
+  display: inline;
+  font-size: .8rem;
+  color: red;
+  font-style: italic;
+}
+
+.deemphasized {
+  display: inline;
+  font-size: .8rem;
+  color: grey;
+  font-style: italic;
+}
 /* PopUp CSS Below */
 
 
@@ -195,7 +208,8 @@ float: left;
   display: flex;
   justify-content: center;
   margin: 1rem;
-  max-height: 50%;
+  height: 40%;
+  width: 100%;
   overflow: hidden;
   
   }
@@ -206,7 +220,7 @@ float: left;
   /* somehow losing my buttons on fullscreen */
   margin: 0px;
  /* width: fit-content; */
- object-fit: scale-down;
+ object-fit: contain;
  object-position: 50% 50%;
 }
 

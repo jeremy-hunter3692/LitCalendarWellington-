@@ -95,6 +95,15 @@ function timeCheck(form) {
     : ''
 }
 
+function sanitizeSubmitObject(obj) {
+  //TO DO check date object copying here rather than taking the date object.
+  const copiedObj = copyWithNewDateObj([obj])
+  const deArrayed = copiedObj[0]
+  deArrayed.koha ? (deArrayed.buyTixLink = null) : ''
+  deleteExtras(deArrayed)
+  return deArrayed
+}
+
 export {
   deleteExtras,
   makeDateObject,
@@ -103,4 +112,5 @@ export {
   unpackDetails,
   copyWithNewDateObj,
   timeCheck,
+  sanitizeSubmitObject,
 }
