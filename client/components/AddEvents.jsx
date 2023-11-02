@@ -40,8 +40,6 @@ export default function AddEvent({
   }
 
   function handleChange(e) {
-
-
     const { name, value } = e.target
     let tempObj = {}
     switch (true) {
@@ -103,7 +101,6 @@ export default function AddEvent({
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
     console.log(form.unwagedCost, form.cost)
-    setWarningTwo(cost > unwaged ? 'Unwaged cost is higher than cost' : '')
   }
 
   function editUpdate(e) {
@@ -125,6 +122,11 @@ export default function AddEvent({
     // recurringEvent(input[0], form.weekly)
   }
 
+  function costCheck() {
+    return Number(form.unwagedCost) >= Number(form.cost)
+      ? 'Unwaged cost must be less than cost'
+      : ''
+  }
   const dropDownMenus = [
     { label: 'Month:', data: months, name: 'month' },
     { label: 'Date:', data: getDaysOfSelectedMonth(form.month), name: 'date' },
@@ -218,7 +220,7 @@ export default function AddEvent({
                     placeholder="0.0"
                   />
                 </label>
-                <p className="warningTextSmall">{warningTwo}</p>
+                <p className="warningTextSmall">{costCheck()}</p>
               </>
             )}
           </div>
