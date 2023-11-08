@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar'
 
 import moment from 'moment'
@@ -24,7 +24,6 @@ export default function MyCalendar({
   const [popDetails, setPopDetails] = useState({})
   const [mousePos, setMousePos] = useState({})
   const [eventsToBeDeletedArr, setEventsToBeDeletedArr] = useState([])
-  const [deletePop, setDeletePop] = useState()
 
   // console.log('calendar init', eventsProps)
   // const [events, setEvents] = useState(eventsProps)
@@ -82,16 +81,12 @@ export default function MyCalendar({
   return (
     <>
       <DeleteTheseEventsPop eventsToBeDeletedArr={eventsToBeDeletedArr} />
-      {/* {deletePop ? (
-      ) : (
-        ''
-      )} */}
 
       {multiDelete && (
         <>
           {' '}
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={handleNo}>No</button>
+          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleNo}>Cancel</button>
         </>
       )}
       <h1>Calender</h1>

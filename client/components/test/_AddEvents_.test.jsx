@@ -116,40 +116,38 @@ describe('form test', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /save event/i }))
     // expect(title.value).toBe('Kates Event')
-    expect(onSubmit).toHaveBeenCalledWith(
-      {
-        // month: 'March',
-        // date: '10',
-        // hour: '18',
-        // year: new Date().getFullYear(),
-        start: start,
-        end: end,
-        // minutes: '30',
-        // endHours: '19',
-        // endMinutes: '30',
-        title: 'Kates Event',
-        type: 'Reading',
-        link: 'www.stuff.co.nz',
-        location: 'a bookstore',
-        imageURL: '',
-        about: 'some words that will be in the about section',
-        facebook: 'www.facebook.com',
-        instagram: 'www.instagram.com',
-        twitter: 'www.twitter.com',
-        typeother: '',
-        inperson: 'In Person',
-        cost: '10',
-        modNotes: {
-          alternativeContact: 'Person2',
-          contact: 'Person1',
-          organisation: 'Place1',
-          extranotes: 'notes in extra notes mod',
-        },
-        koha: false,
-        buyTixLink: 'www.stuff.co.nz',
-        unwagedCost: '5',
+    expect(onSubmit).toHaveBeenCalledWith({
+      // month: 'March',
+      // date: '10',
+      // hour: '18',
+      // year: new Date().getFullYear(),
+      start: start,
+      end: end,
+      // minutes: '30',
+      // endHours: '19',
+      // endMinutes: '30',
+      title: 'Kates Event',
+      type: 'Reading',
+      link: 'www.stuff.co.nz',
+      location: 'a bookstore',
+      imageURL: '',
+      about: 'some words that will be in the about section',
+      facebook: 'www.facebook.com',
+      instagram: 'www.instagram.com',
+      twitter: 'www.twitter.com',
+      typeother: '',
+      inperson: 'In Person',
+      cost: '10',
+      modNotes: {
+        alternativeContact: 'Person2',
+        contact: 'Person1',
+        organisation: 'Place1',
+        extranotes: 'notes in extra notes mod',
       },
-    )
+      koha: false,
+      buyTixLink: 'www.stuff.co.nz',
+      unwagedCost: '5',
+    })
   })
 
   test('correct shape with type Other and Koha checked', async () => {
@@ -211,38 +209,60 @@ describe('form test', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /save event/i }))
     // expect(title.value).toBe('Kates Event')
-    expect(onSubmit).toHaveBeenCalledWith(
-      {
-        // month: 'March',
-        // date: '10',
-        // hour: '18',
-        // year: new Date().getFullYear(),
-        start: start,
-        end: end,
-        // minutes: '30',
-        // endHours: '19',
-        // endMinutes: '30',
-        title: 'Kates Event',
-        type: 'Other',
-        link: 'www.stuff.co.nz',
-        location: 'a bookstore',
-        imageURL: '',
-        about: 'some words that will be in the about section',
-        facebook: 'www.facebook.com',
-        instagram: 'www.instagram.com',
-        twitter: 'www.twitter.com',
-        typeother: 'othertext',
-        inperson: 'Both',
-        cost: '10',
-        modNotes: {
-          alternativeContact: 'Person2',
-          contact: 'Person1',
-          organisation: 'Place1',
-        },
-        koha: true,
-        buyTixLink: null,
-        unwagedCost: '',
+    expect(onSubmit).toHaveBeenCalledWith({
+      // month: 'March',
+      // date: '10',
+      // hour: '18',
+      // year: new Date().getFullYear(),
+      start: start,
+      end: end,
+      // minutes: '30',
+      // endHours: '19',
+      // endMinutes: '30',
+      title: 'Kates Event',
+      type: 'Other',
+      link: 'www.stuff.co.nz',
+      location: 'a bookstore',
+      imageURL: '',
+      about: 'some words that will be in the about section',
+      facebook: 'www.facebook.com',
+      instagram: 'www.instagram.com',
+      twitter: 'www.twitter.com',
+      typeother: 'othertext',
+      inperson: 'Both',
+      cost: '10',
+      modNotes: {
+        alternativeContact: 'Person2',
+        contact: 'Person1',
+        organisation: 'Place1',
       },
-    )
+      koha: true,
+      buyTixLink: null,
+      unwagedCost: '',
+    })
+  })
+})
+
+describe('radio buttons', () => {
+  test('radios selection correctly', () => {
+    const { getByLabelText } = render(<AddEvent />)
+
+    const inPerson = getByLabelText('In Person')
+    const online = getByLabelText('On line/Streamed')
+    const both = getByLabelText('Both')
+
+    expect(inPerson).toBeChecked()
+    expect(online).not.toBeChecked()
+    expect(both).not.toBeChecked()
+
+    fireEvent.click(online)
+    expect(online).toBeChecked()
+    expect(both).not.toBeChecked()
+    expect(inPerson).not.toBeChecked()
+
+    fireEvent.click(both)
+    expect(online).not.toBeChecked()
+    expect(both).toBeChecked()
+    expect(inPerson).not.toBeChecked()
   })
 })

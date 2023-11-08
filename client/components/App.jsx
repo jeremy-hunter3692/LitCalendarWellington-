@@ -82,16 +82,16 @@ const App = () => {
           EDITING EVENTS
         </h1>
       )}
-      {multiDelete && (
-        <h2 style={{ backgroundColor: 'red', color: 'white' }}>
-          Multi Deleting
-        </h2>
-      )}
 
       {!editingSelection && !showAddEvents && (
         <button onClick={() => setMultiDelete(!multiDelete)}>
           {multiDelete ? 'back' : 'MultiDelete'}
         </button>
+      )}
+      {multiDelete && (
+        <h2 style={{ backgroundColor: 'red', color: 'white' }}>
+          Multi Deleting
+        </h2>
       )}
 
       {showEditEventPage ? (

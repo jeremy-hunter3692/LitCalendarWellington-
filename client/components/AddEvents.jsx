@@ -100,7 +100,6 @@ export default function AddEvent({
     const { start, end } = form
     end.setDate(start.getDate())
     end.setMonth(start.getMonth())
-    console.log(form.unwagedCost, form.cost)
   }
 
   function editUpdate(e) {
