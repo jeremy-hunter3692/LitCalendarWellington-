@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 
-function DeleteTheseEventsPop({ eventsToBeDeletedArr }) {
+function DeleteTheseEventsPop({ eventsToBeDeletedArr, removeToBeDeltedItem }) {
   // console.log(eventsToBeDeletedArr)
+
   return (
     <>
       {eventsToBeDeletedArr.length > 0 && (
@@ -12,13 +13,13 @@ function DeleteTheseEventsPop({ eventsToBeDeletedArr }) {
               <Fragment key={x.id}>
                 <div>
                   {x.title} at {x.start.toDateString()}{' '}
+                  <button onClick={() => removeToBeDeltedItem(x)}>X</button>
                 </div>
               </Fragment>
             )
           })}
         </div>
       )}
-      {/* <button onClick={deleteConfirmPop}>delete events</button> */}
     </>
   )
 }

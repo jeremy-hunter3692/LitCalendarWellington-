@@ -52,7 +52,7 @@ export default function MyCalendar({
     // console.log(e)
     setDisplayPop(false)
     if (multiDelete) {
-      console.log('setting', e)
+      // console.log('setting', e)
       setEventsToBeDeletedArr([...eventsToBeDeletedArr, e])
     } else if (editing) {
       showEditSetter(e)
@@ -78,9 +78,18 @@ export default function MyCalendar({
     multiDeleteSetter()
     setEventsToBeDeletedArr([])
   }
+
+  function removeToBeDeltedItem(event) {
+    const filtered = eventsToBeDeletedArr.filter((x) => x != event)
+    setEventsToBeDeletedArr(filtered)
+  }
+
   return (
     <>
-      <DeleteTheseEventsPop eventsToBeDeletedArr={eventsToBeDeletedArr} />
+      <DeleteTheseEventsPop
+        eventsToBeDeletedArr={eventsToBeDeletedArr}
+        removeToBeDeltedItem={removeToBeDeltedItem}
+      />
 
       {multiDelete && (
         <>
