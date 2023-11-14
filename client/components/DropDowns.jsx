@@ -39,25 +39,4 @@ export default function DropDowns({ formSet, form, dropData }) {
   }
 
   return <> {makeDropDowns()}</>
-
-  // return (
-  //   <>
-  //     <select
-  //       id={name}
-  //       name={name}
-  //       value={form[name]}
-  //       onChange={handleChange}
-  //       required
-  //     >
-  //       <option value={label} disabled>
-  //         {label}
-  //       </option>
-  //       {data.map((x) => (
-  //         <option key={x} value={x} title={x}>
-  //           {x}
-  //         </option>
-  //       ))}
-  //     </select>
-  //   </>
-  // )
 }

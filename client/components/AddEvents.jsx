@@ -27,7 +27,7 @@ export default function AddEvent({
   updateEvent,
 }) {
   const [form, setForm] = useState(editDetails || initDetails)
-  const [warningTwo, setWarningTwo] = useState()
+
   function modNotesFormSetter(input) {
     setForm({ ...form, modNotes: input })
   }
@@ -117,8 +117,6 @@ export default function AddEvent({
     eventsSetter(input)
     showAddEventSetter()
     addEvents([input])
-    //Todo finsh this below returns an array of events. Figure out how we will save this.
-    // recurringEvent(input[0], form.weekly)
   }
 
   function costCheck() {

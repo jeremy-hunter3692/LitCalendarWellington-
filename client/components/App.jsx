@@ -49,11 +49,14 @@ const App = () => {
   }
 
   function backButtonForEditing() {
+    setMultiDelete(false)
     setEditingSelection(!editingSelection)
     showEditEvent ? setShowEditEventPage(false) : ''
   }
 
   function showAddEventSetter() {
+    setEditDetails(false)
+    setMultiDelete(false)
     setShowAddEvents(!showAddEvents)
   }
 

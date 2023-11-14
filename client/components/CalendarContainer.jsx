@@ -99,11 +99,11 @@ export default function MyCalendar({
         </>
       )}
       <h1>Calender</h1>
-      <div className="calendar">
-        {displayPop && (
-          <PopupEvent details={popDetails} styleData={mousePos} close={close} />
-        )}
 
+      {displayPop && (
+        <PopupEvent details={popDetails} styleData={mousePos} close={close} />
+      )}
+      <div className="calendar">
         <Calendar
           localizer={localizer}
           events={eventsProps}

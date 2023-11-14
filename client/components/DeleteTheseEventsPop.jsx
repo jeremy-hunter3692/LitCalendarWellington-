@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react'
 
 function DeleteTheseEventsPop({ eventsToBeDeletedArr, removeToBeDeltedItem }) {
-  // console.log(eventsToBeDeletedArr)
-
   return (
     <>
       {eventsToBeDeletedArr.length > 0 && (
         <div>
-          Delete the follow events?
+          Delete the following events?
           {eventsToBeDeletedArr.map((x) => {
             return (
               <Fragment key={x.id}>

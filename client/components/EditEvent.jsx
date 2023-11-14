@@ -28,8 +28,8 @@ export default function EditEvent({
   const fixedDetails = unpackDetails(details)
   return (
     <>
-      <button onClick={apiDeleteEvent}>Delete Event</button>
       <AddEvent editDetails={fixedDetails} updateEvent={onSubmit} />
+      <button onClick={apiDeleteEvent}>Delete Event</button>
     </>
   )
 }

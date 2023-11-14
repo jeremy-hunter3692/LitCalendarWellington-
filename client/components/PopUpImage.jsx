@@ -35,12 +35,7 @@ export default function PopUpImages() {
       <button className="arrows" id="leftArrow" onClick={arrowClick}>
         {'<'}
       </button>
-      <img
-        id="popimg"
-        src={imageArr[imageIdx]}
-        alt="book cover"
-        width="30%"
-      ></img>
+      <img id="popimg" src={imageArr[imageIdx]} alt="book cover"></img>
       <button className="arrows" id="rightArrow" onClick={arrowClick}>
         {'>'}
       </button>

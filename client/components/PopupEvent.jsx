@@ -57,21 +57,21 @@ export default function Popup({ details, styleData, close }) {
     <>
       <div style={style}>
         <div className="popup">
+          <div className="poptoprightbuttons">
+            {style !== initStyle ? (
+              <>
+                {!fullScreen && (
+                  <button onClick={clickThrough}>
+                    {'  '}More{'  '}
+                  </button>
+                )}
+                <button onClick={close}>X</button>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
           <div className="licontainer">
-            <div className="poptoprightbuttons">
-              {style !== initStyle ? (
-                <>
-                  <button onClick={close}>X</button>
-                  {!fullScreen && (
-                    <button onClick={clickThrough}>
-                      {'  '}More{'  '}
-                    </button>
-                  )}
-                </>
-              ) : (
-                ''
-              )}
-            </div>
             <ul>
               {' '}
               <h4>{details.title} </h4>

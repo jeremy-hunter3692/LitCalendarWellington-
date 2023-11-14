@@ -1,121 +1,219 @@
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
-#app {
-  width: 100%;
-  flex-wrap: wrap;
+.popup {
+  border: white solid;
+  width: inherit;
+  height: inherit;
+  position: inherit;
+  z-index: 5;
+  background-color: #00275e;
+  margin: 0px;
+  padding: 1rem;
+  color: #ffffff;
+  border-radius: 25px;
+  box-shadow: 5px 5px #d2d2d2 ;
   display: block;
+  overflow-wrap: break-word;
+  word-wrap: break-all;
+  max-width: 100%;
+} 
+
+.licontainer {
+    padding: 0rem 1rem 1rem 1rem;
+    border: solid white;
+    border-width: 0.2px;
+    border-radius: 12px;
+    display: flex;
+    box-shadow: inset 0px 0px 0.5px 0.5px #ffffff;;
+    height: inherit;
+    flex-wrap: wrap;
+    white-space: normal;
+    max-height: 95%;
+    background-color: #1a1511;
+    justify-content: center;
+  
 
 }
 
+   .poptoprightbuttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top:  0rem;
+    margin-bottom:  0.3rem;
+
+ 
+  }
+  
+   .poptoprightbuttons button {
+    font-size: 0.5rem;
+ 
+  }
+  
+   
+
+.popup h4 {
+    margin: 0;
+    /* background-color:#130561 ; */
+    text-align: center;
+}
+  
+.popuppreview {
+    float: right;
+}
+  
 
 
-html, body, .viewport {
-  width: 100%;
-  height: 100%;
-  margin: 0;
+.popimgcont {
+  display: flex;
+justify-content: center;
+ text-align: center;
+  margin: 1rem;
+  max-height: 40%;
+
+}
+  
+
+ #popimg { 
+  max-height: 40%;
+  max-width: 40%;
+
+  object-fit: contain;
+
+  overflow: hidden;
+  
+}
+.popimgcont button {
   padding: 0;
-  background: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-i {
-  font-size: .7em;
-}
-
-
-
-header {
-  width: 100%;
+  border-radius: 0;
+  width: 0.8rem;
+  border: none;
+  color: #1a1511; 
+  background-color: #1a1511;
 }
 
 
-
-h1 {
-  text-align: center;
-  margin: 0;
-  font-family:Arial, Helvetica, sans-serif;
-  font-size: 2rem;
-}
-
-h2 {
-  text-align: center;
-  margin: 1rem auto;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 40px;
-  color: rgb(208, 0, 0);
-}
-
-
-h3 {
-  text-align: center;
-  margin: 7px auto;
-  font-size: 25px;
-}
-
-a {
-  text-decoration: none;
+.arrows {
+  margin: 0px;
+  padding: 0px;
   color: white;
+  align-items: center;
+}
+
+.arrows:hover {
+  color: black;
+   background: #ffffff;
+  opacity: 30%;
+}
+
+
+.popuplink {
+  flex-grow:unset;
+  /* border: solid red; */
+  display: flex;
+  flex-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+.aboutsection {
+  display: flex;
+  flex-Direction: row;
+  flex-Wrap: wrap;
+
+}
+
+
+
+
+
+.popup p {
   font-size: 0.8rem;
-  font-style: italic;
-}
-
-label {
-  
-  font-size: 1rem;;
-}
-
-
-textarea {
-  width: 50vw;
-  height: 20vh;
-}
-
-
-.textBox {
-  width: 90vw;
-  height: 40vh; 
-  margin: 2rem;
-  border-radius: 5px;
-  justify-content: center;
-  font-size: 2rem;
-}
-
-
-
-
-
-.calendar{
-  display: flex;
-  justify-content: center;
-  padding: 0rem;
-  width: 100vw;
-
-}
-
-
-
-
-.addEvent {
-  display: inline-block;
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  margin-bottom: 0;
+  margin-right:auto;
   
 }
 
-.AddEventContainer {
-float: left;
+
+.popup button {
+  display: block;
+  /* width: 100%; */
+  white-space: nowrap;
+
+  /* color:#00275e; */
+  /* padding: 0 0.4rem;
+  width: 3rem;
+  font-size: .6rem;
+  margin-top:  .2rem;
+  margin-bottom:  .1rem; */
+
+}
+
+#insidemorebutton {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  font-size: 0.8rem;
+  border-radius: 0%;
+  margin: 0;
+  padding:0px;
+  width: 10%;
+  /* opacity: 0; */
 }
 
 
-.textarea {
-  margin: 2em;
+
+#insidemorebutton:hover {
+  padding: 0;
+  margin: 0;
+  background-color: whitesmoke;
+  opacity: 0.5;
+  color: black; 
+}
+
+.popup ul {
+  max-width: 90%;
+  padding: 0px;
+  margin-bottom: 0;
+}
+
+.sociallistcont {
   display: flex;
+  justify-content: center;
+  width: auto;
+  margin-top: auto;
+  margin-bottom: 0;
+  bottom: 0;
+}
+.sociallist {
+
+  list-style: none;
+  display: flex; 
+  justify-content: space-between;   
+  max-height:100%; 
+  max-width:100%;
+  margin-bottom: 1rem;
 }
 
+.sociallist a {
+  display: flex;
+  justify-content: center;
+}
 
+.sociallist img {
+  width: 30%;
+  
+}
+/* 
+////////////////////////////////////////////////////////
+//re worked css 
+//////////////////////////////////////////////////
 
 .popuppreview {
   float: right;
@@ -136,56 +234,42 @@ border-radius: 25px;
 box-shadow: 5px 5px #d2d2d2 ;
 display: flex;
 font: arial; 
-/* flex: grow; */
+
 flex-direction: column;
-/* word-wrap: break-all; */
+
 } 
 
 
-.radioli {
-  list-style: none;
-  display:inline-block;
+.secondlineMoveDown{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
 }
-
 
 
 
 .poptoprightbuttons {
   display: flex;
-  /* border: red solid; */
+
   flex-direction: row-reverse;
   padding: 0.4rem;
-  /* padding: 0.2rem;
 
-  /* background-color: whitesmoke; */
   }
 
   .poptoprightbuttons button {
-    /* margin: 0.4rem; */
+
     margin: 0;
     padding: 0, 0.4rem;
     font-size: .6rem;
   }
-  /* .popupclosebutton {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-  
-    color:#00275e;
-  
-    width: 3rem;
 
-    margin-top:  .2rem;
-    margin-bottom:  .1rem;
-  
-  } 
-  */
 
 
 
 
 .arrows  {
-  /* all: unset; */
+  all: unset;
   display: flex;
   background-color: inherit;
   color:black;
@@ -236,7 +320,7 @@ flex-direction: column;
 
 .popup h4 {
   margin: 0;
-  /* background-color:#130561 ; */
+
   text-align: center;
 }
 
@@ -280,7 +364,7 @@ flex-direction: column;
 
 .popuplink {
   flex-grow:unset;
-  /* border: solid red; */
+
   display: flex;
   flex-wrap: nowrap;
   text-overflow: ellipsis;
@@ -308,12 +392,6 @@ flex-direction: column;
   
 }
 
-.secondlineMoveDown{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  white-space: pre-wrap;
-}
 
 .popup ul {
   max-width: 90%;
@@ -348,4 +426,4 @@ justify-content: center;
   display: flex;  
 
 }
-
+ */

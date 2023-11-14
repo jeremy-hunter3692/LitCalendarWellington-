@@ -8,8 +8,6 @@ export default function navBar() {
           <h1 style={{ backgroundColor: '#f5f5f4' }}>
             Lit Calendar Wellington
           </h1>
-          {/* <Link to="/">Home</Link>
-          <Link to="/calendar">Calendar</Link> */}
         </header>
       </div>
     </>
